@@ -1,0 +1,48 @@
+/* src/components/StackCard/StackCard.module.css */
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 16px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  position: relative;
+  transition: box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.cardName {
+  font-weight: 600;
+  font-size: 1.125rem; /* 18px */
+  color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.cardCount {
+  font-size: 0.875rem; /* 14px */
+  color: #718096;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0aec0;
+}
+
+.deleteButton:hover {
+  background-color: #edf2f7;
+  color: #1a202c;
+}

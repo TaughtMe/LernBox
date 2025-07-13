@@ -1,0 +1,17 @@
+/* src/components/Flashcard/Flashcard.module.css */
+.card {
+  background-color: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.text {
+  font-size: 1.75rem;
+  font-weight: 600;
+}

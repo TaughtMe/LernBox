@@ -1,0 +1,58 @@
+/* src/components/LevelBox/LevelBox.module.css */
+.box {
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+
+/* Verschiedene Farben für die Level, ähnlich dem Mockup */
+.level1 { background-color: #60a5fa; } /* blue-400 */
+.level2 { background-color: #a78bfa; } /* violet-400 */
+.level3 { background-color: #f472b6; } /* pink-400 */
+.level4 { background-color: #fb923c; } /* orange-400 */
+.level5 { background-color: #facc15; } /* yellow-400 */
+
+.levelTitle {
+  font-weight: 600;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.count {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.unit {
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.button {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

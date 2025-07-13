@@ -1,0 +1,28 @@
+/* src/components/SettingsToggle/SettingsToggle.module.css */
+.container {
+  display: inline-flex;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.option {
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  color: #475569;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+  border-left: 1px solid #e2e8f0;
+}
+
+.option:first-child {
+  border-left: none;
+}
+
+.option.active {
+  background-color: #4f46e5;
+  color: #ffffff;
+}

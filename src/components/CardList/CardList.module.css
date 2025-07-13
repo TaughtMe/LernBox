@@ -1,0 +1,29 @@
+/* src/components/CardList/CardList.module.css */
+.container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 56px; /* 56px für die Action-Spalte */
+  gap: 1rem;
+}
+
+.headerTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.emptyState {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}

@@ -1,0 +1,43 @@
+/* src/pages/StackDetailPage.module.css */
+.pageContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.backLink {
+  text-decoration: none;
+  font-weight: 600;
+  color: #4f46e5;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}

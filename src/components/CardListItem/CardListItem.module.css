@@ -1,0 +1,42 @@
+/* src/components/CardListItem/CardListItem.module.css */
+.item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.content {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.text {
+  font-size: 1rem;
+  color: #334155;
+  word-break: break-word;
+}
+
+.actions {
+  margin-left: 1rem;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.deleteButton:hover {
+  color: #ef4444;
+  background-color: #fee2e2;
+}
