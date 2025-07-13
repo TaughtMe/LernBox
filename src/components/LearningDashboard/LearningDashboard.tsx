@@ -11,7 +11,7 @@ interface LearningDashboardProps {
   stackId: string;
 }
 
-export const LearningDashboard: React.FC<LearningDashboardProps> = ({ cards }) => {
+export const LearningDashboard: React.FC<LearningDashboardProps> = ({ cards, stackId }) => {
   // Zählt die Karten für jedes Level
   const navigate = useNavigate();
   const levelCounts = cards.reduce(

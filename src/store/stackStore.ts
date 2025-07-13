@@ -1,7 +1,7 @@
 // src/store/stackStore.ts
 
 import { create } from 'zustand';
-import type { Stack } from '../types/stack.types';
+import type { Stack, StackSettings, VocabularyCard } from '../types/stack.types';
 
 // --- Mock-Daten (Test-Daten) ---
 // Wir initialisieren den Store mit unseren bekannten Test-Daten.
