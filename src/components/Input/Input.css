@@ -1,0 +1,15 @@
+.input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 8px 12px;
+  width: 100%;
+}
+
+/* Stil für den Fokus-Zustand */
+.input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
