@@ -2,33 +2,31 @@ import React from 'react';
 import './Button.css';
 
 interface ButtonProps {
-  /**
-   * Legt fest, ob dies die primäre AUI-Aktion auf der Seite ist.
-   */
   primary?: boolean;
-  /**
-   * Der Text, der im Button angezeigt wird.
-   */
   label: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
   /**
-   * Optionale Klick-Funktion.
+   * NEU: Lässt den Button die volle Breite einnehmen.
    */
-  onClick?: () => void;
+  fullWidth?: boolean;
 }
 
-/**
- * Die primäre UI-Komponente zur Benutzerinteraktion.
- */
 export const Button = ({
   primary = false,
   label,
+  type = 'button',
+  fullWidth = false,
   ...props
 }: ButtonProps) => {
   const mode = primary ? 'button--primary' : 'button--secondary';
+  const fullWidthClass = fullWidth ? 'button--full-width' : '';
+
   return (
     <button
-      type="button"
-      className={['button', mode].join(' ')}
+      type={type}
+      className={['button', mode, fullWidthClass].filter(Boolean).join(' ')}
       {...props}
     >
       {label}

@@ -11,12 +11,18 @@
 }
 
 .button--primary {
-  color: white;
+  color: rgb(244, 243, 243);
   background-color: #1ea7fd;
 }
 
+/* Button.css - Option A */
 .button--secondary {
-  color: #333;
+  /* Korrigierte Textfarbe für Sichtbarkeit auf hellem Hintergrund */
+  color: #333; 
   background-color: transparent;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+}
+
+.button--full-width {
+  width: 100%;
 }

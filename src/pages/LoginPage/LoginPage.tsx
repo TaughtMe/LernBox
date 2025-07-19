@@ -1,19 +1,45 @@
-import React from 'react';
+import { useState, type FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { Card } from '../../components/Card/Card';
 import { Input } from '../../components/Input/Input';
 import { Button } from '../../components/Button/Button';
 import './LoginPage.css';
 
-export const LoginPage: React.FC = () => {
+const LoginPage: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    login();
+    navigate('/dashboard');
+  };
+
   return (
     <div className="login-page-container">
       <Card>
         <h2>Login</h2>
-        <Input placeholder="E-Mail" type="email" />
-        <Input placeholder="Passwort" type="password" />
-        {/* KORREKTUR: Der Text muss als "label"-Prop übergeben werden */}
-        <Button label="Anmelden" />
+        <form onSubmit={handleSubmit}>
+          <Input
+            placeholder="E-Mail"
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="Passwort"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <Button type="submit" label="Anmelden" />
+        </form>
       </Card>
     </div>
   );
 };
+
+export default LoginPage;

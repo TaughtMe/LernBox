@@ -7,6 +7,9 @@ const meta: Meta<typeof Card> = {
   component: Card,
   tags: ['autodocs'],
   argTypes: {
+    title: { control: 'text', description: 'Der Titel der Karte' },
+    description: { control: 'text', description: 'Der Beschreibungstext der Karte' },
+    // Wir deaktivieren die 'children'-Steuerung, da wir sie manuell in einer Story zeigen
     children: {
       control: { disable: true },
     },
@@ -16,13 +19,25 @@ const meta: Meta<typeof Card> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// 1. Story: Die Karte mit Titel und Beschreibung (für unser Dashboard)
 export const Default: Story = {
-  render: () => (
-    <Card>
+  args: {
+    title: 'Kartentitel',
+    description: 'Dies ist eine Beschreibung für die Standard-Karte.',
+  },
+};
+
+// 2. Story: Die Karte als Container (für unsere Login-Seite)
+export const AsContainer: Story = {
+  args: {
+    // Hier keine title/description props, nur children
+  },
+  render: (args) => (
+    <Card {...args}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <h2>Beispielkarte</h2>
+        <h2>Beispiel-Container</h2>
         <p>
-          Dies ist ein Beispielinhalt für die Card-Komponente. Sie kann beliebige React-Knoten als `children` enthalten.
+          Dieser Inhalt wird als 'children' übergeben.
         </p>
         <div style={{ alignSelf: 'flex-end' }}>
           <Button label="Aktion" />

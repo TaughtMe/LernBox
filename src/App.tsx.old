@@ -1,0 +1,20 @@
+import { Routes, Route } from 'react-router-dom';
+// Ihre bestehenden Page-Imports
+import LoginPage from './pages/LoginPage/LoginPage';
+import DashboardPage from './pages/DashboardPage/DashboardPage';
+// 1. Der neue Import
+import './App.css';
+
+function App() {
+  return (
+    <Routes>
+      {/* Route für die Login-Seite hinzufügen */}
+      <Route path="/" element={<LoginPage />} />
+
+      {/* Route für die Dashboard-Seite (noch ungeschützt) */}
+      <Route path="/dashboard" element={<DashboardPage />} />
+    </Routes>
+  );
+}
+
+export default App;

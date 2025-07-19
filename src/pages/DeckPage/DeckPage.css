@@ -1,0 +1,185 @@
+/* Karten‑Container: Grid sorgt für nebeneinander, Zeilenumbruch nur bei sehr schmalem Viewport */
+.card-area {
+  display: grid;
+  /* Mindestens je Karte 300px, maximal 1fr (also gleichmäßig) */
+  grid-template-columns: repeat(auto-fit, minmax(clamp(300px, 25vw, 400px), 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+/* Flashcard‑Panel mit einheitlicher Größe und dezenten Scrollbars */
+.flashcard-panel {
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  width: clamp(300px, 25vw, 400px);
+  aspect-ratio: 1 / 0.65;
+
+  /* Firefox: dünner Balken, Daumen leicht transparent */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* WebKit‑Browser: nur Daumen‑Balken, keine Pfeile, keine Track‑Hinterlegung */
+.flashcard-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flashcard-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.flashcard-panel::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.flashcard-panel::-webkit-scrollbar-button,
+.flashcard-panel::-webkit-scrollbar-corner {
+  display: none;
+}
+
+
+/* Stile für die neuen Verwaltungsbereiche */
+.section-divider {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 40px 0;
+}
+
+.card-management-area,
+.card-list-area {
+  width: 100%;
+  max-width: 700px; /* Gleiche Breite wie Lernkarten */
+  margin: 0 auto;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+/* Formular zum Hinzufügen von Karten */
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.add-card-form .button {
+  align-self: flex-start; /* Button nicht über die ganze Breite */
+}
+
+
+/* Liste der vorhandenen Karten */
+.card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.card-info {
+  flex-grow: 1;
+  line-height: 1.5;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.card-actions .button {
+  padding: 5px 10px; /* Kleinere Buttons für die Liste */
+}
+
+/* Zusätzliche Stile für die Lern-Sitzung */
+.learn-session {
+  margin-bottom: 2rem;
+}
+
+.evaluation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.evaluation-buttons .button {
+  flex-grow: 1;
+}
+
+.card-level {
+  font-size: 0.9em;
+  color: #666;
+  font-weight: bold;
+  margin-right: 1rem;
+  align-self: center;
+}
+
+/* --- Deck-Titel Bearbeitung --- */
+.deck-title-editor {
+  margin-bottom: 2rem;
+}
+
+.deck-title-input {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-text-primary);
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.deck-title-input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--color-primary);
+}
