@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+
+
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -8,6 +8,10 @@ interface ProtectedRouteProps {
 
 /*
 // --- URSPRÜNGLICHE LOGIK (AUSGEKLAMMERT) ---
+
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+
 export const ProtectedRoute = ({ children }: ProtectedRouteProps): React.ReactNode => {
   const { isLoggedIn } = useAuth();
 

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useTheme } from './context/ThemeContext';
-import LoginPage from './pages/LoginPage/LoginPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import DeckPage from './pages/DeckPage/DeckPage';

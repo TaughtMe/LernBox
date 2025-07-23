@@ -1,4 +1,5 @@
 {
+  "homepage": "https://LernBox.github.io/LernBox",
   "name": "lernbox",
   "private": true,
   "version": "0.0.0",
@@ -9,7 +10,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -38,6 +41,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "eslint-plugin-storybook": "^9.0.16",
+    "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
     "playwright": "^1.54.1",
     "prettier": "^3.6.2",
