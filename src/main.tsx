@@ -11,7 +11,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider>
       <AuthProvider>
-        <BrowserRouter>
+        {/* The basename property is added here */}
+        <BrowserRouter basename="/LernBox">
           <DeckProvider>
             <App />
           </DeckProvider>

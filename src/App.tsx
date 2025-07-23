@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useTheme } from './context/ThemeContext';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
@@ -10,12 +10,10 @@ import LearningPage from './pages/LearningPage/LearningPage';
 function App() {
   const { theme } = useTheme();
 
-  // 2. Dieser Hook wird hinzugefügt
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // 3. Der umschließende <div>-Container wird entfernt
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -35,7 +33,14 @@ function App() {
           </ProtectedRoute>
         }
       />
-            <Route path="/learn/:deckId" element={<LearningPage />} /> {/* NEUE ROUTE */}
+      <Route 
+        path="/learn/:deckId" 
+        element={
+          <ProtectedRoute>
+            <LearningPage />
+          </ProtectedRoute>
+        } 
+      />
     </Routes>
   );
 }
