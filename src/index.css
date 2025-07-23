@@ -1,85 +1,120 @@
-/* 1. Definition der Farbvariablen */
+/* Schritt 1: Globale Styles & Design Tokens (Final) */
 
-/* Light Theme (wird als Standard :root definiert) */
 :root {
-  --font-family-base: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --transition-speed: 0.25s;
+  /* Font */
+  --font-family-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-  /* Farben */
-  --color-background: #ffffff;
-  --color-foreground: #213547;
-  --color-primary: #646cff;
-  --color-primary-hover: #747bff;
-  --color-button-background: #f9f9f9;
+  /* Radien */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Schatten */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+  /* Übergänge */
+  --transition-speed: 0.2s;
+
+  /* Light Mode Farben */
+  --clr-bg: #f8f9fa;
+  --clr-bg-surface: #ffffff;
+  --clr-text-primary: #212529;
+  --clr-text-secondary: #6c757d;
+  --clr-border: #dee2e6;
+  --clr-accent: #4368fa;
+  --clr-accent-hover: #3a5cdf;
+  --clr-danger: #dc3545;
+  
+  --clr-level-1-bg: #ffffff;
+  --clr-level-1-border: #dee2e6;
+  --clr-level-2-bg: #e9ecef;
+  --clr-level-2-border: #ced4da;
+  --clr-level-3-bg: #c87524; /* Angepasst für Kontrast */
+  --clr-level-3-border: #c87524;
+  --clr-level-4-bg: #adb5bd;
+  --clr-level-4-border: #adb5bd;
+  --clr-level-5-bg: #f59e0b; /* Gold */
+  --clr-level-5-border: #f59e0b;
 }
 
-/* Dark Theme (wird durch das data-Attribut aktiviert) */
-:root[data-theme='dark'] {
-  --color-background: #242424;
-  --color-foreground: rgba(255, 255, 255, 0.87);
-  --color-primary: #646cff;
-  --color-primary-hover: #535bf2;
-  --color-button-background: #1a1a1a;
+body[data-theme='dark'] {
+  /* Dark Mode Farben */
+  --clr-bg: #111827;
+  --clr-bg-surface: #1f2937;
+  --clr-text-primary: #f9fafb;
+  --clr-text-secondary: #9ca3af;
+  --clr-border: #374151;
+  --clr-accent: #4f46e5;
+  --clr-accent-hover: #4338ca;
+  --clr-danger: #f87171;
+  
+  --clr-level-1-bg: #374151;
+  --clr-level-1-border: #4b5563;
+  --clr-level-2-bg: #384554;
+  --clr-level-2-border: #6b7280;
+  --clr-level-3-bg: #9a3412; /* Angepasst für Kontrast */
+  --clr-level-3-border: #9a3412;
+  --clr-level-4-bg: #374457;
+  --clr-level-4-border: #374151;
+  --clr-level-5-bg: #b45309; /* Gold */
+  --clr-level-5-border: #b45309;
 }
 
 
-/* 2. Anwendung der Variablen auf globale Styles (deine bestehenden Styles) */
-
-body {
+/* Globale Resets und Basis-Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  
-  /* Variablen anwenden */
-  font-family: var(--font-family-base);
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  transition: background-color var(--transition-speed), color var(--transition-speed);
-  
-  /* Weitere Basis-Styles */
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-family-sans);
   line-height: 1.5;
-  font-weight: 400;
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  background-color: var(--clr-bg);
+  color: var(--clr-text-primary);
+  transition: background-color var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 a {
-  font-weight: 500;
-  color: var(--color-primary);
-  text-decoration: inherit;
+  color: var(--clr-accent);
+  text-decoration: none;
   transition: color var(--transition-speed);
 }
+
 a:hover {
-  color: var(--color-primary-hover);
+  text-decoration: underline;
+  color: var(--clr-accent-hover);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* In index.css */
+
+:root {
+  /* ... andere Farben ... */
+  --clr-accent: #4368fa;
+  --clr-accent-hover: #3a5cdf;
+  --clr-danger: #dc3545;
+  --clr-success: #198754; /* NEU */
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-
-  /* Variablen anwenden */
-  background-color: var(--color-button-background);
-  color: var(--color-foreground); /* Wichtig, damit Button-Text auch die Farbe wechselt */
-  transition: border-color var(--transition-speed);
-}
-button:hover {
-  border-color: var(--color-primary);
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+body[data-theme='dark'] {
+  /* ... andere Farben ... */
+  --clr-danger: #f87171;
+  --clr-success: #20c997; /* NEU */
 }

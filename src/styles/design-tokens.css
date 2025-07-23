@@ -1,0 +1,7 @@
+:root {
+  /* ... existierende Variablen ... */
+
+  /* Feedback-Farben (NEU) */
+  --color-success: #28a745;
+  --color-danger: #dc3545;
+}

@@ -17,7 +17,7 @@ export interface Deck {
 
 interface DeckContextType {
   decks: Deck[];
-  addDeck: () => void;
+  addDeck: (title: string) => void;
   updateDeck: (deckId: string, title: string) => void;
   deleteDeck: (deckId: string) => void;
   addCardToDeck: (deckId: string, cardData: { question: string; answer: string }) => void;
@@ -37,14 +37,14 @@ interface DeckProviderProps {
 export const DeckProvider = ({ children }: DeckProviderProps) => {
   const [decks, setDecks] = useLocalStorage<Deck[]>('lernbox-decks', []);
 
-  const addDeck = () => {
-    const newDeck: Deck = {
-      id: crypto.randomUUID(),
-      title: `Neues Lernset #${decks.length + 1}`,
-      cards: [],
-    };
-    setDecks(prevDecks => [...prevDecks, newDeck]);
+  const addDeck = (title: string) => { // <--- Parameter 'title' hier hinzufügen
+  const newDeck = {                // Annahme, dass dein Deck-Objekt so aussieht
+    id: crypto.randomUUID(),       // Erzeugt eine einzigartige ID
+    title: title,                  // Verwendet den übergebenen Titel
+    cards: [],
   };
+  setDecks((prevDecks) => [...prevDecks, newDeck]);
+};
 
   const deleteDeck = (deckId: string) => {
     setDecks(prevDecks => prevDecks.filter(deck => deck.id !== deckId));

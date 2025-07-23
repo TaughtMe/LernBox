@@ -1,0 +1,94 @@
+.card-management-area,
+.card-list-area {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.card-management-area h2,
+.card-list-area h2 {
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+/* Formular zum Hinzufügen von Karten */
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.add-card-form .button {
+  align-self: flex-start;
+}
+
+
+/* Liste der vorhandenen Karten */
+.card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.card-info {
+  flex-grow: 1;
+  line-height: 1.5;
+}
+
+.card-info span {
+    display: block;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
+  align-items: center;
+}
+
+.card-actions .button {
+  padding: 5px 10px;
+}
+
+.card-level {
+  font-size: 0.9em;
+  color: #666;
+  font-weight: bold;
+  margin-right: 1rem;
+  align-self: center;
+}

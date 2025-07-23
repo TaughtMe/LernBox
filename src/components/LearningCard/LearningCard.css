@@ -1,0 +1,82 @@
+/* Container für die Karten-Panels */
+.card-area {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(300px, 25vw, 400px), 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 90vw;
+  margin: 0 auto;
+  cursor: pointer; /* Zeigt an, dass der Bereich klickbar ist */
+}
+
+/* Einzelnes Karten-Panel (Vorder-/Rückseite) */
+.flashcard-panel {
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  width: clamp(300px, 25vw, 400px);
+  aspect-ratio: 1 / 0.65;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* WebKit-spezifische Scrollbar-Styles */
+.flashcard-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flashcard-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.flashcard-panel::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* Verwischt den Inhalt der Rückseite, wenn sie noch nicht aufgedeckt ist */
+.blurred {
+  filter: blur(10px);
+  transition: filter 0.3s ease-in-out;
+}
+
+/* Header innerhalb eines Panels (Titel + Speak-Button) */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.panel-header .panel-title {
+    margin: 0; /* Entfernt Standard-Margin von h4 */
+}
+
+/* Button zur Sprachausgabe */
+.speak-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin-left: 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.speak-button:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+.speak-button img {
+  width: 20px;
+  height: 20px;
+}

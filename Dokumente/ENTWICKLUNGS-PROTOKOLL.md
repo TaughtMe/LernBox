@@ -309,3 +309,149 @@ Lösung: Die Logik in App.tsx wurde mittels eines useEffect-Hooks angepasst, um 
 
 Ergebnis
 Die Anwendung verfügt nun über einen robusten und voll funktionsfähigen Darkmode. Die Auswahl des Nutzers bleibt über Sitzungen hinweg erhalten. Die technische Umsetzung ist skalierbar und folgt modernen React-Praktiken.
+
+Protokoll: Phase 17 – Erweiterung der Lernmodi
+Projekt: Lernkarten-App
+
+Datum: 21.07.2025
+
+Status: ✅ Abgeschlossen
+
+1. Zielsetzung
+Das Ziel dieser Phase war die Erweiterung der Funktionalität der Lern-Sitzung. Benutzer sollten mehr Kontrolle über ihre Lernerfahrung erhalten, indem neue Lernmodi (Klassisch, Schreiben) und eine flexible Abfragerichtung (Frage → Antwort, Antwort → Frage, Gemischt) eingeführt werden.
+
+2. Implementierungsübersicht
+Die Umsetzung erfolgte in den folgenden Kernbereichen:
+
+Erweiterung der Zustandsverwaltung:
+
+In DeckPage.tsx wurden neue useState-Hooks zur Verwaltung des learnMode (Lernmodus), der queryDirection (Abfragerichtung) und der Logik des Schreib-Modus (userAnswer, isAnswerChecked, feedback) implementiert.
+
+Ein zusätzlicher Zustand (displayQuestion) wurde eingeführt, um die für die aktuelle Karte angezeigte Seite (Frage oder Antwort) zu steuern.
+
+Anpassung der Benutzeroberfläche (UI):
+
+Ein Einstellungsbereich wurde in DeckPage.tsx oberhalb der Lernkarte hinzugefügt, der Button-Komponenten zur Auswahl der neuen Modi enthält.
+
+Die primary-Eigenschaft der Buttons wird genutzt, um die aktive Auswahl visuell hervorzuheben.
+
+Zugehörige Stile wurden in DeckPage.css ergänzt.
+
+Implementierung der Modi-Logik:
+
+Schreib-Modus:
+
+Bedingtes Rendern eines Input-Feldes und eines "Prüfen"-Buttons.
+
+Eine handleCheckAnswer-Funktion vergleicht die Nutzereingabe mit der korrekten Antwort und gibt visuelles Feedback. Die Bewertungsbuttons ("Richtig"/"Falsch") erscheinen erst nach dieser Prüfung.
+
+Für das Feedback wurden neue Farbvariablen (--color-success, --color-danger) in design-tokens.css definiert.
+
+Gemischter Modus:
+
+Die loadNextCard-Funktion wurde erweitert, um die queryDirection zu berücksichtigen. Im gemischten Modus wird die angezeigte Seite per Zufall (Math.random()) bestimmt.
+
+Die JSX-Renderlogik wurde angepasst, um dynamisch entweder die Frage oder die Antwort als Vorderseite der Karte anzuzeigen.
+
+3. Ergebnis
+Alle definierten Aufgaben der Phase 17 wurden erfolgreich umgesetzt. Die Anwendung bietet nun eine interaktivere und effektivere Lernumgebung mit verschiedenen Abfragemethoden. Die Codebasis in DeckPage.tsx ist für zukünftige Erweiterungen modular strukturiert.
+
+Bearbeitete Dateien:
+
+src/pages/DeckPage/DeckPage.tsx
+
+src/pages/DeckPage/DeckPage.css
+
+src/styles/design-tokens.css
+
+Absolut. Hier ist das Protokoll für die durchgeführte Phase.
+
+***
+
+## Protokoll: Phase 17.5 - Refactoring der DeckPage
+
+**Datum:** 23.07.2025
+**Teilnehmer:** User (Developer), Gemini (Architect/Bauleiter)
+
+---
+
+### Ausgangssituation
+
+Die Komponente `DeckPage.tsx` war mit fast 400 Zeilen Code zu groß und unübersichtlich geworden. Sie vereinte die Logik für die Lern-Sitzung, die Einstellungen und die Verwaltung der Kartenliste in einer einzigen, monolithischen Komponente. Dieser Zustand erschwerte die Wartung und Weiterentwicklung.
+
+---
+
+### Zielsetzung
+
+Das primäre Ziel der Phase war die **Verbesserung der Code-Qualität** durch das Refactoring der `DeckPage.tsx`. Die Komponente sollte in mehrere kleinere, spezialisierte und wiederverwendbare Unter-Komponenten aufgeteilt werden. Die Funktionalität für den Endbenutzer musste dabei exakt erhalten bleiben.
+
+---
+
+### Durchgeführte Schritte
+
+1.  **Architekturplanung:** Basierend auf dem bestehenden Code wurde ein detaillierter Plan zur Aufteilung der Komponente erstellt. Der Plan sah die Extraktion von vier neuen Komponenten vor.
+
+2.  **Struktur-Anlage:** Es wurde eine neue Ordner- und Dateistruktur unter `src/components/` für die neuen Komponenten angelegt.
+
+3.  **Komponenten-Extraktion:** Die Logik und das JSX der `DeckPage` wurden schrittweise in die folgenden neuen Komponenten ausgelagert:
+    * **`SessionSettings`**: Kapselt die UI-Elemente zur Einstellung von Lernmodus, Abfragerichtung und automatischer Sprachausgabe.
+    * **`CardListEditor`**: Beinhaltet das Formular zum Hinzufügen einer neuen Karte sowie die komplette Liste der bestehenden Karten inklusive Löschfunktion.
+    * **`LearningCard`**: Stellt die visuelle Karteikarte (Vorder- und Rückseite) dar.
+    * **`SessionControls`**: Bündelt alle Steuerungselemente wie Fortschrittsanzeige, Eingabefeld und die Buttons ("Richtig", "Falsch", "Prüfen").
+
+4.  **Integration & Umbau:** Nach der Erstellung jeder neuen Komponente wurde die `DeckPage.tsx` angepasst: Der alte Code wurde entfernt und durch den Aufruf der neuen Komponente ersetzt. Die `DeckPage` wurde so zu einer reinen **Manager-Komponente**, die nur noch den Zustand verwaltet und diesen über Props an die Kind-Komponenten weitergibt.
+
+5.  **Code-Bereinigung:** Im Anschluss wurden überflüssige Importe (`Input`, `SpeakerIcon`) und redundante CSS-Regeln aus `DeckPage.tsx` und `DeckPage.css` entfernt, um die Code-Basis abzuschließen.
+
+---
+
+### Ergebnis
+
+Die `DeckPage.tsx` ist nun eine saubere und schlanke Manager-Komponente, deren Hauptverantwortung in der Zustandsverwaltung liegt. Die Benutzeroberfläche ist in vier logische, gekapselte und wiederverwendbare Komponenten aufgeteilt, was die Lesbarkeit und Wartbarkeit des Codes erheblich verbessert.
+
+**Die Ziele der Phase 17.5 wurden vollständig erreicht.** 🏁
+
+Protokoll: Phase 18
+Projekt:	Lern-App
+Phase:	18: Erweiterte Sprachausgabe mit Spracherkennung
+Datum:	23.07.2025
+Status:	✅ Abgeschlossen
+
+In Google Sheets exportieren
+Ziele der Phase
+Erstellung eines Hooks (useSpeechSynthesis) zur Kapselung der Web Speech API für die Sprachausgabe.
+
+Implementierung eines Service (languageService) zur einfachen Erkennung der Sprache (DE/EN) von Texten.
+
+Integration der Sprachausgabe in die LearningCard-Komponente über ein klickbares Icon, das nur auf der sichtbaren Seite der Karte erscheint.
+
+(Optional) Implementierung einer automatischen Vorlesefunktion, die über die SessionSettings gesteuert wird.
+
+Umsetzung und Ergebnisse
+Alle Ziele der Phase wurden erfolgreich umgesetzt.
+
+languageService.ts:
+
+Eine neue Datei wurde unter src/services/languageService.ts erstellt.
+
+Die Funktion detectLanguage wurde implementiert. Sie erkennt Deutsch anhand von Umlauten und "ß" und wählt standardmäßig Englisch.
+
+useSpeechSynthesis.ts:
+
+Ein neuer Hook wurde unter src/hooks/useSpeechSynthesis.ts erstellt.
+
+Er kapselt die Logik zum Laden von Systemstimmen und stellt die Funktionen speak(text, lang) und cancel() zur Verfügung. Die speak-Funktion wählt automatisch eine passende Stimme basierend auf dem übergebenen Sprachcode.
+
+Anpassungen der Komponenten:
+
+LearningCard.tsx: Die Komponente wurde so angepasst, dass sie den useSpeechSynthesis-Hook und den languageService intern nutzt. Ein Lautsprecher-Icon wird nun korrekt nur neben dem Text der aktiven Kartenseite angezeigt. Die speak-Prop wurde entfernt, da die Komponente autonom agiert.
+
+SessionSettings.tsx: Die Komponente zur Steuerung der Lernsitzung wurde um eine Checkbox für "Automatisch vorlesen" erweitert.
+
+DeckPage.tsx: Diese zentrale Komponente wurde angepasst, um die cancel-Funktion des Hooks zu nutzen und die Logik für die automatische Sprachausgabe zu implementieren. Ein useEffect-Hook löst nun die Sprachausgabe aus, wenn die entsprechende Einstellung aktiv ist und eine neue Karte geladen oder umgedreht wird. Alle TypeScript-Fehler wurden behoben.
+
+Fazit
+Die Anwendung verfügt nun über eine voll funktionsfähige, intelligente Sprachausgabe. Sowohl die manuelle Ausgabe per Klick als auch die optionale automatische Ausgabe funktionieren wie geplant. Die Architektur ist sauber in wiederverwendbare Hooks und Services getrennt.
+
+Phase 18 ist damit erfolgreich abgeschlossen.
+

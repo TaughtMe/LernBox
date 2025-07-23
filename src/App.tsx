@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'; // <-- 1. Hinzugefügt
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useTheme } from './context/ThemeContext';
 import LoginPage from './pages/LoginPage/LoginPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import DeckPage from './pages/DeckPage/DeckPage';
 import './App.css';
+import LearningPage from './pages/LearningPage/LearningPage';
 
 function App() {
   const { theme } = useTheme();
@@ -18,7 +19,7 @@ function App() {
   // 3. Der umschließende <div>-Container wird entfernt
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route
         path="/dashboard"
         element={
@@ -35,6 +36,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+            <Route path="/learn/:deckId" element={<LearningPage />} /> {/* NEUE ROUTE */}
     </Routes>
   );
 }

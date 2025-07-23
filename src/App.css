@@ -1,42 +1,425 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+/* Schritt 2: Generelle App-Layout-Container */
+
+.App {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto; /* Zentriert den Container horizontal */
+  padding: 2rem 1.5rem; /* Oben/Unten | Links/Rechts */
+  text-align: left; /* Stellt die Standard-Textausrichtung sicher */
+}
+
+/* Stellt sicher, dass der Hauptinhalt den Platz zum Footer ausfüllt */
+main {
+  flex-grow: 1;
+}
+
+/* Hilfsklasse für den "Zurück zur Übersicht" Link */
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--clr-text-secondary);
+  transition: color var(--transition-speed);
+}
+
+.back-link:hover {
+  color: var(--clr-text-primary);
+}
+
+/* Schritt 3: Basis-Komponenten-Styling */
+
+/* --- Card --- */
+.card {
+  background-color: var(--clr-bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--clr-border);
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--transition-speed), transform 0.1s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--clr-accent);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: var(--clr-accent-hover);
+}
+
+.btn-secondary {
+  background-color: var(--clr-bg-surface); /* Weißer Hintergrund */
+  color: var(--clr-text-primary);
+  font-weight: 500;
+  border: 1px solid var(--clr-border); /* Hinzufügen eines Rahmens */
+}
+.btn-secondary:hover {
+  background-color: #70417e; /* Ein leichtes Grau beim Hovern */
+}
+
+
+/* --- Formulare & Inputs --- */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--clr-text-secondary);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--clr-text-primary);
+  background-color: var(--clr-bg-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.input-field:focus, .input-field:focus-visible {
+  outline: none;
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clr-accent) 25%, transparent);
+}
+
+textarea.input-field {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Schritt 4: Dashboard-Seite */
+
+.dashboard-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.dashboard-header .version-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dashboard-header .version {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--clr-text-secondary);
+}
+
+.deck-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.deck-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--clr-bg-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.deck-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.deck-card-info h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.25rem 0;
+  color: var(--clr-text-primary);
+}
+
+.deck-card-info p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: var(--clr-text-secondary);
+}
+
+.deck-card-delete {
+  background: none;
+  border: none;
+  color: var(--clr-text-secondary);
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-speed);
+}
+
+.deck-card-delete:hover {
+  color: var(--clr-danger);
+  transform: scale(1.1);
+}
+
+.new-deck-form {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.new-deck-form .input-field {
+  flex-grow: 1; /* Input nimmt den meisten Platz ein */
+}
+
+.new-deck-form .btn {
+  flex-shrink: 0; /* Verhindert, dass der Button schrumpft */
+}
+
+/* Schritt 5: Deck-Detailseite */
+
+/* --- Layout für die Sektionen --- */
+.page-section {
+  margin-bottom: 2rem;
+}
+
+.page-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--clr-text-secondary);
+  font-weight: 600;
+}
+
+/* --- Segmented Controls (für Lernmodus/Lernrichtung) --- */
+.control-group {
+    margin-bottom: 1rem;
+}
+
+.control-group-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.segmented-control {
+  display: flex;
+  width: 100%;
+}
+
+.segmented-control button {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--clr-border);
+  background-color: var(--clr-bg-surface);
+  color: var(--clr-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.segmented-control button:not(:last-child) {
+  border-right: none;
+}
+
+.segmented-control button:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.segmented-control button:last-child {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.segmented-control button.active {
+  background-color: var(--clr-accent);
+  color: #ffffff;
+  border-color: var(--clr-accent);
+}
+
+/* --- Lernlevel Grid --- */
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.level-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+}
+
+.level-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.level-card .card-count {
+  font-size: 0.9rem;
+  color: var(--clr-text-secondary);
+  flex-grow: 1; /* Pusht den Button nach unten */
+}
+
+/* Farben für die Level-Karten */
+.level-card.level-1 { border-color: var(--clr-level-1-border); background-color: var(--clr-level-1-bg); }
+.level-card.level-2 { border-color: var(--clr-level-2-border); background-color: var(--clr-level-2-bg); }
+
+/* --- Bronze (Level 3) --- */
+.level-card.level-3 { 
+  background: linear-gradient(145deg, #d08c4a, #a46628); /* Bronze-Verlauf */
+  border-color: #a46628;
+  color: #fff; 
+}
+.level-card.level-3 .card-count { color: rgba(255, 255, 255, 0.8); }
+
+/* --- Silber (Level 4) --- */
+.level-card.level-4 { 
+  background: linear-gradient(145deg, #e1e1e1, #b0b0b0); /* Silber-Verlauf */
+  border-color: #b0b0b0;
+  color: #212529; /* Dunkler Text für besseren Kontrast */
+}
+.level-card.level-4 .card-count { color: #495057; }
+
+
+/* --- Gold (Level 5) --- */
+.level-card.level-5 { 
+  background: linear-gradient(145deg, #fcd34d, #f59e0b); /* Gold-Verlauf */
+  border-color: #f59e0b;
+  color: #422006; /* Dunkelbrauner Text für Kontrast */
+}
+.level-card.level-5 .card-count { color: #6e4217; }
+
+
+/* --- Formular für neue Karten --- */
+.new-card-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.new-card-form .btn {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+/* Schritt 6: Lern-Ansicht */
+
+.learning-session-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.learning-session-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.learning-session-header h1 {
+  font-size: 1.5rem;
+  color: var(--clr-text-secondary);
+  font-weight: 600;
+}
+
+/* Die Lernkarte selbst, erbt von .card, aber mit Anpassungen */
+.learning-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 16 / 9;
   padding: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2.5rem); 
+  font-weight: bold;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.learning-session-controls {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 700px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.learning-session-controls .btn {
+    width: 100%;
+    padding: 1rem 2rem; /* Größerer Button */
+    font-size: 1.2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Container für die Buttons "Gewusst" / "Nicht gewusst" */
+.judgement-buttons {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
 }
 
-.card {
-  padding: 2em;
+.judgement-buttons .btn {
+    flex: 1; /* Beide Buttons nehmen gleich viel Platz ein */
 }
 
-.read-the-docs {
-  color: #888;
+.learning-session-footer {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--clr-text-secondary);
+}
+
+.learning-session-footer a {
+    font-weight: 500;
 }

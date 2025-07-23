@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -19,9 +19,15 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-// 5. Erstelle die Provider-Komponente
+// 5. Erstelle die Provider-Komponente (korrigiert)
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useLocalStorage<Theme>('theme', 'light');
+
+  // Dieser Hook wird bei jeder Änderung des Themes ausgeführt.
+  // Er muss VOR der return-Anweisung stehen.
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
