@@ -1,67 +1,84 @@
-import React, { useState, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useDecks } from '../../context/DeckContext';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { CardListEditor } from '../../components/CardListEditor/CardListEditor';
+import React, { useState, useMemo } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useDecks } from '../../context/DeckContext'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { CardListEditor } from '../../components/CardListEditor/CardListEditor'
 
-type LearnMode = 'Klassisch' | 'Schreiben';
-type LearnDirection = 'V→R' | 'R→V' | 'Gemischt';
+type LearnMode = 'Klassisch' | 'Schreiben'
+type LearnDirection = 'V→R' | 'R→V' | 'Gemischt'
 
 const DeckPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { deckId } = useParams<{ deckId: string }>();
-  const { decks, addCardToDeck, deleteCardFromDeck, updateCardInDeck } = useDecks();
+  const navigate = useNavigate()
+  const { deckId } = useParams<{ deckId: string }>()
+  // HINWEIS: Papa und useRef wurden entfernt
+  const {
+    decks,
+    addCardToDeck,
+    deleteCardFromDeck,
+    updateCardInDeck,
+    addMultipleCardsToDeck,
+  } = useDecks()
 
-  const [learnMode, setLearnMode] = useLocalStorage<LearnMode>('learnModeSetting', 'Klassisch');
-  const [learnDirection, setLearnDirection] = useLocalStorage<LearnDirection>('learnDirectionSetting', 'V→R');
-  // HINZUGEFÜGT: Der fehlende State für das Sortierkriterium
-  const [sortCriteria, setSortCriteria] = useState('default');
+  const [learnMode, setLearnMode] = useLocalStorage<LearnMode>(
+    'learnModeSetting',
+    'Klassisch'
+  )
+  const [learnDirection, setLearnDirection] = useLocalStorage<LearnDirection>(
+    'learnDirectionSetting',
+    'V→R'
+  )
+  const [sortCriteria, setSortCriteria] = useState('default')
 
-  const currentDeck = useMemo(() => decks.find(d => d.id === deckId), [decks, deckId]);
+  const currentDeck = useMemo(
+    () => decks.find((d) => d.id === deckId),
+    [decks, deckId]
+  )
+
+  // HINWEIS: handleFileChange wurde entfernt
 
   const cardsByLevel = useMemo(() => {
-    const groups: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    const groups: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
     if (currentDeck) {
-      currentDeck.cards.forEach(card => {
+      currentDeck.cards.forEach((card) => {
         if (groups[card.level] !== undefined) {
-          groups[card.level]++;
+          groups[card.level]++
         }
-      });
+      })
     }
-    return groups;
-  }, [currentDeck]);
+    return groups
+  }, [currentDeck])
 
   const sortedCards = useMemo(() => {
-    // Wenn nicht sortiert werden soll, die originale Reihenfolge beibehalten
     if (!currentDeck || sortCriteria === 'default') {
-      return currentDeck ? currentDeck.cards : [];
+      return currentDeck ? currentDeck.cards : []
     }
-    
-    // Für die Sortierung immer eine Kopie des Arrays erstellen
-    const cardsToSort = [...currentDeck.cards];
+
+    const cardsToSort = [...currentDeck.cards]
 
     switch (sortCriteria) {
       case 'question-asc':
-        return cardsToSort.sort((a, b) => a.question.localeCompare(b.question));
+        return cardsToSort.sort((a, b) => a.question.localeCompare(b.question))
       case 'answer-asc':
-        return cardsToSort.sort((a, b) => a.answer.localeCompare(b.answer));
+        return cardsToSort.sort((a, b) => a.answer.localeCompare(b.answer))
       case 'level-asc':
-        return cardsToSort.sort((a, b) => a.level - b.level);
+        return cardsToSort.sort((a, b) => a.level - b.level)
       default:
-        return cardsToSort;
+        return cardsToSort
     }
-  }, [currentDeck, sortCriteria]);
+  }, [currentDeck, sortCriteria])
 
   const startLearningSession = (level: number) => {
-    navigate(`/learn/${deckId}?mode=${learnMode}&direction=${learnDirection}&level=${level}`);
-  };
+    navigate(
+      `/learn/${deckId}?mode=${learnMode}&direction=${learnDirection}&level=${level}`
+    )
+  }
 
   if (!deckId || !currentDeck) {
     return (
       <div>
         Deck nicht gefunden. <a href="/">Zurück zur Übersicht</a>
       </div>
-    );
+    )
   }
 
   return (
@@ -70,15 +87,17 @@ const DeckPage: React.FC = () => {
         href="/"
         className="back-link"
         onClick={(e) => {
-          e.preventDefault();
-          navigate('/dashboard');
+          e.preventDefault()
+          navigate('/dashboard')
         }}
       >
         &larr; Zur Stapel-Übersicht
       </a>
 
       <header className="page-section">
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{currentDeck.title}</h1>
+        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>
+          {currentDeck.title}
+        </h1>
       </header>
 
       {/* Sektion 1: Einstellungen */}
@@ -130,7 +149,7 @@ const DeckPage: React.FC = () => {
 
       {/* Sektion 2: Deine Lernlevel */}
       <section className="page-section">
-        <h2>Deine Lernlevel</h2>
+        <h2 style={{ marginLeft: '1.5rem' }}>Deine Lernlevel</h2>
         <div className="level-grid">
           {Object.entries(cardsByLevel).map(([level, count]) => (
             <div key={level} className={`level-card level-${level}`}>
@@ -150,6 +169,7 @@ const DeckPage: React.FC = () => {
 
       {/* Sektion 3: Kartenverwaltung */}
       <section className="card page-section">
+        {/* HINWEIS: Der CSV-Import-Block wurde von hier entfernt */}
 
         <CardListEditor
           deckId={deckId}
@@ -157,12 +177,13 @@ const DeckPage: React.FC = () => {
           onAddCard={addCardToDeck}
           onDeleteCard={deleteCardFromDeck}
           onUpdateCard={updateCardInDeck}
+          addMultipleCardsToDeck={addMultipleCardsToDeck} // NEU
           sortCriteria={sortCriteria}
           setSortCriteria={setSortCriteria}
         />
       </section>
     </>
-  );
-};
+  )
+}
 
-export default DeckPage;
+export default DeckPage

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+import type { Meta, StoryObj } from '@storybook/react'
+import { Button } from './Button'
 
 // Metadaten für die Button-Komponente in Storybook
 const meta = {
@@ -15,10 +15,10 @@ const meta = {
     // Definiert, wie die 'primary' Prop in Storybook gesteuert wird
     primary: { control: 'boolean' },
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Button>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 // Story für den primären Button-Zustand
 export const Primary: Story = {
@@ -26,7 +26,7 @@ export const Primary: Story = {
     primary: true,
     label: 'Primary Button',
   },
-};
+}
 
 // Story für den sekundären Button-Zustand
 export const Secondary: Story = {
@@ -34,4 +34,4 @@ export const Secondary: Story = {
     primary: false,
     label: 'Secondary Button',
   },
-};
+}

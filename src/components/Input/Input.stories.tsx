@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from './Input';
+import type { Meta, StoryObj } from '@storybook/react'
+import { Input } from './Input'
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',
@@ -14,10 +14,10 @@ const meta: Meta<typeof Input> = {
       control: 'boolean',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const EmptyWithPlaceholder: Story = {
   name: '1. Leer mit Platzhalter',
@@ -25,7 +25,7 @@ export const EmptyWithPlaceholder: Story = {
     placeholder: 'Hier Text eingeben...',
     type: 'text',
   },
-};
+}
 
 export const WithDefaultValue: Story = {
   name: '2. Mit vordefiniertem Wert',
@@ -33,4 +33,4 @@ export const WithDefaultValue: Story = {
     value: 'Ein vordefinierter Wert',
     type: 'text',
   },
-};
+}

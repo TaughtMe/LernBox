@@ -1,0 +1,8 @@
+/* Mobile Optimierung für das Dashboard */
+@media (max-width: 768px) {
+  .deck-list {
+    /* Wechselt auf eine einzelne Spalte für die Deck-Karten */
+    grid-template-columns: 1fr;
+    gap: 1rem; /* Reduziert den Abstand zwischen den Elementen */
+  }
+}

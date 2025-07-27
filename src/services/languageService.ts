@@ -7,12 +7,12 @@
  */
 export const detectLanguage = (text: string): 'de' | 'en' => {
   // Simple heuristic: Check for characters specific to the German language.
-  const germanChars = /[äöüß]/i;
+  const germanChars = /[äöüß]/i
 
   if (germanChars.test(text)) {
-    return 'de';
+    return 'de'
   }
 
   // Default to English if no German-specific characters are found.
-  return 'en';
-};
+  return 'en'
+}

@@ -1,30 +1,31 @@
-import React from 'react';
-import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
-import './SessionControls.css';
+import React from 'react'
+import { Button } from '../Button/Button'
+import { Input } from '../Input/Input'
+import './SessionControls.css'
 
 type SessionControlsProps = {
   // Zustände
-  learnMode: 'classic' | 'write';
-  isFlipped: boolean;
-  isAnswerChecked: boolean;
-  feedback: 'correct' | 'incorrect' | 'none';
-  userAnswer: string;
+  learnMode: 'classic' | 'write'
+  isFlipped: boolean
+  isAnswerChecked: boolean
+  feedback: 'correct' | 'incorrect' | 'none'
+  userAnswer: string
+  onNextCardClick: () => void // <-- NEU
   
   // Funktionen
-  setUserAnswer: (value: string) => void;
-  onShowAnswer: () => void;
-  onEvaluate: (wasCorrect: boolean) => void;
-  onCheckAnswer: () => void;
-  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  setUserAnswer: (value: string) => void
+  onShowAnswer: () => void
+  onEvaluate: (wasCorrect: boolean) => void
+  onCheckAnswer: () => void
+  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void
 
   // Daten für die Anzeige
   progress: {
-    mastered: number;
-    total: number;
-  };
-  backTitle?: string;
-};
+    mastered: number
+    total: number
+  }
+  backTitle?: string
+}
 
 export const SessionControls: React.FC<SessionControlsProps> = ({
   learnMode,
@@ -36,24 +37,34 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
   onShowAnswer,
   onEvaluate,
   onCheckAnswer,
+  onNextCardClick,
   onKeyDown,
   progress,
-  backTitle
+  backTitle,
 }) => {
   return (
     <div className="session-controls-container">
-       <p className="card-counter">
+      <p className="card-counter">
         Fortschritt: {progress.mastered} von {progress.total} gemeistert
       </p>
 
       {learnMode === 'classic' && (
         <div className="navigation-buttons">
           {!isFlipped ? (
-            <Button onClick={onShowAnswer} label="Antwort aufdecken" primary fullWidth />
+            <Button
+              onClick={onShowAnswer}
+              label="Antwort aufdecken"
+              primary
+              fullWidth
+            />
           ) : (
             <div className="evaluation-buttons">
               <Button onClick={() => onEvaluate(false)} label="Falsch" />
-              <Button onClick={() => onEvaluate(true)} label="Richtig" primary />
+              <Button
+                onClick={() => onEvaluate(true)}
+                label="Richtig"
+                primary
+              />
             </div>
           )}
         </div>
@@ -71,18 +82,34 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
               onKeyDown={onKeyDown}
             />
           </div>
-          
+
           <div className="navigation-buttons">
             {!isAnswerChecked ? (
-              <Button onClick={onCheckAnswer} label="Prüfen" primary fullWidth disabled={userAnswer.trim() === ''} />
+              <Button
+                onClick={onCheckAnswer}
+                label="Prüfen"
+                primary
+                fullWidth
+                disabled={userAnswer.trim() === ''}
+              />
             ) : (
-              <div className="evaluation-feedback">
-                {feedback === 'correct' ? 'Richtig! ✨' : 'Falsch. Die korrekte Antwort wird angezeigt.'}
-              </div>
+              <>
+                <div className="evaluation-feedback" style={{ marginBottom: '1rem' }}>
+                  {feedback === 'correct'
+                    ? 'Richtig! ✨'
+                    : 'Falsch. Die korrekte Antwort wird angezeigt.'}
+                </div>
+                <Button
+                  onClick={onNextCardClick}
+                  label="Weiter"
+                  primary
+                  fullWidth
+                />
+              </>
             )}
           </div>
         </>
       )}
     </div>
-  );
-};
+  )
+}

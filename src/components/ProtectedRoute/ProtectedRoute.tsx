@@ -1,9 +1,7 @@
-import React from 'react';
-
-
+import React from 'react'
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 /*
@@ -27,5 +25,5 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps): React.ReactNo
 // --- TEMPORÄRE LÖSUNG (AKTIV) ---
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Da die Login-Seite deaktiviert ist, gewähren wir vorübergehend immer Zugriff.
-  return <>{children}</>;
-};
+  return <>{children}</>
+}

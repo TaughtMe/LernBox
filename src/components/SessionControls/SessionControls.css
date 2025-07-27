@@ -8,9 +8,9 @@
 }
 
 .card-counter {
-    text-align: center;
-    color: var(--color-text-secondary);
-    margin-bottom: 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
 }
 
 .navigation-buttons {
@@ -37,7 +37,9 @@
 }
 
 .write-input {
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .write-input.input-correct {

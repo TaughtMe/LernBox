@@ -9,7 +9,7 @@ Die Einrichtung der Projektbasis wurde erfolgreich abgeschlossen.
 - [x] `ESLint` und `Prettier` für einheitliche Code-Qualität konfiguriert.
 - [x] Git-Repository initialisiert und auf GitHub hochgeladen.
 
-##  repository
+## repository
 
 Das Projekt-Repository ist hier zu finden:
 [https://github.com/TaughtMe/LernBox.git](https://github.com/TaughtMe/LernBox.git)

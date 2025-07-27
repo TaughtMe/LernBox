@@ -36,7 +36,13 @@ main {
   padding: 1.5rem;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--clr-border);
-  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+  transition:
+    background-color var(--transition-speed),
+    border-color var(--transition-speed);
+}
+
+.card-content {
+  padding: 1.5rem;
 }
 
 /* --- Buttons --- */
@@ -51,7 +57,9 @@ main {
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  transition: background-color var(--transition-speed), transform 0.1s ease;
+  transition:
+    background-color var(--transition-speed),
+    transform 0.1s ease;
 }
 
 .btn:active {
@@ -78,7 +86,6 @@ main {
   background-color: #70417e; /* Ein leichtes Grau beim Hovern */
 }
 
-
 /* --- Formulare & Inputs --- */
 .form-group {
   margin-bottom: 1.5rem;
@@ -101,18 +108,21 @@ main {
   background-color: var(--clr-bg-surface);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-md);
-  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  transition:
+    border-color var(--transition-speed),
+    box-shadow var(--transition-speed);
 }
 
-.input-field:focus, .input-field:focus-visible {
+.input-field:focus,
+.input-field:focus-visible {
   outline: none;
   border-color: var(--clr-accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--clr-accent) 25%, transparent);
 }
 
 textarea.input-field {
-    min-height: 100px;
-    resize: vertical;
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* Schritt 4: Dashboard-Seite */
@@ -133,9 +143,9 @@ textarea.input-field {
 }
 
 .dashboard-header .version-toggle-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .dashboard-header .version {
@@ -160,7 +170,9 @@ textarea.input-field {
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -232,13 +244,13 @@ textarea.input-field {
 
 /* --- Segmented Controls (für Lernmodus/Lernrichtung) --- */
 .control-group {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .control-group-label {
-    display: block;
-    margin-bottom: 0.75rem;
-    font-weight: 500;
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
 }
 
 .segmented-control {
@@ -256,7 +268,9 @@ textarea.input-field {
   background-color: var(--clr-bg-surface);
   color: var(--clr-text-secondary);
   cursor: pointer;
-  transition: background-color var(--transition-speed), color var(--transition-speed);
+  transition:
+    background-color var(--transition-speed),
+    color var(--transition-speed);
 }
 
 .segmented-control button:not(:last-child) {
@@ -308,52 +322,62 @@ textarea.input-field {
 }
 
 /* Farben für die Level-Karten */
-.level-card.level-1 { border-color: var(--clr-level-1-border); background-color: var(--clr-level-1-bg); }
-.level-card.level-2 { border-color: var(--clr-level-2-border); background-color: var(--clr-level-2-bg); }
+.level-card.level-1 {
+  border-color: var(--clr-level-1-border);
+  background-color: var(--clr-level-1-bg);
+}
+.level-card.level-2 {
+  border-color: var(--clr-level-2-border);
+  background-color: var(--clr-level-2-bg);
+}
 
 /* --- Bronze (Level 3) --- */
-.level-card.level-3 { 
+.level-card.level-3 {
   background: linear-gradient(145deg, #d08c4a, #a46628); /* Bronze-Verlauf */
   border-color: #a46628;
-  color: #fff; 
+  color: #fff;
 }
-.level-card.level-3 .card-count { color: rgba(255, 255, 255, 0.8); }
+.level-card.level-3 .card-count {
+  color: rgba(255, 255, 255, 0.8);
+}
 
 /* --- Silber (Level 4) --- */
-.level-card.level-4 { 
+.level-card.level-4 {
   background: linear-gradient(145deg, #e1e1e1, #b0b0b0); /* Silber-Verlauf */
   border-color: #b0b0b0;
   color: #212529; /* Dunkler Text für besseren Kontrast */
 }
-.level-card.level-4 .card-count { color: #495057; }
-
+.level-card.level-4 .card-count {
+  color: #495057;
+}
 
 /* --- Gold (Level 5) --- */
-.level-card.level-5 { 
+.level-card.level-5 {
   background: linear-gradient(145deg, #fcd34d, #f59e0b); /* Gold-Verlauf */
   border-color: #f59e0b;
   color: #422006; /* Dunkelbrauner Text für Kontrast */
 }
-.level-card.level-5 .card-count { color: #6e4217; }
-
+.level-card.level-5 .card-count {
+  color: #6e4217;
+}
 
 /* --- Formular für neue Karten --- */
 .new-card-form .form-group {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .new-card-form .btn {
-    width: 100%;
-    margin-top: 0.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 /* Schritt 6: Lern-Ansicht */
 
 .learning-session-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .learning-session-header {
@@ -377,7 +401,7 @@ textarea.input-field {
   max-width: 700px;
   aspect-ratio: 16 / 9;
   padding: 2rem;
-  font-size: clamp(1.5rem, 5vw, 2.5rem); 
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
   font-weight: bold;
   text-align: center;
 }
@@ -393,20 +417,20 @@ textarea.input-field {
 }
 
 .learning-session-controls .btn {
-    width: 100%;
-    padding: 1rem 2rem; /* Größerer Button */
-    font-size: 1.2rem;
+  width: 100%;
+  padding: 1rem 2rem; /* Größerer Button */
+  font-size: 1.2rem;
 }
 
 /* Container für die Buttons "Gewusst" / "Nicht gewusst" */
 .judgement-buttons {
-    display: flex;
-    width: 100%;
-    gap: 1rem;
+  display: flex;
+  width: 100%;
+  gap: 1rem;
 }
 
 .judgement-buttons .btn {
-    flex: 1; /* Beide Buttons nehmen gleich viel Platz ein */
+  flex: 1; /* Beide Buttons nehmen gleich viel Platz ein */
 }
 
 .learning-session-footer {
@@ -421,5 +445,12 @@ textarea.input-field {
 }
 
 .learning-session-footer a {
-    font-weight: 500;
+  font-weight: 500;
+}
+
+.data-management {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }

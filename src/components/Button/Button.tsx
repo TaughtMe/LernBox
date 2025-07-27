@@ -1,16 +1,16 @@
-import React from 'react';
-import './Button.css';
+import React from 'react'
+import './Button.css'
 
 interface ButtonProps {
-  primary?: boolean;
-  label: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
+  primary?: boolean
+  label: string
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
   /**
    * NEU: Lässt den Button die volle Breite einnehmen.
    */
-  fullWidth?: boolean;
+  fullWidth?: boolean
 }
 
 export const Button = ({
@@ -20,8 +20,8 @@ export const Button = ({
   fullWidth = false,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'button--primary' : 'button--secondary';
-  const fullWidthClass = fullWidth ? 'button--full-width' : '';
+  const mode = primary ? 'button--primary' : 'button--secondary'
+  const fullWidthClass = fullWidth ? 'button--full-width' : ''
 
   return (
     <button
@@ -31,5 +31,5 @@ export const Button = ({
     >
       {label}
     </button>
-  );
-};
+  )
+}
