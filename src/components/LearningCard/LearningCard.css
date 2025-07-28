@@ -1,7 +1,10 @@
 /* Container für die Karten-Panels */
 .card-area {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(300px, 25vw, 400px), 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(clamp(300px, 25vw, 400px), 1fr)
+  );
   gap: 2rem;
   width: 100%;
   max-width: 90vw;
@@ -55,7 +58,7 @@
 }
 
 .panel-header .panel-title {
-    margin: 0; /* Entfernt Standard-Margin von h4 */
+  margin: 0; /* Entfernt Standard-Margin von h4 */
 }
 
 /* Button zur Sprachausgabe */

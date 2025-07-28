@@ -1,14 +1,15 @@
 ## Phase 3: Aufbau der ersten Anwendungsseite
 
-* **Datum:** 15.07.2025
-* **Ziel:** Erstellung einer ersten sichtbaren Seite zur Validierung des Design-Systems.
-* **Ergebnisse:**
-    * Eine neue Seiten-Komponente `LoginPage` wurde unter `src/pages/LoginPage` erstellt.
-    * Die Seite demonstriert die Wiederverwendbarkeit der `Card`-, `Input`- und `Button`-Komponenten in einem realen Anwendungskontext.
-    * Die `LoginPage` wurde als primäre Startseite in `App.tsx` integriert.
-    * Grundlegendes Seiten-Styling (`LoginPage.css`) wurde für die zentrierte Darstellung des Inhalts implementiert.
-* **Anmerkungen:**
-    * Während der Implementierung wurde ein TypeScript-Fehler bei der `Button`-Komponente identifiziert (Props-Mismatch: `children` statt des erwarteten `label`-Prop). Der Fehler wurde durch Anpassung der Prop-Übergabe in `LoginPage.tsx` behoben.
+- **Datum:** 15.07.2025
+- **Ziel:** Erstellung einer ersten sichtbaren Seite zur Validierung des Design-Systems.
+- **Ergebnisse:**
+  - Eine neue Seiten-Komponente `LoginPage` wurde unter `src/pages/LoginPage` erstellt.
+  - Die Seite demonstriert die Wiederverwendbarkeit der `Card`-, `Input`- und `Button`-Komponenten in einem realen Anwendungskontext.
+  - Die `LoginPage` wurde als primäre Startseite in `App.tsx` integriert.
+  - Grundlegendes Seiten-Styling (`LoginPage.css`) wurde für die zentrierte Darstellung des Inhalts implementiert.
+- **Anmerkungen:**
+  - Während der Implementierung wurde ein TypeScript-Fehler bei der `Button`-Komponente identifiziert (Props-Mismatch: `children` statt des erwarteten `label`-Prop). Der Fehler wurde durch Anpassung der Prop-Übergabe in `LoginPage.tsx` behoben.
+
 ## Phase 4: Interaktivität der LoginPage
 
 - **Datum:** 17.07.2025
@@ -36,10 +37,12 @@ Die `LoginPage` ist nun interaktiv. Benutzereingaben werden im State gehalten un
 **Datum:** 17.07.2025
 
 **Ziele:**
+
 - Implementierung einer client-seitigen Navigation.
 - Weiterleitung des Benutzers von der `LoginPage` zu einer neuen `DashboardPage` nach dem Anmelden.
 
 **Umsetzung:**
+
 1.  **Bibliothek installiert:** `react-router-dom` wurde dem Projekt als Abhängigkeit hinzugefügt, um die Kernfunktionalität für das Routing bereitzustellen.
 2.  **`DashboardPage` erstellt:** Eine neue Platzhalter-Seite (`src/pages/DashboardPage`) wurde als Ziel für die Navigation nach dem Login erstellt.
 3.  **Router konfiguriert:**
@@ -51,9 +54,11 @@ Die `LoginPage` ist nun interaktiv. Benutzereingaben werden im State gehalten un
 Die Anwendung verfügt nun über eine funktionierende client-seitige Navigation. Der Wechsel zwischen Login- und Dashboard-Seite erfolgt ohne Neuladen der Seite.
 
 **Abhängigkeiten:**
+
 - `react-router-dom`
 
 ## 📝 Entwicklungsprotokoll: Phase 6
+
 Datum: 17.07.2025
 
 Ziel: Implementierung eines globalen Authentifizierungs-Status (isLoggedIn) zur Absicherung von Routen. Der Zugriff auf die DashboardPage soll nur nach einem "Login" möglich sein.
@@ -61,9 +66,11 @@ Ziel: Implementierung eines globalen Authentifizierungs-Status (isLoggedIn) zur 
 Status: ✅ Abgeschlossen
 
 ### Ergebnis
+
 Die DashboardPage unter der URL /dashboard ist nun eine geschützte Route. Ein direkter Aufruf der URL ohne vorherigen Login führt zu einer automatischen Weiterleitung zur LoginPage (/). Der Zugriff auf das Dashboard wird erst nach dem Auslösen der login()-Funktion durch einen Klick auf den "Anmelden"-Button gewährt.
 
 ### Durchgeführte Schritte
+
 AuthContext erstellt: In src/context/AuthContext.tsx wurde ein neuer React Context angelegt. Der AuthProvider verwaltet den isLoggedIn-Zustand sowie die login()- und logout()-Funktionen und stellt diese global zur Verfügung.
 
 AuthProvider integriert: Die gesamte Anwendung wurde in src/main.tsx mit dem AuthProvider umschlossen, um den globalen Zustand für alle Komponenten zugänglich zu machen.
@@ -157,11 +164,11 @@ Thema: Lernkarten-Management (CRUD & LocalStorage)
 Status: Abgeschlossen ✅
 
 1. Zielsetzung
-Das Ziel dieser Phase war die Erweiterung der DeckPage, um vollständige CRUD-Operationen (Create, Read, Update, Delete) für einzelne Lernkarten innerhalb eines Decks zu ermöglichen. Alle Änderungen an den Karten sollten persistent im localStorage gespeichert werden.
+   Das Ziel dieser Phase war die Erweiterung der DeckPage, um vollständige CRUD-Operationen (Create, Read, Update, Delete) für einzelne Lernkarten innerhalb eines Decks zu ermöglichen. Alle Änderungen an den Karten sollten persistent im localStorage gespeichert werden.
 
 2. Implementierungsübersicht
-2.1. Erweiterung des DeckContext (src/context/DeckContext.tsx)
-Der zentrale State-Management-Kontext wurde um die Logik zur Kartenverwaltung erweitert.
+   2.1. Erweiterung des DeckContext (src/context/DeckContext.tsx)
+   Der zentrale State-Management-Kontext wurde um die Logik zur Kartenverwaltung erweitert.
 
 Typ-Definitionen: Die Card- und Deck-Interfaces wurden etabliert, um die neue Datenstruktur (deck.cards) abzubilden.
 
@@ -190,7 +197,7 @@ Karten bearbeiten (Update): Ein "Bearbeiten"-Button wurde als Platzhalter hinzug
 Es wurden neue CSS-Regeln hinzugefügt, um das Formular, die Trennlinien und die Kartenliste strukturiert und übersichtlich darzustellen. Dies verbessert die Lesbarkeit und Benutzerführung der neuen UI-Elemente.
 
 3. Ergebnis
-Die DeckPage ist nun eine voll funktionsfähige Verwaltungszentrale für den Inhalt eines Lern-Decks. Benutzer können Karten erstellen, ansehen und löschen. Alle durchgeführten Aktionen sind persistent. Die technische Grundlage für das Bearbeiten von Karten ist gelegt. Phase 11 wurde erfolgreich abgeschlossen.
+   Die DeckPage ist nun eine voll funktionsfähige Verwaltungszentrale für den Inhalt eines Lern-Decks. Benutzer können Karten erstellen, ansehen und löschen. Alle durchgeführten Aktionen sind persistent. Die technische Grundlage für das Bearbeiten von Karten ist gelegt. Phase 11 wurde erfolgreich abgeschlossen.
 
 Phase 13: PWA-Konfiguration und Style-Refactoring
 Datum: 20.07.2025
@@ -212,7 +219,7 @@ Verifizierung der PWA-Funktionalität mittels npm run preview und den Browser-En
 Aufgetretene Probleme & Lösungen
 Während der Verifizierungsphase traten mehrere unvorhergesehene Probleme auf:
 
-Build-Fehler (TypeScript): Der build-Prozess schlug aufgrund mehrerer TS6133-Fehler (ungenutzte Importe) in den *.tsx-Dateien fehl.
+Build-Fehler (TypeScript): Der build-Prozess schlug aufgrund mehrerer TS6133-Fehler (ungenutzte Importe) in den \*.tsx-Dateien fehl.
 
 Lösung: Entfernung der nicht verwendeten React-Importe und Korrektur der Nutzung der Button-Komponente (Verwendung der label-Prop statt children).
 
@@ -318,10 +325,10 @@ Datum: 21.07.2025
 Status: ✅ Abgeschlossen
 
 1. Zielsetzung
-Das Ziel dieser Phase war die Erweiterung der Funktionalität der Lern-Sitzung. Benutzer sollten mehr Kontrolle über ihre Lernerfahrung erhalten, indem neue Lernmodi (Klassisch, Schreiben) und eine flexible Abfragerichtung (Frage → Antwort, Antwort → Frage, Gemischt) eingeführt werden.
+   Das Ziel dieser Phase war die Erweiterung der Funktionalität der Lern-Sitzung. Benutzer sollten mehr Kontrolle über ihre Lernerfahrung erhalten, indem neue Lernmodi (Klassisch, Schreiben) und eine flexible Abfragerichtung (Frage → Antwort, Antwort → Frage, Gemischt) eingeführt werden.
 
 2. Implementierungsübersicht
-Die Umsetzung erfolgte in den folgenden Kernbereichen:
+   Die Umsetzung erfolgte in den folgenden Kernbereichen:
 
 Erweiterung der Zustandsverwaltung:
 
@@ -354,7 +361,7 @@ Die loadNextCard-Funktion wurde erweitert, um die queryDirection zu berücksicht
 Die JSX-Renderlogik wurde angepasst, um dynamisch entweder die Frage oder die Antwort als Vorderseite der Karte anzuzeigen.
 
 3. Ergebnis
-Alle definierten Aufgaben der Phase 17 wurden erfolgreich umgesetzt. Die Anwendung bietet nun eine interaktivere und effektivere Lernumgebung mit verschiedenen Abfragemethoden. Die Codebasis in DeckPage.tsx ist für zukünftige Erweiterungen modular strukturiert.
+   Alle definierten Aufgaben der Phase 17 wurden erfolgreich umgesetzt. Die Anwendung bietet nun eine interaktivere und effektivere Lernumgebung mit verschiedenen Abfragemethoden. Die Codebasis in DeckPage.tsx ist für zukünftige Erweiterungen modular strukturiert.
 
 Bearbeitete Dateien:
 
@@ -366,7 +373,7 @@ src/styles/design-tokens.css
 
 Absolut. Hier ist das Protokoll für die durchgeführte Phase.
 
-***
+---
 
 ## Protokoll: Phase 17.5 - Refactoring der DeckPage
 
@@ -394,10 +401,10 @@ Das primäre Ziel der Phase war die **Verbesserung der Code-Qualität** durch da
 2.  **Struktur-Anlage:** Es wurde eine neue Ordner- und Dateistruktur unter `src/components/` für die neuen Komponenten angelegt.
 
 3.  **Komponenten-Extraktion:** Die Logik und das JSX der `DeckPage` wurden schrittweise in die folgenden neuen Komponenten ausgelagert:
-    * **`SessionSettings`**: Kapselt die UI-Elemente zur Einstellung von Lernmodus, Abfragerichtung und automatischer Sprachausgabe.
-    * **`CardListEditor`**: Beinhaltet das Formular zum Hinzufügen einer neuen Karte sowie die komplette Liste der bestehenden Karten inklusive Löschfunktion.
-    * **`LearningCard`**: Stellt die visuelle Karteikarte (Vorder- und Rückseite) dar.
-    * **`SessionControls`**: Bündelt alle Steuerungselemente wie Fortschrittsanzeige, Eingabefeld und die Buttons ("Richtig", "Falsch", "Prüfen").
+    - **`SessionSettings`**: Kapselt die UI-Elemente zur Einstellung von Lernmodus, Abfragerichtung und automatischer Sprachausgabe.
+    - **`CardListEditor`**: Beinhaltet das Formular zum Hinzufügen einer neuen Karte sowie die komplette Liste der bestehenden Karten inklusive Löschfunktion.
+    - **`LearningCard`**: Stellt die visuelle Karteikarte (Vorder- und Rückseite) dar.
+    - **`SessionControls`**: Bündelt alle Steuerungselemente wie Fortschrittsanzeige, Eingabefeld und die Buttons ("Richtig", "Falsch", "Prüfen").
 
 4.  **Integration & Umbau:** Nach der Erstellung jeder neuen Komponente wurde die `DeckPage.tsx` angepasst: Der alte Code wurde entfernt und durch den Aufruf der neuen Komponente ersetzt. Die `DeckPage` wurde so zu einer reinen **Manager-Komponente**, die nur noch den Zustand verwaltet und diesen über Props an die Kind-Komponenten weitergibt.
 
@@ -412,10 +419,10 @@ Die `DeckPage.tsx` ist nun eine saubere und schlanke Manager-Komponente, deren H
 **Die Ziele der Phase 17.5 wurden vollständig erreicht.** 🏁
 
 Protokoll: Phase 18
-Projekt:	Lern-App
-Phase:	18: Erweiterte Sprachausgabe mit Spracherkennung
-Datum:	23.07.2025
-Status:	✅ Abgeschlossen
+Projekt: Lern-App
+Phase: 18: Erweiterte Sprachausgabe mit Spracherkennung
+Datum: 23.07.2025
+Status: ✅ Abgeschlossen
 
 In Google Sheets exportieren
 Ziele der Phase
@@ -454,4 +461,3 @@ Fazit
 Die Anwendung verfügt nun über eine voll funktionsfähige, intelligente Sprachausgabe. Sowohl die manuelle Ausgabe per Klick als auch die optionale automatische Ausgabe funktionieren wie geplant. Die Architektur ist sauber in wiederverwendbare Hooks und Services getrennt.
 
 Phase 18 ist damit erfolgreich abgeschlossen.
-

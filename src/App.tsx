@@ -1,18 +1,18 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useTheme } from './context/ThemeContext';
-import DashboardPage from './pages/DashboardPage/DashboardPage';
-import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
-import DeckPage from './pages/DeckPage/DeckPage';
-import './App.css';
-import LearningPage from './pages/LearningPage/LearningPage';
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useTheme } from './context/ThemeContext'
+import DashboardPage from './pages/DashboardPage/DashboardPage'
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'
+import DeckPage from './pages/DeckPage/DeckPage'
+import './App.css'
+import LearningPage from './pages/LearningPage/LearningPage'
 
 function App() {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
 
   return (
     <Routes>
@@ -33,16 +33,16 @@ function App() {
           </ProtectedRoute>
         }
       />
-      <Route 
-        path="/learn/:deckId" 
+      <Route
+        path="/learn/:deckId"
         element={
           <ProtectedRoute>
             <LearningPage />
           </ProtectedRoute>
-        } 
+        }
       />
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App

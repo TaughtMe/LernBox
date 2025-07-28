@@ -1,61 +1,69 @@
+/* Haupt-Wrapper für die Steuerungselemente */
 .session-controls-container {
   width: 100%;
-  max-width: 90vw; /* Gleiche Breite wie die Karten */
-  margin: 20px auto 0; /* Oben Abstand, zentriert */
+  max-width: 500px; /* Begrenzt die Gesamtbreite für bessere Lesbarkeit */
+  margin: 1.5rem auto; /* Abstand oben/unten, horizontal zentriert */
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Abstand zwischen den Elementen */
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .card-counter {
-    text-align: center;
-    color: var(--color-text-secondary);
-    margin-bottom: 0;
+  text-align: center;
+  color: var(--clr-text-secondary);
+  margin: 0;
 }
 
+/* Wrapper für ALLE Navigations-Aktionen (wichtig!) */
 .navigation-buttons {
+  display: flex; /* Dies ist der entscheidende Flex-Container */
+  justify-content: center;
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  gap: 1rem;
 }
 
+/* Speziell die Gruppe für "Falsch"/"Richtig" */
 .evaluation-buttons {
   display: flex;
-  justify-content: center;
+  flex-grow: 1; /* Nimmt den maximalen Platz im .navigation-buttons ein */
   gap: 1rem;
-  width: 100%;
 }
 
+/* Die Buttons in der "Falsch"/"Richtig"-Gruppe */
 .evaluation-buttons .button {
-  flex-grow: 1;
+  flex-grow: 1; /* Teilt sich den Platz gleichmäßig auf */
 }
 
+/* Eingabebereich im Schreibmodus */
 .write-mode-input-area {
-  max-width: 400px;
   width: 100%;
-  margin: 0 auto;
 }
 
 .write-input {
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .write-input.input-correct {
-  border-color: var(--color-success) !important;
+  border-color: var(--clr-success) !important;
   background-color: rgba(40, 167, 69, 0.1);
 }
 
 .write-input.input-incorrect {
-  border-color: var(--color-danger) !important;
+  border-color: var(--clr-danger) !important;
   background-color: rgba(220, 53, 69, 0.1);
 }
 
+/* Text-Feedback im Schreibmodus */
 .evaluation-feedback {
   text-align: center;
   font-weight: bold;
-  padding: 10px 0;
   font-size: 1.1rem;
-  min-height: 44px; /* Stellt sicher, dass die Höhe des Buttons beibehalten wird */
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
