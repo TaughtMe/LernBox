@@ -15,6 +15,12 @@ const dirname =
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   base: '/LernBox/',
+
+  // HINZUGEFÜGT: Dieser Block ändert das Ausgabe-Verzeichnis auf "docs"
+  build: {
+    outDir: 'docs',
+  },
+
   plugins: [
     react(),
     VitePWA({
