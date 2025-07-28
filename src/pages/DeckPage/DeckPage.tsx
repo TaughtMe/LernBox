@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useDecks } from '../../context/DeckContext'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { CardListEditor } from '../../components/CardListEditor/CardListEditor'
+import { Button } from '../../components/Button/Button'
+import { MdExitToApp } from 'react-icons/md'
 
 type LearnMode = 'Klassisch' | 'Schreiben'
 type LearnDirection = 'V→R' | 'R→V' | 'Gemischt'
@@ -10,7 +12,6 @@ type LearnDirection = 'V→R' | 'R→V' | 'Gemischt'
 const DeckPage: React.FC = () => {
   const navigate = useNavigate()
   const { deckId } = useParams<{ deckId: string }>()
-  // HINWEIS: Papa und useRef wurden entfernt
   const {
     decks,
     addCardToDeck,
@@ -34,8 +35,6 @@ const DeckPage: React.FC = () => {
     [decks, deckId]
   )
 
-  // HINWEIS: handleFileChange wurde entfernt
-
   const cardsByLevel = useMemo(() => {
     const groups: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
     if (currentDeck) {
@@ -52,9 +51,7 @@ const DeckPage: React.FC = () => {
     if (!currentDeck || sortCriteria === 'default') {
       return currentDeck ? currentDeck.cards : []
     }
-
     const cardsToSort = [...currentDeck.cards]
-
     switch (sortCriteria) {
       case 'question-asc':
         return cardsToSort.sort((a, b) => a.question.localeCompare(b.question))
@@ -83,21 +80,16 @@ const DeckPage: React.FC = () => {
 
   return (
     <>
-      <a
-        href="/"
-        className="back-link"
-        onClick={(e) => {
-          e.preventDefault()
-          navigate('/dashboard')
-        }}
-      >
-        &larr; Zur Stapel-Übersicht
-      </a>
-
-      <header className="page-section">
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>
-          {currentDeck.title}
-        </h1>
+      <header className="deck-page-header page-section">
+        <h1>{currentDeck.title}</h1>
+        <Button
+          onClick={() => navigate('/dashboard')}
+          variant="secondary"
+          isIconOnly
+          aria-label="Zur Stapel-Übersicht"
+        >
+          <MdExitToApp />
+        </Button>
       </header>
 
       {/* Sektion 1: Einstellungen */}
@@ -169,15 +161,13 @@ const DeckPage: React.FC = () => {
 
       {/* Sektion 3: Kartenverwaltung */}
       <section className="card page-section">
-        {/* HINWEIS: Der CSV-Import-Block wurde von hier entfernt */}
-
         <CardListEditor
           deckId={deckId}
           cards={sortedCards}
           onAddCard={addCardToDeck}
           onDeleteCard={deleteCardFromDeck}
           onUpdateCard={updateCardInDeck}
-          addMultipleCardsToDeck={addMultipleCardsToDeck} // NEU
+          addMultipleCardsToDeck={addMultipleCardsToDeck}
           sortCriteria={sortCriteria}
           setSortCriteria={setSortCriteria}
         />

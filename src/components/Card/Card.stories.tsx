@@ -41,7 +41,7 @@ export const AsContainer: Story = {
         <h2>Beispiel-Container</h2>
         <p>Dieser Inhalt wird als 'children' übergeben.</p>
         <div style={{ alignSelf: 'flex-end' }}>
-          <Button label="Aktion" />
+          <Button aria-label="Aktion">Aktion</Button>
         </div>
       </div>
     </Card>

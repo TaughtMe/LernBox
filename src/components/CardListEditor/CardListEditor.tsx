@@ -3,6 +3,8 @@ import Papa from 'papaparse'
 import { Button } from '../Button/Button'
 import { Input } from '../Input/Input'
 import { type Card as CardType } from '../../context/DeckContext'
+// NEU: Icons von Google (Material Design) importieren
+import { MdEdit, MdDelete, MdSave, MdCancel } from 'react-icons/md'
 import './CardListEditor.css'
 
 type CardListEditorProps = {
@@ -21,7 +23,7 @@ type CardListEditorProps = {
   addMultipleCardsToDeck: (
     deckId: string,
     newCardsData: { question: string; answer: string }[]
-  ) => void // NEU
+  ) => void
   sortCriteria: string
   setSortCriteria: (value: string) => void
 }
@@ -32,29 +34,23 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
   onAddCard,
   onDeleteCard,
   onUpdateCard,
-  addMultipleCardsToDeck, // NEU
+  addMultipleCardsToDeck,
   sortCriteria,
   setSortCriteria,
 }) => {
   const [newQuestion, setNewQuestion] = useState('')
   const [newAnswer, setNewAnswer] = useState('')
-
-  // --- NEU: CSV-Import Logik ---
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    if (!file || !deckId) {
-      return
-    }
-
+    if (!file || !deckId) return
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
       delimiter: ';',
       complete: (results) => {
         const newCardsData: { question: string; answer: string }[] = []
-
         results.data.forEach((row: unknown) => {
           const cardData = row as { question?: string; answer?: string }
           if (cardData.question && cardData.answer) {
@@ -64,27 +60,20 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
             })
           }
         })
-
         if (newCardsData.length > 0) {
           addMultipleCardsToDeck(deckId, newCardsData)
           alert(`${newCardsData.length} Karten wurden erfolgreich importiert.`)
         } else {
           alert('Keine gültigen Karten in der Datei gefunden.')
         }
-
-        if (event.target) {
-          event.target.value = ''
-        }
+        if (event.target) event.target.value = ''
       },
       error: (error) => {
         console.error('Fehler beim Parsen der CSV-Datei:', error)
-        alert(
-          'Die CSV-Datei konnte nicht verarbeitet werden. Bitte prüfe die Konsole auf Fehler.'
-        )
+        alert('Die CSV-Datei konnte nicht verarbeitet werden.')
       },
     })
   }
-  // --- ENDE: CSV-Import Logik ---
 
   const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -136,7 +125,6 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
 
   return (
     <>
-      {/* Unsichtbares Datei-Input-Feld */}
       <input
         type="file"
         ref={fileInputRef}
@@ -144,7 +132,6 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
         accept=".csv"
         onChange={handleFileChange}
       />
-
       <div className="card-management-area">
         <h2
           style={{ cursor: 'pointer', margin: '0 0 1rem 0' }}
@@ -181,12 +168,16 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                 marginTop: '1rem',
               }}
             >
-              <Button type="submit" label="Karte hinzufügen" primary />
+              <Button type="submit" variant="primary" aria-label="Karte hinzufügen">
+                Karte hinzufügen
+              </Button>
               <Button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                label="Aus CSV importieren"
-              />
+                aria-label="Aus CSV importieren"
+              >
+                Aus CSV importieren
+              </Button>
               <a
                 href="/LernBox/import_template.csv"
                 download="import_vorlage.csv"
@@ -206,7 +197,8 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
           style={{ cursor: 'pointer', margin: '0 0 1rem 0' }}
           onClick={() => setIsCardListVisible(!isCardListVisible)}
         >
-          Karten in diesem Deck ({cards.length}) {isCardListVisible ? '▲' : '▼'}
+          Karten in diesem Deck ({cards.length}){' '}
+          {isCardListVisible ? '▲' : '▼'}
         </h2>
         {isCardListVisible && (
           <>
@@ -222,30 +214,10 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
               <label style={{ marginRight: '1rem', fontWeight: 'bold' }}>
                 Sortieren nach:
               </label>
-              <button
-                className={sortCriteria === 'question-asc' ? 'active' : ''}
-                onClick={() => setSortCriteria('question-asc')}
-              >
-                Frage (A-Z)
-              </button>
-              <button
-                className={sortCriteria === 'answer-asc' ? 'active' : ''}
-                onClick={() => setSortCriteria('answer-asc')}
-              >
-                Antwort (A-Z)
-              </button>
-              <button
-                className={sortCriteria === 'level-asc' ? 'active' : ''}
-                onClick={() => setSortCriteria('level-asc')}
-              >
-                Lernstufe
-              </button>
-              <button
-                className={sortCriteria === 'default' ? 'active' : ''}
-                onClick={() => setSortCriteria('default')}
-              >
-                Zurücksetzen
-              </button>
+              <Button onClick={() => setSortCriteria('default')} variant={sortCriteria === 'default' ? 'primary' : 'text'} aria-label="Sortierung zurücksetzen">Standard</Button>
+              <Button onClick={() => setSortCriteria('question-asc')} variant={sortCriteria === 'question-asc' ? 'primary' : 'text'} aria-label="Nach Frage sortieren">Frage</Button>
+              <Button onClick={() => setSortCriteria('answer-asc')} variant={sortCriteria === 'answer-asc' ? 'primary' : 'text'} aria-label="Nach Antwort sortieren">Antwort</Button>
+              <Button onClick={() => setSortCriteria('level-asc')} variant={sortCriteria === 'level-asc' ? 'primary' : 'text'} aria-label="Nach Stufe sortieren">Stufe</Button>
             </div>
             <ul className="card-list">
               {cards.length > 0 ? (
@@ -272,13 +244,19 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                         <div className="card-actions">
                           <Button
                             onClick={() => handleSaveClick(card.id)}
-                            label="Speichern"
-                            primary
-                          />
+                            variant="success"
+                            isIconOnly
+                            aria-label="Speichern"
+                          >
+                            <MdSave />
+                          </Button>
                           <Button
                             onClick={handleCancelClick}
-                            label="Abbrechen"
-                          />
+                            isIconOnly
+                            aria-label="Abbrechen"
+                          >
+                            <MdCancel />
+                          </Button>
                         </div>
                       </>
                     ) : (
@@ -292,17 +270,23 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                           </span>
                         </div>
                         <div className="card-actions">
-                          <span className="card-level">
-                            Stufe: {card.level}
-                          </span>
+                          <span className="card-level">Stufe: {card.level}</span>
                           <Button
                             onClick={() => handleEditClick(card)}
-                            label="Bearbeiten"
-                          />
+                            variant="success"
+                            isIconOnly
+                            aria-label="Bearbeiten"
+                          >
+                            <MdEdit />
+                          </Button>
                           <Button
                             onClick={() => onDeleteCard(deckId, card.id)}
-                            label="Löschen"
-                          />
+                            variant="danger"
+                            isIconOnly
+                            aria-label="Löschen"
+                          >
+                            <MdDelete />
+                          </Button>
                         </div>
                       </>
                     )}

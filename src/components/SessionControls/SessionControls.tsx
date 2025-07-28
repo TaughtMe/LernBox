@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from '../Button/Button'
 import { Input } from '../Input/Input'
 import './SessionControls.css'
+import { MdCheck, MdClose } from 'react-icons/md'
 
 type SessionControlsProps = {
   // Zustände
@@ -10,8 +11,8 @@ type SessionControlsProps = {
   isAnswerChecked: boolean
   feedback: 'correct' | 'incorrect' | 'none'
   userAnswer: string
-  onNextCardClick: () => void // <-- NEU
-  
+  onNextCardClick: () => void
+
   // Funktionen
   setUserAnswer: (value: string) => void
   onShowAnswer: () => void
@@ -53,18 +54,30 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
           {!isFlipped ? (
             <Button
               onClick={onShowAnswer}
-              label="Antwort aufdecken"
-              primary
+              variant="primary"
               fullWidth
-            />
+              aria-label="Antwort aufdecken"
+            >
+              Antwort aufdecken
+            </Button>
           ) : (
             <div className="evaluation-buttons">
-              <Button onClick={() => onEvaluate(false)} label="Falsch" />
+              <Button
+                onClick={() => onEvaluate(false)}
+                variant="danger"
+                aria-label="Falsch"
+                isIconOnly // <-- Wichtig
+              >
+                <MdClose />
+              </Button>
               <Button
                 onClick={() => onEvaluate(true)}
-                label="Richtig"
-                primary
-              />
+                variant="success"
+                aria-label="Richtig"
+                isIconOnly // <-- Wichtig
+              >
+                <MdCheck />
+              </Button>
             </div>
           )}
         </div>
@@ -72,6 +85,7 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
 
       {learnMode === 'write' && (
         <>
+          {/* Der 'write'-Modus bleibt unverändert */}
           <div className="write-mode-input-area">
             <Input
               value={userAnswer}
@@ -82,16 +96,17 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
               onKeyDown={onKeyDown}
             />
           </div>
-
           <div className="navigation-buttons">
             {!isAnswerChecked ? (
               <Button
                 onClick={onCheckAnswer}
-                label="Prüfen"
-                primary
+                variant="primary"
                 fullWidth
                 disabled={userAnswer.trim() === ''}
-              />
+                aria-label="Prüfen"
+              >
+                Prüfen
+              </Button>
             ) : (
               <>
                 <div className="evaluation-feedback" style={{ marginBottom: '1rem' }}>
@@ -101,10 +116,12 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
                 </div>
                 <Button
                   onClick={onNextCardClick}
-                  label="Weiter"
-                  primary
+                  variant="success"
                   fullWidth
-                />
+                  aria-label="Weiter"
+                >
+                  Weiter
+                </Button>
               </>
             )}
           </div>

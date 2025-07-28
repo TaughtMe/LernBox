@@ -1,29 +1,87 @@
+/* Grundlegende Button-Stile */
 .button {
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-sans);
   font-weight: 700;
-  border: 0;
-  border-radius: 3em;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  display: inline-block;
-  line-height: 1;
-  padding: 10px 16px;
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--transition-speed) ease;
+  white-space: nowrap;
+  margin: 0.25rem;
+  padding: 0.5rem 1rem; /* Standard-Padding für Text-Buttons */
+  box-sizing: border-box;
 }
 
+/* --- Button-Varianten --- */
 .button--primary {
-  color: rgb(255, 255, 255);
-  background-color: #0ab551;
-  box-shadow: #03873a 0px 0px 0px 1px inset;
+  color: white;
+  background-color: var(--clr-accent);
+  border-color: var(--clr-accent);
 }
-
-/* Button.css - Option A */
 .button--secondary {
-  /* Korrigierte Textfarbe für Sichtbarkeit auf hellem Hintergrund */
-  color: #ffffff;
-  background-color: #ff3131;
-  box-shadow: #ce2121 0px 0px 0px 1px inset;
+  color: var(--clr-text-primary);
+  background-color: transparent;
+  border-color: var(--clr-border);
+}
+.button--success {
+  color: white;
+  background-color: var(--clr-success);
+  border-color: var(--clr-success);
+}
+.button--danger {
+  color: white;
+  background-color: var(--clr-danger);
+  border-color: var(--clr-danger);
+}
+.button--text {
+  color: var(--clr-accent);
+  background-color: transparent;
+  border: none;
 }
 
+/* --- Spezialfall: Reiner Icon-Button --- */
+/* Diese Regel ist sehr spezifisch und überschreibt das Standard-Padding */
+.button.button--icon-only {
+  width: 2rem !important;
+  height: 2rem !important;
+  padding: 0 !important; /* Die entscheidende Korrektur! */
+  min-width: 0;
+  
+}
+.button.button--icon-only svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+/* --- Zustände (Hover, Disabled) --- */
+.button:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+.button--primary:hover:not(:disabled) {
+  background-color: var(--clr-accent-hover);
+  border-color: var(--clr-accent-hover);
+}
+.button--secondary:hover:not(:disabled) {
+  background-color: var(--clr-bg-surface);
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+}
+
+.button--text:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Modifikatoren --- */
 .button--full-width {
   width: 100%;
 }

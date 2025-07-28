@@ -25,32 +25,42 @@ export const SessionSettings: React.FC<SessionSettingsProps> = ({
         <label>Modus:</label>
         <Button
           onClick={() => setLearnMode('classic')}
-          label="Klassisch"
-          primary={learnMode === 'classic'}
-        />
+          variant={learnMode === 'classic' ? 'primary' : 'secondary'}
+          aria-label="Klassisch"
+        >
+          Klassisch
+        </Button>
         <Button
           onClick={() => setLearnMode('write')}
-          label="Schreiben"
-          primary={learnMode === 'write'}
-        />
+          variant={learnMode === 'write' ? 'primary' : 'secondary'}
+          aria-label="Schreiben"
+        >
+          Schreiben
+        </Button>
       </div>
       <div className="settings-group">
         <label>Richtung:</label>
         <Button
           onClick={() => setQueryDirection('q_to_a')}
-          label="F → A"
-          primary={queryDirection === 'q_to_a'}
-        />
+          variant={queryDirection === 'q_to_a' ? 'primary' : 'secondary'}
+          aria-label="Frage zu Antwort"
+        >
+          F → A
+        </Button>
         <Button
           onClick={() => setQueryDirection('a_to_q')}
-          label="A → F"
-          primary={queryDirection === 'a_to_q'}
-        />
+          variant={queryDirection === 'a_to_q' ? 'primary' : 'secondary'}
+          aria-label="Antwort zu Frage"
+        >
+          A → F
+        </Button>
         <Button
           onClick={() => setQueryDirection('mixed')}
-          label="Gemischt"
-          primary={queryDirection === 'mixed'}
-        />
+          variant={queryDirection === 'mixed' ? 'primary' : 'secondary'}
+          aria-label="Gemischt"
+        >
+          Gemischt
+        </Button>
       </div>
       <div className="settings-group settings-group-toggle">
         <label htmlFor="auto-speak-toggle">Automatisch vorlesen:</label>
