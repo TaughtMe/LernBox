@@ -5,6 +5,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { CardListEditor } from '../../components/CardListEditor/CardListEditor'
 import { Button } from '../../components/Button/Button'
 import { MdExitToApp } from 'react-icons/md'
+// NEU: Unsere neue Komponente importieren
+import { LanguageSelector } from '../../components/LanguageSelector/LanguageSelector'
 
 type LearnMode = 'Klassisch' | 'Schreiben'
 type LearnDirection = 'V→R' | 'R→V' | 'Gemischt'
@@ -18,6 +20,7 @@ const DeckPage: React.FC = () => {
     deleteCardFromDeck,
     updateCardInDeck,
     addMultipleCardsToDeck,
+    updateDeckLanguages,
   } = useDecks()
 
   const [learnMode, setLearnMode] = useLocalStorage<LearnMode>(
@@ -34,6 +37,13 @@ const DeckPage: React.FC = () => {
     () => decks.find((d) => d.id === deckId),
     [decks, deckId]
   )
+  
+  // NEU: Definieren der verfügbaren Sprachen
+  const languageOptions = [
+    { code: 'de', name: 'Deutsch' },
+    { code: 'en', name: 'Englisch' },
+    // Hier können später weitere Sprachen hinzugefügt werden
+  ];
 
   const cardsByLevel = useMemo(() => {
     const groups: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
@@ -95,45 +105,68 @@ const DeckPage: React.FC = () => {
       {/* Sektion 1: Einstellungen */}
       <div className="card page-section">
         <h2 style={{ marginTop: 0 }}>Einstellungen</h2>
-        <div style={{ display: 'flex', gap: '2rem' }}>
-          <div className="control-group" style={{ flex: 1 }}>
-            <label className="control-group-label">Lernmodus</label>
-            <div className="segmented-control">
-              <button
-                className={learnMode === 'Klassisch' ? 'active' : ''}
-                onClick={() => setLearnMode('Klassisch')}
-              >
-                Klassisch
-              </button>
-              <button
-                className={learnMode === 'Schreiben' ? 'active' : ''}
-                onClick={() => setLearnMode('Schreiben')}
-              >
-                Schreiben
-              </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          {/* Erste Reihe */}
+          <div style={{ display: 'flex', gap: '2rem' }}>
+            <div className="control-group" style={{ flex: 1 }}>
+              <label className="control-group-label">Lernmodus</label>
+              <div className="segmented-control">
+                <button
+                  className={learnMode === 'Klassisch' ? 'active' : ''}
+                  onClick={() => setLearnMode('Klassisch')}
+                >
+                  Klassisch
+                </button>
+                <button
+                  className={learnMode === 'Schreiben' ? 'active' : ''}
+                  onClick={() => setLearnMode('Schreiben')}
+                >
+                  Schreiben
+                </button>
+              </div>
+            </div>
+            <div className="control-group" style={{ flex: 1 }}>
+              <label className="control-group-label">Lernrichtung</label>
+              <div className="segmented-control">
+                <button
+                  className={learnDirection === 'V→R' ? 'active' : ''}
+                  onClick={() => setLearnDirection('V→R')}
+                >
+                  V→R
+                </button>
+                <button
+                  className={learnDirection === 'R→V' ? 'active' : ''}
+                  onClick={() => setLearnDirection('R→V')}
+                >
+                  R→V
+                </button>
+                <button
+                  className={learnDirection === 'Gemischt' ? 'active' : ''}
+                  onClick={() => setLearnDirection('Gemischt')}
+                >
+                  Gemischt
+                </button>
+              </div>
             </div>
           </div>
-          <div className="control-group" style={{ flex: 1 }}>
-            <label className="control-group-label">Lernrichtung</label>
-            <div className="segmented-control">
-              <button
-                className={learnDirection === 'V→R' ? 'active' : ''}
-                onClick={() => setLearnDirection('V→R')}
-              >
-                V→R
-              </button>
-              <button
-                className={learnDirection === 'R→V' ? 'active' : ''}
-                onClick={() => setLearnDirection('R→V')}
-              >
-                R→V
-              </button>
-              <button
-                className={learnDirection === 'Gemischt' ? 'active' : ''}
-                onClick={() => setLearnDirection('Gemischt')}
-              >
-                Gemischt
-              </button>
+
+          {/* Zweite Reihe - JETZT MIT CUSTOM DROPDOWN */}
+          <div style={{ display: 'flex', gap: '2rem' }}>
+            <div className="control-group" style={{ flex: 1 }}>
+              <LanguageSelector 
+                label="Sprache Vorderseite"
+                options={languageOptions}
+                selectedOptionCode={currentDeck.langFront}
+                onSelect={(code) => updateDeckLanguages(deckId, { langFront: code, langBack: currentDeck.langBack })}
+              />
+            </div>
+            <div className="control-group" style={{ flex: 1 }}>
+              <LanguageSelector 
+                label="Sprache Rückseite"
+                options={languageOptions}
+                selectedOptionCode={currentDeck.langBack}
+                onSelect={(code) => updateDeckLanguages(deckId, { langFront: currentDeck.langFront, langBack: code })}
+              />
             </div>
           </div>
         </div>
@@ -152,7 +185,7 @@ const DeckPage: React.FC = () => {
                 disabled={count === 0}
                 onClick={() => startLearningSession(parseInt(level))}
               >
-                Lernen
+                Starten
               </button>
             </div>
           ))}

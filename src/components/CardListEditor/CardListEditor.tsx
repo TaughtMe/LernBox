@@ -3,7 +3,6 @@ import Papa from 'papaparse'
 import { Button } from '../Button/Button'
 import { Input } from '../Input/Input'
 import { type Card as CardType } from '../../context/DeckContext'
-// NEU: Icons von Google (Material Design) importieren
 import { MdEdit, MdDelete, MdSave, MdCancel } from 'react-icons/md'
 import './CardListEditor.css'
 
@@ -252,6 +251,7 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                           </Button>
                           <Button
                             onClick={handleCancelClick}
+                            variant="secondary"
                             isIconOnly
                             aria-label="Abbrechen"
                           >
