@@ -132,13 +132,13 @@ const DeckPage: React.FC = () => {
                   className={learnDirection === 'V→R' ? 'active' : ''}
                   onClick={() => setLearnDirection('V→R')}
                 >
-                  V→R
+                  VS→RS
                 </button>
                 <button
                   className={learnDirection === 'R→V' ? 'active' : ''}
                   onClick={() => setLearnDirection('R→V')}
                 >
-                  R→V
+                  RS→VS
                 </button>
                 <button
                   className={learnDirection === 'Gemischt' ? 'active' : ''}

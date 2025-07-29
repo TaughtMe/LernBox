@@ -128,7 +128,7 @@ const LearningPage: React.FC = () => {
               onCardClick={() =>
                 learnMode === 'classic' && setIsFlipped((f) => !f)
               }
-              // --- HIER IST DIE FINALE ÄNDERUNG ---
+              
               langFront={deck.langFront}
               langBack={deck.langBack}
             />

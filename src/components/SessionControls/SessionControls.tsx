@@ -90,7 +90,7 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
             <Input
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
-              placeholder={`${backTitle} eingeben...`}
+              placeholder={`Antwort eingeben...`}
               className={`write-input ${feedback !== 'none' ? `input-${feedback}` : ''}`}
               disabled={isAnswerChecked}
               onKeyDown={onKeyDown}
