@@ -12,6 +12,8 @@ export interface Card {
 export interface Deck {
   id: string
   title: string
+  langFront: string // NEU
+  langBack: string // NEU
   cards: Card[]
 }
 
@@ -24,7 +26,6 @@ interface DeckContextType {
     deckId: string,
     cardData: { question: string; answer: string }
   ) => void
-  // NEU HINZUGEFÜGT
   addMultipleCardsToDeck: (
     deckId: string,
     newCardsData: { question: string; answer: string }[]
@@ -37,6 +38,10 @@ interface DeckContextType {
   deleteCardFromDeck: (deckId: string, cardId: string) => void
   answerCard: (deckId: string, cardId: string, wasCorrect: boolean) => void
   restoreDecks: (decks: Deck[]) => void
+  updateDeckLanguages: (
+    deckId: string,
+    languages: { langFront: string; langBack: string }
+  ) => void
 }
 
 // --- Context Erstellung ---
@@ -54,6 +59,8 @@ export const DeckProvider = ({ children }: DeckProviderProps) => {
     const newDeck: Deck = {
       id: crypto.randomUUID(),
       title: title,
+      langFront: 'de',
+      langBack: 'en',
       cards: [],
     }
     setDecks((prevDecks) => [...prevDecks, newDeck])
@@ -66,6 +73,19 @@ export const DeckProvider = ({ children }: DeckProviderProps) => {
   const updateDeck = (deckId: string, title: string) => {
     setDecks((prevDecks) =>
       prevDecks.map((deck) => (deck.id === deckId ? { ...deck, title } : deck))
+    )
+  }
+
+  const updateDeckLanguages = (
+    deckId: string,
+    languages: { langFront: string; langBack: string }
+  ) => {
+    setDecks((prevDecks) =>
+      prevDecks.map((deck) =>
+        deck.id === deckId
+          ? { ...deck, langFront: languages.langFront, langBack: languages.langBack }
+          : deck
+      )
     )
   }
 
@@ -89,7 +109,6 @@ export const DeckProvider = ({ children }: DeckProviderProps) => {
     )
   }
 
-  // --- NEUE FUNKTION ---
   const addMultipleCardsToDeck = (
     deckId: string,
     newCardsData: { question: string; answer: string }[]
@@ -97,14 +116,12 @@ export const DeckProvider = ({ children }: DeckProviderProps) => {
     setDecks((prevDecks) =>
       prevDecks.map((deck) => {
         if (deck.id === deckId) {
-          // Erzeuge alle neuen Karten auf einmal
           const newCards: Card[] = newCardsData.map((cardData) => ({
             id: crypto.randomUUID(),
             question: cardData.question,
             answer: cardData.answer,
             level: 1,
           }))
-          // Füge das Array der neuen Karten zum bestehenden Array hinzu
           return { ...deck, cards: [...deck.cards, ...newCards] }
         }
         return deck
@@ -173,11 +190,12 @@ export const DeckProvider = ({ children }: DeckProviderProps) => {
     updateDeck,
     deleteDeck,
     addCardToDeck,
-    addMultipleCardsToDeck, // NEU HINZUGEFÜGT
+    addMultipleCardsToDeck,
     updateCardInDeck,
     deleteCardFromDeck,
     answerCard,
     restoreDecks,
+    updateDeckLanguages,
   }
 
   return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>

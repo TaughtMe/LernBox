@@ -1,5 +1,5 @@
 {
-  "homepage": "https://LernBox.github.io/LernBox",
+  "homepage": "https://taughtme.github.io/LernBox",
   "name": "lernbox",
   "private": true,
   "version": "0.0.0",
@@ -7,12 +7,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "cp docs/index.html docs/404.html",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build && npm run postbuild",
+    "deploy": "gh-pages -d docs"
   },
   "dependencies": {
     "franc": "^6.2.0",

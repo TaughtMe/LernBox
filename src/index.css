@@ -200,6 +200,10 @@ a:hover {
     flex-wrap: wrap;
   }
 
+   .hide-on-mobile {
+    display: none;
+  }
+
   /* Stapelt die Aktions-Buttons untereinander */
   .card-page-section .control-group {
     display: flex;

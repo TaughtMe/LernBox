@@ -1,35 +1,51 @@
-import { franc } from 'franc'
+import { francAll } from 'franc';
 
 /**
- * Detects the language of a given text using a hybrid approach.
- * First, it checks for unique German characters for high confidence.
- * If not found, it uses the 'franc' library for analysis.
+ * Erkennt die Sprache eines Textes mit einem mehrstufigen Hybrid-Ansatz.
+ * 1. Prüft auf deutsche Sonderzeichen (ä, ö, ü, ß) für eine schnelle, sichere Erkennung.
+ * 2. Nutzt 'francAll', um die statistische Wahrscheinlichkeit mit einer Konfidenzschwelle zu bewerten.
+ * 3. Fällt bei Unsicherheit auf eine Zählung häufiger deutscher und englischer Wörter zurück.
  *
- * @param text The text to analyze.
- * @returns 'de' for German, 'en' for English (default).
+ * @param text Der zu analysierende Text.
+ * @returns 'de' für Deutsch, 'en' für Englisch.
  */
 export const detectLanguage = (text: string): 'de' | 'en' => {
-  console.log(`[HYBRID DEBUG] Input: "${text}"`);
+  const cleanedText = text.trim();
 
-  // Step 1: Heuristic
+  if (cleanedText.length < 2) {
+    return 'en';
+  }
+
+  // --- Schritt 1: Heuristik für 100% sichere deutsche Zeichen ---
   const germanChars = /[äöüß]/i;
-  if (germanChars.test(text)) {
-    console.log('[HYBRID DEBUG] Result: "de" (from heuristic)');
+  if (germanChars.test(cleanedText)) {
     return 'de';
   }
 
-  // Step 2: Franc
-  const langCode = franc(text, {
+  // --- Schritt 2: 'francAll' mit Konfidenzprüfung ---
+  const langProbs = francAll(cleanedText, {
     only: ['deu', 'eng'],
   });
-  console.log(`[HYBRID DEBUG] Franc output: "${langCode}"`);
 
-  if (langCode === 'deu') {
-    console.log('[HYBRID DEBUG] Result: "de" (from franc)');
+  // Wir geben den Elementen hier explizite Typen, um den 'implicit any' Fehler zu beheben
+  const deuProb = langProbs.find(([lang]: [string, number]) => lang === 'deu')?.[1] || 0;
+  const engProb = langProbs.find(([lang]: [string, number]) => lang === 'eng')?.[1] || 0;
+
+  const confidenceThreshold = 0.1;
+  if (deuProb > engProb + confidenceThreshold) {
     return 'de';
   }
+  if (engProb > deuProb + confidenceThreshold) {
+    return 'en';
+  }
 
-  // Step 3: Default
-  console.log('[HYBRID DEBUG] Result: "en" (default)');
-  return 'en';
-}
+  // --- Schritt 3: Fallback-Prüfung häufiger Wörter ---
+  const germanCommonWords = new Set(['der', 'die', 'das', 'und', 'ist', 'nicht', 'es', 'sie', 'er', 'ich', 'mit', 'zu']);
+  const englishCommonWords = new Set(['the', 'and', 'is', 'in', 'to', 'of', 'a', 'for', 'with', 'on', 'he', 'she']);
+
+  const words = cleanedText.toLowerCase().split(/\s+/);
+  const germanCount = words.filter(word => germanCommonWords.has(word)).length;
+  const englishCount = words.filter(word => englishCommonWords.has(word)).length;
+  
+  return germanCount > englishCount ? 'de' : 'en';
+};

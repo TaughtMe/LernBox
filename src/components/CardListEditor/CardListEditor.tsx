@@ -3,7 +3,6 @@ import Papa from 'papaparse'
 import { Button } from '../Button/Button'
 import { Input } from '../Input/Input'
 import { type Card as CardType } from '../../context/DeckContext'
-// NEU: Icons von Google (Material Design) importieren
 import { MdEdit, MdDelete, MdSave, MdCancel } from 'react-icons/md'
 import './CardListEditor.css'
 
@@ -181,7 +180,7 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
               <a
                 href="/LernBox/import_template.csv"
                 download="import_vorlage.csv"
-                className="link-secondary"
+                className="link-secondary hide-on-mobile"
               >
                 Vorlage
               </a>
@@ -202,22 +201,14 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
         </h2>
         {isCardListVisible && (
           <>
-            <div
-              className="sort-controls"
-              style={{
-                margin: '1rem 0',
-                padding: '0.5rem',
-                border: '1px solid #eee',
-                borderRadius: '8px',
-              }}
-            >
-              <label style={{ marginRight: '1rem', fontWeight: 'bold' }}>
-                Sortieren nach:
-              </label>
-              <Button onClick={() => setSortCriteria('default')} variant={sortCriteria === 'default' ? 'primary' : 'text'} aria-label="Sortierung zurücksetzen">Standard</Button>
-              <Button onClick={() => setSortCriteria('question-asc')} variant={sortCriteria === 'question-asc' ? 'primary' : 'text'} aria-label="Nach Frage sortieren">Frage</Button>
-              <Button onClick={() => setSortCriteria('answer-asc')} variant={sortCriteria === 'answer-asc' ? 'primary' : 'text'} aria-label="Nach Antwort sortieren">Antwort</Button>
-              <Button onClick={() => setSortCriteria('level-asc')} variant={sortCriteria === 'level-asc' ? 'primary' : 'text'} aria-label="Nach Stufe sortieren">Stufe</Button>
+            <div className="sort-controls">
+              <label>Sortieren nach:</label>
+              <div className="sort-buttons-group">
+                <Button onClick={() => setSortCriteria('default')} variant={sortCriteria === 'default' ? 'primary' : 'text'} aria-label="Sortierung zurücksetzen">Standard</Button>
+                <Button onClick={() => setSortCriteria('question-asc')} variant={sortCriteria === 'question-asc' ? 'primary' : 'text'} aria-label="Nach Frage sortieren">VS</Button>
+                <Button onClick={() => setSortCriteria('answer-asc')} variant={sortCriteria === 'answer-asc' ? 'primary' : 'text'} aria-label="Nach Antwort sortieren">RS</Button>
+                <Button onClick={() => setSortCriteria('level-asc')} variant={sortCriteria === 'level-asc' ? 'primary' : 'text'} aria-label="Nach Stufe sortieren">Stufe</Button>
+              </div>
             </div>
             <ul className="card-list">
               {cards.length > 0 ? (
@@ -252,6 +243,7 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                           </Button>
                           <Button
                             onClick={handleCancelClick}
+                            variant="secondary"
                             isIconOnly
                             aria-label="Abbrechen"
                           >
@@ -263,10 +255,10 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                       <>
                         <div className="card-info">
                           <span>
-                            <strong>Frage:</strong> {card.question}
+                            <strong>VS:</strong> {card.question}
                           </span>
                           <span>
-                            <strong>Antwort:</strong> {card.answer}
+                            <strong>RS:</strong> {card.answer}
                           </span>
                         </div>
                         <div className="card-actions">

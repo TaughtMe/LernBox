@@ -78,7 +78,7 @@ const DashboardPage: React.FC = () => {
       <header className="dashboard-header">
         <div className="title-container">
           <h1>Meine Lernstapel</h1>
-          <span className="version">v1.1.0</span>
+          <span className="version">v1.1.1</span>
         </div>
         <div className="version-toggle-container">
           <ThemeToggle />

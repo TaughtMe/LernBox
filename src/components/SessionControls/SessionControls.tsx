@@ -25,7 +25,6 @@ type SessionControlsProps = {
     mastered: number
     total: number
   }
-  backTitle?: string
 }
 
 export const SessionControls: React.FC<SessionControlsProps> = ({
@@ -41,7 +40,6 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
   onNextCardClick,
   onKeyDown,
   progress,
-  backTitle,
 }) => {
   return (
     <div className="session-controls-container">
@@ -85,12 +83,11 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
 
       {learnMode === 'write' && (
         <>
-          {/* Der 'write'-Modus bleibt unverändert */}
           <div className="write-mode-input-area">
             <Input
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
-              placeholder={`${backTitle} eingeben...`}
+              placeholder="Antwort eingeben..."
               className={`write-input ${feedback !== 'none' ? `input-${feedback}` : ''}`}
               disabled={isAnswerChecked}
               onKeyDown={onKeyDown}
