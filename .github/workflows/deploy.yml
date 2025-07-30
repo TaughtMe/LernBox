@@ -1,0 +1,50 @@
+# Name des Workflows
+name: Deploy Vite App to GitHub Pages
+
+# Wird bei jedem Push auf den main-Branch ausgeführt
+on:
+  push:
+    branches: [ main ]
+  # Erlaubt das manuelle Starten des Workflows von der Actions-Seite
+  workflow_dispatch:
+
+# Definiert die Berechtigungen für den Workflow
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Definiert die Jobs, die ausgeführt werden
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Hier Ihre Node.js-Version eintragen
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build # Führt 'vite build' und das Kopieren der 404.html aus
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs # Der Ordner, der das Build-Ergebnis enthält
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
