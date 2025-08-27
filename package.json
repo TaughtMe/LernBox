@@ -2,7 +2,7 @@
   "homepage": "https://taughtme.github.io/LernBox",
   "name": "lernbox",
   "private": true,
-  "version": "2.0.7c",
+  "version": "2.0.7d",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,6 +14,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tiptap/extension-placeholder": "^3.3.0",
     "@tiptap/pm": "^3.3.0",
     "@tiptap/react": "^3.3.0",
     "@tiptap/starter-kit": "^3.3.0",
