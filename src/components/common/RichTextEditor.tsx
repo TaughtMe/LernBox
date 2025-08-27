@@ -16,20 +16,28 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
       onChange(editor.getHTML());
     },
     editorProps: {
-      attributes: {
-        class: 'prose max-w-none p-4 border border-gray-300 rounded-b-lg min-h-[150px] focus:outline-none',
-      },
+      attributes: {},
     },
   });
 
   useEffect(() => {
-    if (editor && editor.getHTML() !== content) {
-      editor.commands.setContent(content);
+    // A race condition can happen where the editor updates the parent,
+    // which then re-renders and tries to set the content back, causing a loop.
+    // This check prevents that.
+    const isSame = editor?.getHTML() === content;
+
+    if (isSame) {
+      return;
     }
+    
+    // KORRIGIERTE ZEILE:
+    // The second argument is now an object instead of a boolean.
+    editor?.commands.setContent(content, { emitUpdate: false });
+
   }, [content, editor]);
 
   return (
-    <div>
+    <div className="tiptap-editor">
       <Toolbar editor={editor} />
       <EditorContent editor={editor} />
     </div>
