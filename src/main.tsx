@@ -11,8 +11,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider>
       <AuthProvider>
-        {/* Die basename-Eigenschaft wurde hier entfernt */}
-        <BrowserRouter>
+        {/* Die basename-Eigenschaft für GitHub Pages wieder hinzufügen */}
+        <BrowserRouter basename="/LernBox">
           <DeckProvider>
             <App />
           </DeckProvider>
