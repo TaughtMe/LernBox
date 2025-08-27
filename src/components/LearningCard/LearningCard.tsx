@@ -5,65 +5,76 @@ import './LearningCard.css'
 import { useSpeechSynthesis } from '../../hooks/useSpeechSynthesis'
 
 type CardContent = {
-  front: string
-  back: string
+  front: string
+  back: string
 }
 
+// Die Props-Definition wird hier korrigiert
 type LearningCardProps = {
-  cardContent: CardContent
-  isFlipped: boolean
-  onCardClick: () => void
-  langFront: string // NEU
-  langBack: string  // NEU
+  cardContent: CardContent
+  isFlipped: boolean
+  onCardClick: () => void
+  langFront: string
+  langBack: string
+  displayQuestion: boolean
+  queryDirection: string // KORREKTUR: Diese Zeile wird wieder hinzugefügt
 }
 
 const SpeakButton = ({ onSpeak }: { onSpeak: () => void }) => (
-  <button
-    className="speak-button"
-    onClick={(e) => {
-      e.stopPropagation()
-      onSpeak()
-    }}
-    aria-label="Text vorlesen"
-  >
-    <img src={SpeakerIcon} alt="Vorlesen" />
-  </button>
+  <button
+    className="speak-button"
+    onClick={(e) => {
+      e.stopPropagation() // Verhindert, dass der Klick die Karte umdreht
+      onSpeak()
+    }}
+    aria-label="Text vorlesen"
+  >
+    <img src={SpeakerIcon} alt="Vorlesen" />
+  </button>
 )
 
 export const LearningCard: React.FC<LearningCardProps> = ({
-  cardContent,
-  isFlipped,
-  onCardClick,
-  langFront, // NEU
-  langBack,   // NEU
+  cardContent,
+  isFlipped,
+  onCardClick,
+  langFront,
+  langBack,
+  displayQuestion,
+  // queryDirection wird hier zwar empfangen, aber für die Logik nicht benötigt
 }) => {
-  const { speak } = useSpeechSynthesis()
+  const { speak } = useSpeechSynthesis()
 
-  // Die alte handleSpeak Funktion mit Spracherkennung wird nicht mehr benötigt.
+  const handleSpeakFront = () => {
+    const lang = displayQuestion ? langFront : langBack
+    speak(cardContent.front, lang)
+  }
 
-  return (
-    <div className="card-area" onClick={onCardClick}>
-      {/* VORDERSEITE */}
-      <div className="flashcard-panel">
-        <div className="panel-header">
-          {/* NEU: Die definierte Sprache 'langFront' wird direkt verwendet */}
-          <SpeakButton onSpeak={() => speak(cardContent.front, langFront)} />
-        </div>
-        <p className="panel-content">{cardContent.front}</p>
-      </div>
+  const handleSpeakBack = () => {
+    const lang = displayQuestion ? langBack : langFront
+    speak(cardContent.back, lang)
+  }
 
-      {/* RÜCKSEITE */}
-      <div className="flashcard-panel">
-        <div className="panel-header">
-          {isFlipped && (
-            // NEU: Die definierte Sprache 'langBack' wird direkt verwendet
-            <SpeakButton onSpeak={() => speak(cardContent.back, langBack)} />
-          )}
-        </div>
-        <p className={`panel-content ${!isFlipped ? 'blurred' : ''}`}>
-          {cardContent.back}
-        </p>
-      </div>
-    </div>
-  )
+  return (
+    <div className="card-area" onClick={onCardClick}>
+      {/* VORDERSEITE */}
+      <div className="flashcard-panel">
+        <div className="panel-header">
+          <SpeakButton onSpeak={handleSpeakFront} />
+        </div>
+        <p className="panel-content">{cardContent.front}</p>
+      </div>
+
+      {/* RÜCKSEITE */}
+      <div className="flashcard-panel">
+        <div className="panel-header">
+          {isFlipped && (
+            <SpeakButton onSpeak={handleSpeakBack} />
+          )}
+        </div>
+        <p className={`panel-content ${!isFlipped ? 'blurred' : ''}`}>
+          {cardContent.back}
+        </p>
+      </div>
+    </div>
+  )
 }

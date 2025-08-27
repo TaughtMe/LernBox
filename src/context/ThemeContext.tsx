@@ -19,12 +19,18 @@ interface ThemeProviderProps {
   children: ReactNode
 }
 
-// 5. Erstelle die Provider-Komponente (korrigiert)
+// 5. Erstelle die Provider-Komponente
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useLocalStorage<Theme>('theme', 'light')
+  // Die Initialisierungslogik wird hier angepasst:
+  // 1. useLocalStorage prüft, ob 'theme' im localStorage existiert.
+  // 2. Wenn nicht, wird der zweite Parameter als Standardwert verwendet.
+  //    Dieser prüft nun die Systemeinstellung und fällt auf 'light' zurück.
+  const [theme, setTheme] = useLocalStorage<Theme>(
+    'theme',
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  )
 
   // Dieser Hook wird bei jeder Änderung des Themes ausgeführt.
-  // Er muss VOR der return-Anweisung stehen.
   useEffect(() => {
     document.body.setAttribute('data-theme', theme)
   }, [theme])
@@ -39,6 +45,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 }
 
 // 6. Erstelle einen Custom Hook für den einfachen Zugriff auf den Context
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
   const context = useContext(ThemeContext)
   if (context === undefined) {

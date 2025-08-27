@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './Button';
 import { MdEdit } from 'react-icons/md'; // Icon für ein Beispiel importieren
 

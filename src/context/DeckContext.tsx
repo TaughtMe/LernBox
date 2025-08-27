@@ -202,6 +202,7 @@ export const DeckProvider = ({ children }: DeckProviderProps) => {
 }
 
 // --- Custom Hook für einfachen Zugriff ---
+// eslint-disable-next-line react-refresh/only-export-components
 export const useDecks = () => {
   const context = useContext(DeckContext)
   if (context === undefined) {

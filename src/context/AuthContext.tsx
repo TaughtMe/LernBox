@@ -12,9 +12,14 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>(null!)
 
 // 3. Erstelle einen Custom Hook für die einfache Nutzung des Contexts
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
-  return useContext(AuthContext)
-}
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 // 4. Definiere die Props für den Provider
 interface AuthProviderProps {
