@@ -27,8 +27,8 @@ function App() {
     // Diese Funktion wird jetzt asynchron, um die neue Version zu holen
     async onNeedRefresh() {
       try {
-        // Cache umgehen, um sicher die NEUE version.json zu erhalten
-        const response = await fetch(`/version.json?t=${new Date().getTime()}`);
+        // HIER IST DIE FINALE KORREKTUR: './' statt '/'
+        const response = await fetch(`./version.json?t=${new Date().getTime()}`);
         if (response.ok) {
           const data = await response.json();
           // State mit der neuen Version setzen, was die Benachrichtigung auslöst
