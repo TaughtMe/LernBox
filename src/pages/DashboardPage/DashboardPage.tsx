@@ -1,84 +1,76 @@
-import React, { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDecks } from '../../context/DeckContext'
-import { ThemeToggle } from '../../components/ThemeToggle'
-import type { Deck } from '../../context/DeckContext'
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDecks } from '../../context/DeckContext';
+import { ThemeToggle } from '../../components/ThemeToggle';
+import type { Deck } from '../../context/DeckContext';
+// Dies ist der finale, saubere Import:
+import { version } from '../../version';
 
 const DashboardPage: React.FC = () => {
-  const navigate = useNavigate()
-  const { decks, addDeck, deleteDeck, restoreDecks } = useDecks()
-  const [newDeckTitle, setNewDeckTitle] = useState('')
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate();
+  const { decks, addDeck, deleteDeck, restoreDecks, exportDecks } = useDecks();
+  const [newDeckTitle, setNewDeckTitle] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDelete = (e: React.MouseEvent, deckId: string) => {
-    e.stopPropagation()
-    deleteDeck(deckId)
-  }
+    e.stopPropagation();
+    deleteDeck(deckId);
+  };
 
   const handleAddDeck = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (newDeckTitle.trim()) {
-      addDeck(newDeckTitle.trim())
-      setNewDeckTitle('')
+      addDeck(newDeckTitle.trim());
+      setNewDeckTitle('');
     }
-  }
-
-  const handleExport = () => {
-    const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
-      JSON.stringify(decks, null, 2)
-    )}`
-    const link = document.createElement('a')
-    link.href = jsonString
-    link.download = 'lernbox-backup.json'
-    link.click()
-  }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (!file) {
-      return
+      return;
     }
 
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onload = (event) => {
-      const content = event.target?.result
-      if (typeof content !== 'string') return
+      const content = event.target?.result;
+      if (typeof content !== 'string') return;
 
       const confirmation = window.confirm(
         'WARNUNG: Das Importieren einer Datei überschreibt alle aktuellen Decks. Möchten Sie fortfahren?'
-      )
+      );
 
       if (confirmation) {
         try {
-          const importedDecks = JSON.parse(content) as Deck[]
+          const importedDecks = JSON.parse(content) as Deck[];
           if (Array.isArray(importedDecks)) {
-            restoreDecks(importedDecks)
-            alert('Decks erfolgreich importiert!')
+            restoreDecks(importedDecks);
+            alert('Decks erfolgreich importiert!');
           } else {
-            throw new Error('Invalides Dateiformat.')
+            throw new Error('Invalides Dateiformat.');
           }
         } catch (error) {
-          console.error('Fehler beim Importieren der Decks:', error)
+          console.error('Fehler beim Importieren der Decks:', error);
           alert(
             'Fehler: Die Datei konnte nicht gelesen werden. Stellen Sie sicher, dass es eine valide JSON-Datei ist.'
-          )
+          );
         }
       }
-    }
-    reader.readAsText(file)
-    e.target.value = ''
-  }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
 
   const triggerFileInput = () => {
-    fileInputRef.current?.click()
-  }
+    fileInputRef.current?.click();
+  };
 
   return (
     <>
       <header className="dashboard-header">
         <div className="title-container">
           <h1>Meine Lernstapel</h1>
-          <span className="version">v1.1.1</span>
+          <span className="version">v{version}</span>
         </div>
         <div className="version-toggle-container">
           <ThemeToggle />
@@ -128,7 +120,7 @@ const DashboardPage: React.FC = () => {
         </form>
 
         <div className="data-management">
-          <button onClick={handleExport} className="btn">
+          <button onClick={exportDecks} className="btn">
             Alle Decks exportieren
           </button>
           <button onClick={triggerFileInput} className="btn">
@@ -144,7 +136,7 @@ const DashboardPage: React.FC = () => {
         </div>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

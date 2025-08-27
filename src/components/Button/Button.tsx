@@ -1,15 +1,16 @@
-import React from 'react'
-import './Button.css'
+import React from 'react';
+import './Button.css';
 
-interface ButtonProps {
-  children: React.ReactNode // Ersetzt 'label', um beliebige Inhalte zu ermöglichen
-  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'text'
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
-  type?: 'button' | 'submit' | 'reset'
-  disabled?: boolean
-  fullWidth?: boolean
-  isIconOnly?: boolean // NEU: Für reine Icon-Buttons
-  'aria-label': string // Wichtig für Accessibility bei Icon-Buttons
+// HIER DAS WORT "export" HINZUFÜGEN
+export interface ButtonProps {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'text';
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  fullWidth?: boolean;
+  isIconOnly?: boolean;
+  'aria-label': string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,9 +21,9 @@ export const Button: React.FC<ButtonProps> = ({
   isIconOnly = false,
   ...props
 }) => {
-  const modeClass = `button--${variant}`
-  const fullWidthClass = fullWidth ? 'button--full-width' : ''
-  const iconOnlyClass = isIconOnly ? 'button--icon-only' : ''
+  const modeClass = `button--${variant}`;
+  const fullWidthClass = fullWidth ? 'button--full-width' : '';
+  const iconOnlyClass = isIconOnly ? 'button--icon-only' : '';
 
   return (
     <button
@@ -34,5 +35,5 @@ export const Button: React.FC<ButtonProps> = ({
     >
       {children}
     </button>
-  )
-}
+  );
+};

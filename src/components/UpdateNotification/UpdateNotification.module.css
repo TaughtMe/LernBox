@@ -1,0 +1,28 @@
+.notification {
+  position: fixed;
+  top: 20px; /* Geändert von 'bottom' */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-background-offset);
+  color: var(--color-text);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  width: 90%;
+  max-width: 500px;
+}
+
+.text {
+  margin: 0;
+  margin-right: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
