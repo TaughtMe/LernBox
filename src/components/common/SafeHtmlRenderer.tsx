@@ -1,55 +1,14 @@
-import React, { useState, useCallback, useEffect } from "react"
-import { useEditor, EditorContent } from "@tiptap/react"
-import StarterKit from "@tiptap/starter-kit"
-import { Toolbar, BottomBar, type Cmd } from "./Toolbar"
+import DOMPurify from "dompurify"
+import type { FC } from "react"
 
-type Props = { content: string; onChange: (html: string) => void }
-
-const RichTextEditor: React.FC<Props> = ({ content, onChange }) => {
-  const [activeStates, setActiveStates] = useState<Partial<Record<Cmd, boolean>>>({})
-
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content,
-    onUpdate: ({ editor }) => {
-      onChange(editor.getHTML())
-      setActiveStates({
-        bold: editor.isActive("bold"),
-        italic: editor.isActive("italic"),
-        strike: editor.isActive("strike"),
-        bullet: editor.isActive("bulletList"),
-        ordered: editor.isActive("orderedList"),
-      })
-    },
-  })
-
-  const handleExec = useCallback((cmd: Cmd) => {
-    if (!editor) return
-    const chain = editor.chain().focus()
-    switch (cmd) {
-      case "bold": chain.toggleBold().run(); break
-      case "italic": chain.toggleItalic().run(); break
-      case "strike": chain.toggleStrike().run(); break
-      case "bullet": chain.toggleBulletList().run(); break
-      case "ordered": chain.toggleOrderedList().run(); break
-    }
-  }, [editor])
-
-  useEffect(() => {
-    if (editor && editor.getHTML() !== content) {
-      editor.commands.setContent(content, { emitUpdate: false })
-    }
-  }, [content, editor])
-
-  if (!editor) return null
-
-  return (
-    <div>
-      <Toolbar active={activeStates} onExec={handleExec} />
-      <EditorContent editor={editor} className="tiptap-content-area" />
-      <BottomBar active={activeStates} onExec={handleExec} />
-    </div>
-  )
+export type SafeHtmlRendererProps = {
+  htmlContent: string
+  className?: string
 }
 
-export default RichTextEditor
+const SafeHtmlRenderer: FC<SafeHtmlRendererProps> = ({ htmlContent, className }) => {
+  const sanitizedHtml = DOMPurify.sanitize(htmlContent)
+  return <div className={className} dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />
+}
+
+export default SafeHtmlRenderer

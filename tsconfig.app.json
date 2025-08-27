@@ -1,31 +1,36 @@
 {
   "compilerOptions": {
+    // Build-Cache
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
+    // Sprache/Ziel
     "target": "ES2022",
-    "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": true,
 
-    // Bundler mode
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
+    // React/JSX
     "jsx": "react-jsx",
 
-    // Linting
+    // Auflösung/Bundler
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+
+    // Output
+    "noEmit": true,
+    "skipLibCheck": true,
+
+    // Typen explizit laden
+    "types": ["vite/client", "react", "react-dom"],
+
+    // Strenge Regeln
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    // WICHTIG: React-Typen einbinden
-    "types": ["vite/client", "react", "react-dom"]
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
 }
