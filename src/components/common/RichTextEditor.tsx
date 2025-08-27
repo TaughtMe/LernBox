@@ -49,14 +49,16 @@ const RichTextEditor: React.FC<Props> = ({ content, onChange }) => {
   return (
     <div className="relative">
       {/* Editor-Fläche */}
-      <div className="min-h-48 bg-slate-900/60 border border-white/10 rounded-xl p-3">
+      <div className="min-h-48 bg-white/90 text-slate-900 rounded-md p-3 shadow-sm
+                      md:min-h-56 md:p-4
+                      dark:bg-slate-800/60 dark:text-slate-100 dark:border dark:border-white/10">
         <EditorContent editor={editor} />
       </div>
 
-      {/* Spacer, damit BottomBar nichts überlappt */}
+      {/* Platz, damit die schwebende BottomBar nichts überlappt */}
       <div className="h-16" />
 
-      {/* Immer unten */}
+      {/* Immer unten zentriert */}
       <BottomBar active={activeStates} onExec={handleExec} />
     </div>
   )
