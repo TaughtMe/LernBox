@@ -1,39 +1,34 @@
-import React, { useState, useRef } from 'react';
-import Papa from 'papaparse';
-import { Button } from '../Button/Button';
-import RichTextEditor from '../common/RichTextEditor';
-import { type Card as CardType } from '../../context/DeckContext';
-import { MdEdit, MdDelete, MdSave, MdCancel } from 'react-icons/md';
-import './CardListEditor.css';
+import React, { useState, useRef } from "react"
+import Papa from "papaparse"
+import { Button } from "../Button/Button"
+import FrontBackEditor from "../common/FrontBackEditor"          // NEU: 2-Felder-Editor für den Add-Bereich
+import RichTextEditor from "../common/RichTextEditor"            // weiterhin für Inline-Edit in der Liste
+import { type Card as CardType } from "../../context/DeckContext"
+import { MdEdit, MdDelete, MdSave, MdCancel } from "react-icons/md"
+import "./CardListEditor.css"
 
 type CardListEditorProps = {
-  deckId: string;
-  cards: CardType[];
-  onAddCard: (
-    deckId: string,
-    cardData: { question: string; answer: string }
-  ) => void;
-  onDeleteCard: (deckId: string, cardId: string) => void;
+  deckId: string
+  cards: CardType[]
+  onAddCard: (deckId: string, cardData: { question: string; answer: string }) => void
+  onDeleteCard: (deckId: string, cardId: string) => void
   onUpdateCard: (
     deckId: string,
     cardId: string,
     updatedData: { question: string; answer: string }
-  ) => void;
-  addMultipleCardsToDeck: (
-    deckId: string,
-    newCardsData: { question: string; answer: string }[]
-  ) => void;
-  sortCriteria: string;
-  setSortCriteria: (value: string) => void;
-};
+  ) => void
+  addMultipleCardsToDeck: (deckId: string, newCardsData: { question: string; answer: string }[]) => void
+  sortCriteria: string
+  setSortCriteria: (value: string) => void
+}
 
-// Hilfsfunktion um zu prüfen, ob der Editor-Inhalt leer ist
+// Editorinhalt leer?
 const isContentEmpty = (content: string) => {
-  if (!content) return true;
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = content;
-  return tempDiv.textContent?.trim() === '';
-};
+  if (!content) return true
+  const tempDiv = document.createElement("div")
+  tempDiv.innerHTML = content
+  return (tempDiv.textContent || "").trim() === ""
+}
 
 export const CardListEditor: React.FC<CardListEditorProps> = ({
   deckId,
@@ -45,129 +40,124 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
   sortCriteria,
   setSortCriteria,
 }) => {
-  const [newQuestion, setNewQuestion] = useState('');
-  const [newAnswer, setNewAnswer] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  // Add-Form: neuer Inhalt (Front/Back)
+  const [newFront, setNewFront] = useState<string>("")
+  const [newBack, setNewBack] = useState<string>("")
 
+  // CSV
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // ... (CSV Import Logik bleibt unverändert)
-    const file = event.target.files?.[0];
-    if (!file || !deckId) return;
+    const file = event.target.files?.[0]
+    if (!file || !deckId) return
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
-      delimiter: ';',
+      delimiter: ";",
       complete: (results) => {
-        const newCardsData: { question: string; answer: string }[] = [];
+        const newCardsData: { question: string; answer: string }[] = []
         results.data.forEach((row: unknown) => {
-          const cardData = row as { question?: string; answer?: string };
-          if (cardData.question && cardData.answer) {
-            newCardsData.push({
-              question: cardData.question,
-              answer: cardData.answer,
-            });
-          }
-        });
+          const c = row as { question?: string; answer?: string }
+          if (c.question && c.answer) newCardsData.push({ question: c.question, answer: c.answer })
+        })
         if (newCardsData.length > 0) {
-          addMultipleCardsToDeck(deckId, newCardsData);
-          alert(`${newCardsData.length} Karten wurden erfolgreich importiert.`);
+          addMultipleCardsToDeck(deckId, newCardsData)
+          alert(`${newCardsData.length} Karten wurden erfolgreich importiert.`)
         } else {
-          alert('Keine gültigen Karten in der Datei gefunden.');
+          alert("Keine gültigen Karten in der Datei gefunden.")
         }
-        if (event.target) event.target.value = '';
+        if (event.target) event.target.value = ""
       },
       error: (error) => {
-        console.error('Fehler beim Parsen der CSV-Datei:', error);
-        alert('Die CSV-Datei konnte nicht verarbeitet werden.');
+        console.error("Fehler beim Parsen der CSV-Datei:", error)
+        alert("Die CSV-Datei konnte nicht verarbeitet werden.")
       },
-    });
-  };
+    })
+  }
 
+  // Add-Form Sichtbarkeit
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false)
+  // Kartenliste Sichtbarkeit
+  const [isCardListVisible, setIsCardListVisible] = useState(false)
+
+  // Add-Submit
   const handleAddSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isContentEmpty(newQuestion) || isContentEmpty(newAnswer)) {
-      alert('Bitte füllen Sie beide Felder aus.');
-      return;
+    e.preventDefault()
+    if (isContentEmpty(newFront) || isContentEmpty(newBack)) {
+      alert("Bitte fülle Vorder- und Rückseite aus.")
+      return
     }
-    onAddCard(deckId, { question: newQuestion, answer: newAnswer });
-    setNewQuestion('');
-    setNewAnswer('');
-  };
+    onAddCard(deckId, { question: newFront, answer: newBack })
+    setNewFront("")
+    setNewBack("")
+  }
 
-  const [editingCardId, setEditingCardId] = useState<string | null>(null);
-  const [editedCardData, setEditedCardData] = useState({
-    question: '',
-    answer: '',
-  });
+  // Edit-Zustände
+  const [editingCardId, setEditingCardId] = useState<string | null>(null)
+  const [editedCardData, setEditedCardData] = useState<{ question: string; answer: string }>({
+    question: "",
+    answer: "",
+  })
 
   const handleEditClick = (card: CardType) => {
-    setEditingCardId(card.id);
-    setEditedCardData({ question: card.question, answer: card.answer });
-  };
-
+    setEditingCardId(card.id)
+    setEditedCardData({ question: card.question, answer: card.answer })
+  }
   const handleCancelClick = () => {
-    setEditingCardId(null);
-    setEditedCardData({ question: '', answer: '' });
-  };
-
+    setEditingCardId(null)
+    setEditedCardData({ question: "", answer: "" })
+  }
   const handleSaveClick = (cardId: string) => {
-    if (
-      isContentEmpty(editedCardData.question) ||
-      isContentEmpty(editedCardData.answer)
-    ) {
-      alert('Frage und Antwort dürfen nicht leer sein.');
-      return;
+    if (isContentEmpty(editedCardData.question) || isContentEmpty(editedCardData.answer)) {
+      alert("Frage und Antwort dürfen nicht leer sein.")
+      return
     }
-    onUpdateCard(deckId, cardId, editedCardData);
-    setEditingCardId(null);
-    setEditedCardData({ question: '', answer: '' });
-  };
-
-  const handleEditedCardChange = (field: 'question' | 'answer', html: string) => {
-    setEditedCardData(prev => ({ ...prev, [field]: html }));
-  };
-
-  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
-  const [isCardListVisible, setIsCardListVisible] = useState(false);
+    onUpdateCard(deckId, cardId, editedCardData)
+    setEditingCardId(null)
+    setEditedCardData({ question: "", answer: "" })
+  }
+  const handleEditedCardChange = (field: "question" | "answer", html: string) => {
+    setEditedCardData((prev) => ({ ...prev, [field]: html }))
+  }
 
   return (
     <>
+      {/* versteckter CSV-Input */}
       <input
         type="file"
         ref={fileInputRef}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         accept=".csv"
         onChange={handleFileChange}
       />
+
+      {/* --------- NEUE KARTE HINZUFÜGEN --------- */}
       <div className="card-management-area">
         <h2
-          style={{ cursor: 'pointer', margin: '0 0 1rem 0' }}
+          style={{ cursor: "pointer", margin: "0 0 1rem 0" }}
           onClick={() => setIsAddFormVisible(!isAddFormVisible)}
         >
-          Neue Karte hinzufügen {isAddFormVisible ? '▲' : '▼'}
+          Neue Karte hinzufügen {isAddFormVisible ? "▲" : "▼"}
         </h2>
+
         {isAddFormVisible && (
-          <form onSubmit={handleAddSubmit} className="add-card-form">
-            <div className="form-group">
-              <label>Vorderseite</label>
-              <RichTextEditor content={newQuestion} onChange={setNewQuestion} />
-            </div>
-            <div className="form-group">
-              <label>Rückseite</label>
-              <RichTextEditor content={newAnswer} onChange={setNewAnswer} />
-            </div>
+          <form onSubmit={handleAddSubmit} className="add-card-form space-y-4">
+            {/* Sichtbares Eingabefeld im Kartenlook: VORDERSEITE + RÜCKSEITE */}
+            <FrontBackEditor
+              frontHtml={newFront}
+              backHtml={newBack}
+              onChangeFront={(html: string) => setNewFront(html)}
+              onChangeBack={(html: string) => setNewBack(html)}
+            />
+
+            {/* Aktionen */}
             <div
               className="form-actions"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-                marginTop: '1rem',
-              }}
+              style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: ".5rem" }}
             >
               <Button type="submit" variant="primary" aria-label="Karte hinzufügen">
                 Karte hinzufügen
               </Button>
+
               <Button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
@@ -175,6 +165,7 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
               >
                 Aus CSV importieren
               </Button>
+
               <a
                 href="/LernBox/import_template.csv"
                 download="import_vorlage.csv"
@@ -189,26 +180,53 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
 
       <hr className="section-divider" />
 
+      {/* --------- KARTENLISTE --------- */}
       <div className="card-list-area">
         <h2
-          style={{ cursor: 'pointer', margin: '0 0 1rem 0' }}
+          style={{ cursor: "pointer", margin: "0 0 1rem 0" }}
           onClick={() => setIsCardListVisible(!isCardListVisible)}
         >
-          Karten in diesem Deck ({cards.length}){' '}
-          {isCardListVisible ? '▲' : '▼'}
+          Karten in diesem Deck ({cards.length}) {isCardListVisible ? "▲" : "▼"}
         </h2>
+
         {isCardListVisible && (
           <>
-            {/* KORRIGIERTER/WIEDEREINGEFÜGTER TEIL */}
+            {/* Sortierung */}
             <div className="sort-controls">
               <label>Sortieren nach:</label>
               <div className="sort-buttons-group">
-                <Button onClick={() => setSortCriteria('default')} variant={sortCriteria === 'default' ? 'primary' : 'text'} aria-label="Sortierung zurücksetzen">Standard</Button>
-                <Button onClick={() => setSortCriteria('question-asc')} variant={sortCriteria === 'question-asc' ? 'primary' : 'text'} aria-label="Nach Frage sortieren">VS</Button>
-                <Button onClick={() => setSortCriteria('answer-asc')} variant={sortCriteria === 'answer-asc' ? 'primary' : 'text'} aria-label="Nach Antwort sortieren">RS</Button>
-                <Button onClick={() => setSortCriteria('level-asc')} variant={sortCriteria === 'level-asc' ? 'primary' : 'text'} aria-label="Nach Stufe sortieren">Stufe</Button>
+                <Button
+                  onClick={() => setSortCriteria("default")}
+                  variant={sortCriteria === "default" ? "primary" : "text"}
+                  aria-label="Sortierung zurücksetzen"
+                >
+                  Standard
+                </Button>
+                <Button
+                  onClick={() => setSortCriteria("question-asc")}
+                  variant={sortCriteria === "question-asc" ? "primary" : "text"}
+                  aria-label="Nach Frage sortieren"
+                >
+                  VS
+                </Button>
+                <Button
+                  onClick={() => setSortCriteria("answer-asc")}
+                  variant={sortCriteria === "answer-asc" ? "primary" : "text"}
+                  aria-label="Nach Antwort sortieren"
+                >
+                  RS
+                </Button>
+                <Button
+                  onClick={() => setSortCriteria("level-asc")}
+                  variant={sortCriteria === "level-asc" ? "primary" : "text"}
+                  aria-label="Nach Stufe sortieren"
+                >
+                  Stufe
+                </Button>
               </div>
             </div>
+
+            {/* Liste */}
             <ul className="card-list">
               {cards.length > 0 ? (
                 cards.map((card) => (
@@ -216,20 +234,31 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                     {editingCardId === card.id ? (
                       <>
                         <div className="card-info-edit">
+                          {/* Inline-Edit je Seite; wenn du willst, kann ich hier ebenfalls FrontBackEditor einbauen */}
                           <RichTextEditor
                             content={editedCardData.question}
-                            onChange={(html) => handleEditedCardChange('question', html)}
+                            onChange={(html: string) => handleEditedCardChange("question", html)}
                           />
                           <RichTextEditor
                             content={editedCardData.answer}
-                            onChange={(html) => handleEditedCardChange('answer', html)}
+                            onChange={(html: string) => handleEditedCardChange("answer", html)}
                           />
                         </div>
                         <div className="card-actions">
-                          <Button onClick={() => handleSaveClick(card.id)} variant="success" isIconOnly aria-label="Speichern">
+                          <Button
+                            onClick={() => handleSaveClick(card.id)}
+                            variant="success"
+                            isIconOnly
+                            aria-label="Speichern"
+                          >
                             <MdSave />
                           </Button>
-                          <Button onClick={handleCancelClick} variant="secondary" isIconOnly aria-label="Abbrechen">
+                          <Button
+                            onClick={handleCancelClick}
+                            variant="secondary"
+                            isIconOnly
+                            aria-label="Abbrechen"
+                          >
                             <MdCancel />
                           </Button>
                         </div>
@@ -237,15 +266,33 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                     ) : (
                       <>
                         <div className="card-info">
-                          <div dangerouslySetInnerHTML={{ __html: `<strong>VS:</strong> ${card.question}` }} />
-                          <div dangerouslySetInnerHTML={{ __html: `<strong>RS:</strong> ${card.answer}` }} />
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: `<strong>VS:</strong> ${card.question}`,
+                            }}
+                          />
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: `<strong>RS:</strong> ${card.answer}`,
+                            }}
+                          />
                         </div>
                         <div className="card-actions">
                           <span className="card-level">Stufe: {card.level}</span>
-                          <Button onClick={() => handleEditClick(card)} variant="success" isIconOnly aria-label="Bearbeiten">
+                          <Button
+                            onClick={() => handleEditClick(card)}
+                            variant="success"
+                            isIconOnly
+                            aria-label="Bearbeiten"
+                          >
                             <MdEdit />
                           </Button>
-                          <Button onClick={() => onDeleteCard(deckId, card.id)} variant="danger" isIconOnly aria-label="Löschen">
+                          <Button
+                            onClick={() => onDeleteCard(deckId, card.id)}
+                            variant="danger"
+                            isIconOnly
+                            aria-label="Löschen"
+                          >
                             <MdDelete />
                           </Button>
                         </div>
@@ -261,5 +308,5 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
         )}
       </div>
     </>
-  );
-};
+  )
+}
