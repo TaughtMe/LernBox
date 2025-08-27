@@ -1,0 +1,104 @@
+/* 1. Definition der Farbvariablen */
+:root {
+  /* Standardfarben (Light Mode) */
+  --editor-background: #ffffff;
+  --editor-text-color: #111827;
+  --editor-border-color: #d1d5db; /* Tailwind gray-300 */
+  --toolbar-background: #f3f4f6;   /* Tailwind gray-100 */
+  --button-background: #ffffff;
+  --button-hover-background: #e5e7eb; /* Tailwind gray-200 */
+  --button-active-background: #3b82f6; /* Tailwind blue-500 */
+  --button-active-text-color: #ffffff;
+}
+
+.dark {
+  /* Überschriebene Farben für den Dark Mode */
+  --editor-background: #1e293b; /* Ein dunkles Blau/Grau */
+  --editor-text-color: #e2e8f0;
+  --editor-border-color: #475569; /* Tailwind slate-600 */
+  --toolbar-background: #0f172a;   /* Tailwind slate-900 */
+  --button-background: #334155;     /* Tailwind slate-700 */
+  --button-hover-background: #475569; /* Tailwind slate-600 */
+  --button-active-background: #4f46e5; /* Tailwind indigo-600 */
+  --button-active-text-color: #ffffff;
+}
+
+
+/* 2. Anwendung der Variablen auf die Komponenten */
+
+/* Styling für die Werkzeugleiste */
+.tiptap-toolbar {
+  background-color: var(--toolbar-background);
+  border: 1px solid var(--editor-border-color);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tiptap-toolbar button {
+  background-color: var(--button-background);
+  color: var(--editor-text-color);
+  border: 1px solid var(--editor-border-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tiptap-toolbar button:hover {
+  background-color: var(--button-hover-background);
+}
+
+.tiptap-toolbar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Stil für aktive Buttons */
+.tiptap-toolbar button.is-active {
+  background-color: var(--button-active-background);
+  color: var(--button-active-text-color);
+  border-color: var(--button-active-background);
+}
+
+/* Styling für das eigentliche Textfeld */
+.tiptap-editor .ProseMirror {
+  min-height: 150px;
+  padding: 1rem;
+  border: 1px solid var(--editor-border-color);
+  border-radius: 0 0 8px 8px;
+  outline: none;
+  background-color: var(--editor-background);
+  color: var(--editor-text-color);
+}
+
+/* Behebt Fokus-Problem */
+.tiptap-editor .ProseMirror:focus {
+  border-color: var(--button-active-background);
+  box-shadow: 0 0 0 1px var(--button-active-background);
+}
+
+
+/* Grundlegendes Styling für Inhalte im Editor */
+.tiptap-editor .ProseMirror p {
+  margin: 0;
+}
+
+.tiptap-editor .ProseMirror p:not(:first-child) {
+    margin-top: 0.75em;
+}
+
+.tiptap-editor .ProseMirror ul,
+.tiptap-editor .ProseMirror ol {
+  padding-left: 1.5rem;
+}
+
+.tiptap-editor .ProseMirror h1,
+.tiptap-editor .ProseMirror h2,
+.tiptap-editor .ProseMirror h3 {
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+}
