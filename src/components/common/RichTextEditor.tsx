@@ -3,12 +3,12 @@ import StarterKit from "@tiptap/starter-kit"
 import React, { useState, useCallback, useEffect } from "react"
 import { BottomBar, type Cmd } from "./Toolbar"
 
-interface RichTextEditorProps {
+type Props = {
   content: string
   onChange: (html: string) => void
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) => {
+const RichTextEditor: React.FC<Props> = ({ content, onChange }) => {
   const [activeStates, setActiveStates] = useState<Partial<Record<Cmd, boolean>>>({})
 
   const editor = useEditor({
@@ -26,30 +26,17 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
     },
   })
 
-  const handleExec = useCallback(
-    (cmd: Cmd) => {
-      if (!editor) return
-      const chain = editor.chain().focus()
-      switch (cmd) {
-        case "bold":
-          chain.toggleBold().run()
-          break
-        case "italic":
-          chain.toggleItalic().run()
-          break
-        case "strike":
-          chain.toggleStrike().run()
-          break
-        case "bullet":
-          chain.toggleBulletList().run()
-          break
-        case "ordered":
-          chain.toggleOrderedList().run()
-          break
-      }
-    },
-    [editor]
-  )
+  const handleExec = useCallback((cmd: Cmd) => {
+    if (!editor) return
+    const chain = editor.chain().focus()
+    switch (cmd) {
+      case "bold": chain.toggleBold().run(); break
+      case "italic": chain.toggleItalic().run(); break
+      case "strike": chain.toggleStrike().run(); break
+      case "bullet": chain.toggleBulletList().run(); break
+      case "ordered": chain.toggleOrderedList().run(); break
+    }
+  }, [editor])
 
   useEffect(() => {
     if (editor && editor.getHTML() !== content) {
@@ -66,10 +53,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
         <EditorContent editor={editor} />
       </div>
 
-      {/* Spacer, damit BottomBar den Text nicht überlappt */}
+      {/* Spacer, damit BottomBar nichts überlappt */}
       <div className="h-16" />
 
-      {/* Immer unten, egal ob Desktop oder Mobil */}
+      {/* Immer unten */}
       <BottomBar active={activeStates} onExec={handleExec} />
     </div>
   )
