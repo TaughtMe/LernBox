@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "postbuild": "copy docs\\index.html docs\\404.html",
+    "postbuild": "shx cp docs/index.html docs/404.html",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -51,6 +51,7 @@
     "globals": "^16.3.0",
     "playwright": "^1.54.1",
     "prettier": "^3.6.2",
+    "shx": "^0.4.0",
     "storybook": "^9.0.16",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
