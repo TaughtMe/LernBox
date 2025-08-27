@@ -29,7 +29,7 @@ const versionPlugin = () => {
 };
 
 export default defineConfig({
-  base: './',
+  base: '/LernBox/',
   build: {
     outDir: 'docs',
   },
