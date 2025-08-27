@@ -1,89 +1,149 @@
-import { useEditor, EditorContent } from "@tiptap/react"
+import React, { useMemo, useState, useCallback } from "react"
+import { useEditor, EditorContent, type Editor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Placeholder from "@tiptap/extension-placeholder"
-import React, { useState, useCallback, useEffect } from "react"
 import { BottomBar, type Cmd } from "./Toolbar"
 
 type Props = {
-  content: string
-  onChange: (html: string) => void
+  frontHtml: string
+  backHtml: string
+  onChangeFront: (html: string) => void
+  onChangeBack: (html: string) => void
 }
 
-const RichTextEditor: React.FC<Props> = ({ content, onChange }) => {
-  const [activeStates, setActiveStates] = useState<Partial<Record<Cmd, boolean>>>({})
+type ActiveMap = Partial<Record<Cmd, boolean>>
 
-  const editor = useEditor({
+function getActive(editor: Editor | null): ActiveMap {
+  if (!editor) return {}
+  return {
+    bold: editor.isActive("bold"),
+    italic: editor.isActive("italic"),
+    strike: editor.isActive("strike"),
+    bullet: editor.isActive("bulletList"),
+    ordered: editor.isActive("orderedList"),
+  }
+}
+
+export default function FrontBackEditor({
+  frontHtml,
+  backHtml,
+  onChangeFront,
+  onChangeBack,
+}: Props) {
+  const [focused, setFocused] = useState<"front" | "back">("front")
+
+  const frontEditor = useEditor({
     extensions: [
       StarterKit,
-      Placeholder.configure({
-        placeholder: "Schreibe hier …",
-      }),
+      Placeholder.configure({ placeholder: "Schreibe hier …" }),
     ],
-    content,
-    onUpdate: ({ editor }) => {
-      onChange(editor.getHTML())
-      setActiveStates({
-        bold: editor.isActive("bold"),
-        italic: editor.isActive("italic"),
-        strike: editor.isActive("strike"),
-        bullet: editor.isActive("bulletList"),
-        ordered: editor.isActive("orderedList"),
-      })
+    content: frontHtml,
+    onUpdate: ({ editor }) => onChangeFront(editor.getHTML()),
+    editorProps: {
+      attributes: { "aria-label": "Vorderseite" },
+      handleDOMEvents: {
+        focus: () => {
+          setFocused("front")
+          return false
+        },
+      },
     },
   })
 
-  const handleExec = useCallback((cmd: Cmd) => {
-    if (!editor) return
-    const chain = editor.chain().focus()
-    switch (cmd) {
-      case "bold": chain.toggleBold().run(); break
-      case "italic": chain.toggleItalic().run(); break
-      case "strike": chain.toggleStrike().run(); break
-      case "bullet": chain.toggleBulletList().run(); break
-      case "ordered": chain.toggleOrderedList().run(); break
-    }
-  }, [editor])
+  const backEditor = useEditor({
+    extensions: [
+      StarterKit,
+      Placeholder.configure({ placeholder: "Schreibe hier …" }),
+    ],
+    content: backHtml,
+    onUpdate: ({ editor }) => onChangeBack(editor.getHTML()),
+    editorProps: {
+      attributes: { "aria-label": "Rückseite" },
+      handleDOMEvents: {
+        focus: () => {
+          setFocused("back")
+          return false
+        },
+      },
+    },
+  })
 
-  useEffect(() => {
-    if (editor && editor.getHTML() !== content) {
-      editor.commands.setContent(content, { emitUpdate: false })
-    }
-  }, [content, editor])
+  const activeEditor = focused === "front" ? frontEditor : backEditor
+  const activeStates = useMemo(() => getActive(activeEditor), [activeEditor?.state])
 
-  if (!editor) return null
+  const exec = useCallback(
+    (cmd: Cmd) => {
+      const ed = activeEditor
+      if (!ed) return
+      const chain = ed.chain().focus()
+      switch (cmd) {
+        case "bold": chain.toggleBold().run(); break
+        case "italic": chain.toggleItalic().run(); break
+        case "strike": chain.toggleStrike().run(); break
+        case "bullet": chain.toggleBulletList().run(); break
+        case "ordered": chain.toggleOrderedList().run(); break
+      }
+    },
+    [activeEditor]
+  )
 
   return (
-    <div className="relative">
-      {/* EINGABEFELD – deutlich abgehoben vom Hintergrund */}
-      <div
-        className="
-          rounded-xl border shadow-sm overflow-hidden
-          bg-white text-slate-900 border-slate-300
-          focus-within:ring-2 focus-within:ring-sky-400
-          dark:bg-slate-800/85 dark:text-slate-100 dark:border-white/15
-        "
-      >
-        <div className="p-3 md:p-4">
+    <div className="relative space-y-6">
+      {/* Vorderseite */}
+      <section className="space-y-2">
+        <h3 className="text-sm font-medium text-slate-300 dark:text-slate-300">Vorderseite</h3>
+        <CardEditorSurface>
           <EditorContent
-            editor={editor}
+            editor={frontEditor}
             className="
-              min-h-48 md:min-h-56 outline-none leading-relaxed caret-sky-500
-              placeholder:text-slate-400 dark:placeholder:text-slate-400
+              min-h-[8rem] md:min-h-[10rem] outline-none leading-relaxed caret-sky-500
               selection:bg-sky-200/50 dark:selection:bg-sky-400/30
               [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-6
               [&_p]:mb-2 last:[&_p]:mb-0
             "
           />
-        </div>
-      </div>
+        </CardEditorSurface>
+      </section>
 
-      {/* Platz für die Bottom-Bar */}
+      {/* Rückseite */}
+      <section className="space-y-2">
+        <h3 className="text-sm font-medium text-slate-300 dark:text-slate-300">Rückseite</h3>
+        <CardEditorSurface>
+          <EditorContent
+            editor={backEditor}
+            className="
+              min-h-[8rem] md:min-h-[10rem] outline-none leading-relaxed caret-sky-500
+              selection:bg-sky-200/50 dark:selection:bg-sky-400/30
+              [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-6
+              [&_p]:mb-2 last:[&_p]:mb-0
+            "
+          />
+        </CardEditorSurface>
+      </section>
+
+      {/* Abstand, damit BottomBar nichts überdeckt */}
       <div className="h-16" />
 
-      {/* Toolbar unten */}
-      <BottomBar active={activeStates} onExec={handleExec} />
+      {/* Eine Toolbar für den aktuell fokussierten Editor */}
+      <BottomBar active={activeStates} onExec={exec} />
     </div>
   )
 }
 
-export default RichTextEditor
+/** Oberfläche im Kartenlook wie bei der Abfrage */
+function CardEditorSurface({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="
+        rounded-2xl border shadow-md
+        bg-white text-slate-900 border-slate-200
+        dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700
+        transition-colors
+      "
+    >
+      <div className="p-4 md:p-5">
+        {children}
+      </div>
+    </div>
+  )
+}
