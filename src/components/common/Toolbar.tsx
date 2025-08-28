@@ -1,4 +1,4 @@
-import { Bold, Italic, Strikethrough, List, ListOrdered } from "lucide-react"
+import { type ReactNode } from "react"
 
 export type Cmd = "bold" | "italic" | "strike" | "bullet" | "ordered"
 
@@ -7,27 +7,49 @@ type Props = {
   onExec: (cmd: Cmd) => void
 }
 
+/** Einheitliche Icons */
+const icons: Record<Cmd, ReactNode> = {
+  bold: (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path d="M7 5h6a4 4 0 0 1 0 8H7V5zm0 8h7a4 4 0 0 1 0 8H7v-8z" fill="currentColor"/>
+    </svg>
+  ),
+  italic: (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path d="M10 5h9v2h-3.9l-3.2 10H16v2H7v-2h3.9l3.2-10H10z" fill="currentColor"/>
+    </svg>
+  ),
+  strike: (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path d="M3 12h18v2H3z" fill="currentColor"/>
+      <path d="M7 9c0-2.5 2.3-4 5-4 2 0 3.9.7 5 2l-1.8 1.2C14.5 7.5 13.3 7 12 7c-1.6 0-3 .7-3 2 0 1.6 1.6 2.3 4 3H9.6C8 11 7 10.1 7 9z" fill="currentColor"/>
+      <path d="M17 15c0 2.3-2 4-5 4-2.1 0-4.4-.8-5.4-2.1l1.7-1.1c.7.8 2.2 1.4 3.7 1.4 1.8 0 3-.8 3-2 0-1.5-1.6-2.2-4.1-3H14c2 .8 3 1.8 3 2.8z" fill="currentColor"/>
+    </svg>
+  ),
+  bullet: (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <circle cx="6" cy="7" r="2" fill="currentColor"/>
+      <circle cx="6" cy="12" r="2" fill="currentColor"/>
+      <circle cx="6" cy="17" r="2" fill="currentColor"/>
+      <path d="M10 6h8v2h-8zM10 11h8v2h-8zM10 16h8v2h-8z" fill="currentColor"/>
+    </svg>
+  ),
+  ordered: (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path d="M4 6h2V4H4v2zm0 6h3v-2H4v2zm0 6h4v-2H4v2z" fill="currentColor"/>
+      <path d="M10 6h10v2H10zM10 11h10v2H10zM10 16h10v2H10z" fill="currentColor"/>
+    </svg>
+  ),
+}
+
+/** Schwebende Toolbar unten – wie gehabt */
 export function BottomBar({ active, onExec }: Props) {
   const items: Cmd[] = ["bold", "italic", "strike", "bullet", "ordered"]
-
-  const renderIcon = (cmd: Cmd) => {
-    switch (cmd) {
-      case "bold": return <Bold strokeWidth={2} />
-      case "italic": return <Italic strokeWidth={2} />
-      case "strike": return <Strikethrough strokeWidth={2} />
-      case "bullet": return <List strokeWidth={2} />
-      case "ordered": return <ListOrdered strokeWidth={2} />
-    }
-  }
-
   return (
     <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40">
       <nav
-        role="toolbar"
-        className="inline-flex items-center overflow-hidden
-                   rounded-md border border-slate-300/70
-                   shadow-md bg-slate-200/95 text-slate-800
-                   backdrop-blur dark:bg-slate-200"
+        role="toolbar" aria-label="Textformatierung"
+        className="inline-flex items-center overflow-hidden rounded-md border border-slate-300/70 shadow-md bg-slate-200/95 text-slate-800 backdrop-blur dark:bg-slate-200"
       >
         {items.map((cmd, i) => (
           <button
@@ -37,20 +59,47 @@ export function BottomBar({ active, onExec }: Props) {
             aria-label={cmd}
             onClick={() => onExec(cmd)}
             className={[
-              // <-- genau hier wird alles quadratisch
-              "h-11 w-11 flex items-center justify-center",
+              "h-10 w-10 md:h-11 md:w-11 flex items-center justify-center",
               "hover:bg-white active:bg-white/80",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500",
               i !== items.length - 1 ? "border-r border-slate-300/70" : "",
               active[cmd] ? "bg-sky-100" : "",
             ].join(" ")}
           >
-            <div className="w-5 h-5 flex items-center justify-center">
-              {renderIcon(cmd)}
-            </div>
+            <div className="w-5 h-5 flex items-center justify-center">{icons[cmd]}</div>
           </button>
         ))}
       </nav>
     </div>
+  )
+}
+
+/** NEU: Inline-Toolbar – statisch, für jeden Editor direkt unter der Überschrift */
+export function InlineBar({ active, onExec }: Props) {
+  const items: Cmd[] = ["bold", "italic", "strike", "bullet", "ordered"]
+  return (
+    <nav
+      role="toolbar" aria-label="Textformatierung (lokal)"
+      className="inline-flex items-center overflow-hidden rounded-md border border-slate-300/70 bg-slate-100 text-slate-800 shadow-sm dark:bg-slate-200"
+    >
+      {items.map((cmd, i) => (
+        <button
+          key={cmd}
+          type="button"
+          aria-pressed={!!active[cmd]}
+          aria-label={cmd}
+          onClick={() => onExec(cmd)}
+          className={[
+            "h-9 w-9 flex items-center justify-center",
+            "hover:bg-white active:bg-white/80",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500",
+            i !== items.length - 1 ? "border-r border-slate-300/70" : "",
+            active[cmd] ? "bg-sky-100" : "",
+          ].join(" ")}
+        >
+          <div className="w-5 h-5 flex items-center justify-center">{icons[cmd]}</div>
+        </button>
+      ))}
+    </nav>
   )
 }
