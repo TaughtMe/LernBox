@@ -1,149 +1,67 @@
-import React, { useMemo, useState, useCallback } from "react"
-import { useEditor, EditorContent, type Editor } from "@tiptap/react"
+import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
-import Placeholder from "@tiptap/extension-placeholder"
+import React, { useState, useCallback, useEffect } from "react"
 import { BottomBar, type Cmd } from "./Toolbar"
 
 type Props = {
-  frontHtml: string
-  backHtml: string
-  onChangeFront: (html: string) => void
-  onChangeBack: (html: string) => void
+  content: string
+  onChange: (html: string) => void
 }
 
-type ActiveMap = Partial<Record<Cmd, boolean>>
+const RichTextEditor: React.FC<Props> = ({ content, onChange }) => {
+  const [activeStates, setActiveStates] = useState<Partial<Record<Cmd, boolean>>>({})
 
-function getActive(editor: Editor | null): ActiveMap {
-  if (!editor) return {}
-  return {
-    bold: editor.isActive("bold"),
-    italic: editor.isActive("italic"),
-    strike: editor.isActive("strike"),
-    bullet: editor.isActive("bulletList"),
-    ordered: editor.isActive("orderedList"),
-  }
-}
-
-export default function FrontBackEditor({
-  frontHtml,
-  backHtml,
-  onChangeFront,
-  onChangeBack,
-}: Props) {
-  const [focused, setFocused] = useState<"front" | "back">("front")
-
-  const frontEditor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({ placeholder: "Schreibe hier …" }),
-    ],
-    content: frontHtml,
-    onUpdate: ({ editor }) => onChangeFront(editor.getHTML()),
-    editorProps: {
-      attributes: { "aria-label": "Vorderseite" },
-      handleDOMEvents: {
-        focus: () => {
-          setFocused("front")
-          return false
-        },
-      },
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content,
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML())
+      setActiveStates({
+        bold: editor.isActive("bold"),
+        italic: editor.isActive("italic"),
+        strike: editor.isActive("strike"),
+        bullet: editor.isActive("bulletList"),
+        ordered: editor.isActive("orderedList"),
+      })
     },
   })
 
-  const backEditor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({ placeholder: "Schreibe hier …" }),
-    ],
-    content: backHtml,
-    onUpdate: ({ editor }) => onChangeBack(editor.getHTML()),
-    editorProps: {
-      attributes: { "aria-label": "Rückseite" },
-      handleDOMEvents: {
-        focus: () => {
-          setFocused("back")
-          return false
-        },
-      },
-    },
-  })
+  const handleExec = useCallback((cmd: Cmd) => {
+    if (!editor) return
+    const chain = editor.chain().focus()
+    switch (cmd) {
+      case "bold": chain.toggleBold().run(); break
+      case "italic": chain.toggleItalic().run(); break
+      case "strike": chain.toggleStrike().run(); break
+      case "bullet": chain.toggleBulletList().run(); break
+      case "ordered": chain.toggleOrderedList().run(); break
+    }
+  }, [editor])
 
-  const activeEditor = focused === "front" ? frontEditor : backEditor
-  const activeStates = useMemo(() => getActive(activeEditor), [activeEditor?.state])
+  useEffect(() => {
+    if (editor && editor.getHTML() !== content) {
+      editor.commands.setContent(content, { emitUpdate: false })
+    }
+  }, [content, editor])
 
-  const exec = useCallback(
-    (cmd: Cmd) => {
-      const ed = activeEditor
-      if (!ed) return
-      const chain = ed.chain().focus()
-      switch (cmd) {
-        case "bold": chain.toggleBold().run(); break
-        case "italic": chain.toggleItalic().run(); break
-        case "strike": chain.toggleStrike().run(); break
-        case "bullet": chain.toggleBulletList().run(); break
-        case "ordered": chain.toggleOrderedList().run(); break
-      }
-    },
-    [activeEditor]
-  )
+  if (!editor) return null
 
   return (
-    <div className="relative space-y-6">
-      {/* Vorderseite */}
-      <section className="space-y-2">
-        <h3 className="text-sm font-medium text-slate-300 dark:text-slate-300">Vorderseite</h3>
-        <CardEditorSurface>
-          <EditorContent
-            editor={frontEditor}
-            className="
-              min-h-[8rem] md:min-h-[10rem] outline-none leading-relaxed caret-sky-500
-              selection:bg-sky-200/50 dark:selection:bg-sky-400/30
-              [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-6
-              [&_p]:mb-2 last:[&_p]:mb-0
-            "
-          />
-        </CardEditorSurface>
-      </section>
+    <div className="relative">
+      {/* Editor-Fläche */}
+      <div className="min-h-48 bg-white/90 text-slate-900 rounded-md p-3 shadow-sm
+                      md:min-h-56 md:p-4
+                      dark:bg-slate-800/60 dark:text-slate-100 dark:border dark:border-white/10">
+        <EditorContent editor={editor} />
+      </div>
 
-      {/* Rückseite */}
-      <section className="space-y-2">
-        <h3 className="text-sm font-medium text-slate-300 dark:text-slate-300">Rückseite</h3>
-        <CardEditorSurface>
-          <EditorContent
-            editor={backEditor}
-            className="
-              min-h-[8rem] md:min-h-[10rem] outline-none leading-relaxed caret-sky-500
-              selection:bg-sky-200/50 dark:selection:bg-sky-400/30
-              [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-6
-              [&_p]:mb-2 last:[&_p]:mb-0
-            "
-          />
-        </CardEditorSurface>
-      </section>
-
-      {/* Abstand, damit BottomBar nichts überdeckt */}
+      {/* Platz, damit die schwebende BottomBar nichts überlappt */}
       <div className="h-16" />
 
-      {/* Eine Toolbar für den aktuell fokussierten Editor */}
-      <BottomBar active={activeStates} onExec={exec} />
+      {/* Immer unten zentriert */}
+      <BottomBar active={activeStates} onExec={handleExec} />
     </div>
   )
 }
 
-/** Oberfläche im Kartenlook wie bei der Abfrage */
-function CardEditorSurface({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className="
-        rounded-2xl border shadow-md
-        bg-white text-slate-900 border-slate-200
-        dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700
-        transition-colors
-      "
-    >
-      <div className="p-4 md:p-5">
-        {children}
-      </div>
-    </div>
-  )
-}
+export default RichTextEditor

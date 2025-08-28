@@ -1,28 +1,33 @@
 import React, { useState, useRef } from "react"
 import Papa from "papaparse"
 import { Button } from "../Button/Button"
-import FrontBackEditor from "../common/FrontBackEditor"          // NEU: 2-Felder-Editor für den Add-Bereich
-import RichTextEditor from "../common/RichTextEditor"            // weiterhin für Inline-Edit in der Liste
 import { type Card as CardType } from "../../context/DeckContext"
 import { MdEdit, MdDelete, MdSave, MdCancel } from "react-icons/md"
+import FrontBackEditor from "../common/FrontBackEditor.tsx"
 import "./CardListEditor.css"
 
 type CardListEditorProps = {
   deckId: string
   cards: CardType[]
-  onAddCard: (deckId: string, cardData: { question: string; answer: string }) => void
+  onAddCard: (
+    deckId: string,
+    cardData: { question: string; answer: string }
+  ) => void
   onDeleteCard: (deckId: string, cardId: string) => void
   onUpdateCard: (
     deckId: string,
     cardId: string,
     updatedData: { question: string; answer: string }
   ) => void
-  addMultipleCardsToDeck: (deckId: string, newCardsData: { question: string; answer: string }[]) => void
+  addMultipleCardsToDeck: (
+    deckId: string,
+    newCardsData: { question: string; answer: string }[]
+  ) => void
   sortCriteria: string
   setSortCriteria: (value: string) => void
 }
 
-// Editorinhalt leer?
+// Editor-Content leer?
 const isContentEmpty = (content: string) => {
   if (!content) return true
   const tempDiv = document.createElement("div")
@@ -40,12 +45,11 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
   sortCriteria,
   setSortCriteria,
 }) => {
-  // Add-Form: neuer Inhalt (Front/Back)
-  const [newFront, setNewFront] = useState<string>("")
-  const [newBack, setNewBack] = useState<string>("")
-
-  // CSV
+  // --- State: neue Karte anlegen ---
+  const [newQuestion, setNewQuestion] = useState<string>("")
+  const [newAnswer, setNewAnswer] = useState<string>("")
   const fileInputRef = useRef<HTMLInputElement>(null)
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file || !deckId) return
@@ -56,8 +60,13 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
       complete: (results) => {
         const newCardsData: { question: string; answer: string }[] = []
         results.data.forEach((row: unknown) => {
-          const c = row as { question?: string; answer?: string }
-          if (c.question && c.answer) newCardsData.push({ question: c.question, answer: c.answer })
+          const cardData = row as { question?: string; answer?: string }
+          if (cardData.question && cardData.answer) {
+            newCardsData.push({
+              question: cardData.question,
+              answer: cardData.answer,
+            })
+          }
         })
         if (newCardsData.length > 0) {
           addMultipleCardsToDeck(deckId, newCardsData)
@@ -74,24 +83,18 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
     })
   }
 
-  // Add-Form Sichtbarkeit
-  const [isAddFormVisible, setIsAddFormVisible] = useState(false)
-  // Kartenliste Sichtbarkeit
-  const [isCardListVisible, setIsCardListVisible] = useState(false)
-
-  // Add-Submit
   const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (isContentEmpty(newFront) || isContentEmpty(newBack)) {
-      alert("Bitte fülle Vorder- und Rückseite aus.")
+    if (isContentEmpty(newQuestion) || isContentEmpty(newAnswer)) {
+      alert("Bitte füllen Sie beide Felder aus.")
       return
     }
-    onAddCard(deckId, { question: newFront, answer: newBack })
-    setNewFront("")
-    setNewBack("")
+    onAddCard(deckId, { question: newQuestion, answer: newAnswer })
+    setNewQuestion("")
+    setNewAnswer("")
   }
 
-  // Edit-Zustände
+  // --- State: Karte bearbeiten ---
   const [editingCardId, setEditingCardId] = useState<string | null>(null)
   const [editedCardData, setEditedCardData] = useState<{ question: string; answer: string }>({
     question: "",
@@ -102,10 +105,12 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
     setEditingCardId(card.id)
     setEditedCardData({ question: card.question, answer: card.answer })
   }
+
   const handleCancelClick = () => {
     setEditingCardId(null)
     setEditedCardData({ question: "", answer: "" })
   }
+
   const handleSaveClick = (cardId: string) => {
     if (isContentEmpty(editedCardData.question) || isContentEmpty(editedCardData.answer)) {
       alert("Frage und Antwort dürfen nicht leer sein.")
@@ -115,13 +120,12 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
     setEditingCardId(null)
     setEditedCardData({ question: "", answer: "" })
   }
-  const handleEditedCardChange = (field: "question" | "answer", html: string) => {
-    setEditedCardData((prev) => ({ ...prev, [field]: html }))
-  }
+
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false)
+  const [isCardListVisible, setIsCardListVisible] = useState(false)
 
   return (
     <>
-      {/* versteckter CSV-Input */}
       <input
         type="file"
         ref={fileInputRef}
@@ -130,7 +134,7 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
         onChange={handleFileChange}
       />
 
-      {/* --------- NEUE KARTE HINZUFÜGEN --------- */}
+      {/* ---------- Neue Karte hinzufügen ---------- */}
       <div className="card-management-area">
         <h2
           style={{ cursor: "pointer", margin: "0 0 1rem 0" }}
@@ -141,23 +145,26 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
 
         {isAddFormVisible && (
           <form onSubmit={handleAddSubmit} className="add-card-form space-y-4">
-            {/* Sichtbares Eingabefeld im Kartenlook: VORDERSEITE + RÜCKSEITE */}
+            {/* VORDER- & RÜCKSEITE als Karten-Eingabefeld */}
             <FrontBackEditor
-              frontHtml={newFront}
-              backHtml={newBack}
-              onChangeFront={(html: string) => setNewFront(html)}
-              onChangeBack={(html: string) => setNewBack(html)}
+              frontHtml={newQuestion}
+              backHtml={newAnswer}
+              onChangeFront={(html: string) => setNewQuestion(html)}
+              onChangeBack={(html: string) => setNewAnswer(html)}
             />
 
-            {/* Aktionen */}
             <div
               className="form-actions"
-              style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: ".5rem" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                marginTop: "0.5rem",
+              }}
             >
               <Button type="submit" variant="primary" aria-label="Karte hinzufügen">
                 Karte hinzufügen
               </Button>
-
               <Button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
@@ -165,7 +172,6 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
               >
                 Aus CSV importieren
               </Button>
-
               <a
                 href="/LernBox/import_template.csv"
                 download="import_vorlage.csv"
@@ -180,7 +186,7 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
 
       <hr className="section-divider" />
 
-      {/* --------- KARTENLISTE --------- */}
+      {/* ---------- Kartenliste ---------- */}
       <div className="card-list-area">
         <h2
           style={{ cursor: "pointer", margin: "0 0 1rem 0" }}
@@ -226,24 +232,26 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
               </div>
             </div>
 
-            {/* Liste */}
             <ul className="card-list">
               {cards.length > 0 ? (
                 cards.map((card) => (
                   <li key={card.id} className="card-list-item">
                     {editingCardId === card.id ? (
                       <>
+                        {/* Bearbeitungsmodus: beide Seiten als Karten-Eingabe */}
                         <div className="card-info-edit">
-                          {/* Inline-Edit je Seite; wenn du willst, kann ich hier ebenfalls FrontBackEditor einbauen */}
-                          <RichTextEditor
-                            content={editedCardData.question}
-                            onChange={(html: string) => handleEditedCardChange("question", html)}
-                          />
-                          <RichTextEditor
-                            content={editedCardData.answer}
-                            onChange={(html: string) => handleEditedCardChange("answer", html)}
+                          <FrontBackEditor
+                            frontHtml={editedCardData.question}
+                            backHtml={editedCardData.answer}
+                            onChangeFront={(html: string) =>
+                              setEditedCardData((p) => ({ ...p, question: html }))
+                            }
+                            onChangeBack={(html: string) =>
+                              setEditedCardData((p) => ({ ...p, answer: html }))
+                            }
                           />
                         </div>
+
                         <div className="card-actions">
                           <Button
                             onClick={() => handleSaveClick(card.id)}
@@ -266,16 +274,8 @@ export const CardListEditor: React.FC<CardListEditorProps> = ({
                     ) : (
                       <>
                         <div className="card-info">
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: `<strong>VS:</strong> ${card.question}`,
-                            }}
-                          />
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: `<strong>RS:</strong> ${card.answer}`,
-                            }}
-                          />
+                          <div dangerouslySetInnerHTML={{ __html: `<strong>VS:</strong> ${card.question}` }} />
+                          <div dangerouslySetInnerHTML={{ __html: `<strong>RS:</strong> ${card.answer}` }} />
                         </div>
                         <div className="card-actions">
                           <span className="card-level">Stufe: {card.level}</span>
