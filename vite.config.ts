@@ -3,7 +3,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { version } from './package.json'
-
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -14,18 +13,19 @@ const dirname =
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url))
 
+// schreibt docs/version.json nach jedem Build
 const versionPlugin = () => ({
   name: 'version-plugin',
   closeBundle() {
     const versionInfo = { version }
-    const outputPath = path.resolve(dirname, 'docs', 'version.json')
+    const outputPath = path.resolve(__dirname, 'docs', 'version.json')
     fs.writeFileSync(outputPath, JSON.stringify(versionInfo))
     console.log(`version.json mit Version ${version} geschrieben nach ${outputPath}`)
   },
 })
 
 export default defineConfig({
-  base: '/',
+  base: '/', // Cloudflare Pages am Domain-Root
   build: {
     outDir: 'docs',
   },
@@ -49,28 +49,27 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // HTML immer frisch: verhindert „alter Basename“ aus Cache
         runtimeCaching: [
-          // HTML/Navigationsanfragen: NetworkFirst = schnelle Updates, weniger "stale shell"
           {
-            urlPattern: ({ request }) =>
-              request.mode === 'navigate' || request.destination === 'document',
+            urlPattern: ({ request }) => request.destination === 'document',
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'html-cache',
+              cacheName: 'html-cache-v2',
               networkTimeoutSeconds: 3,
-              cacheableResponse: { statuses: [0, 200] },
+              cacheableResponse: { statuses: [200] },
             },
           },
-          // Statische Assets: CacheFirst = schnelle Wiederaufrufe
           {
             urlPattern: ({ request }) =>
               request.destination === 'script' ||
               request.destination === 'style' ||
               request.destination === 'image' ||
-              request.destination === 'font',
+              request.destination === 'font' ||
+              request.destination === 'worker',
             handler: 'CacheFirst',
             options: {
-              cacheName: 'static-cache',
+              cacheName: 'assets-cache-v1',
               expiration: {
                 maxEntries: 500,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Tage
@@ -79,6 +78,9 @@ export default defineConfig({
             },
           },
         ],
+        // Query-Param für Busting erlauben (?v=…)
+        ignoreURLParametersMatching: [/^v$/],
+        cleanupOutdatedCaches: true,
       },
     }),
     versionPlugin(),
@@ -106,5 +108,3 @@ export default defineConfig({
     ],
   },
 })
-
-
