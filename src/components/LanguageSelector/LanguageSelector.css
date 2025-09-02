@@ -20,7 +20,9 @@
   background-color: var(--clr-bg-surface);
   color: var(--clr-text-primary);
   cursor: pointer;
-  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+  transition:
+    background-color var(--transition-speed),
+    border-color var(--transition-speed);
 }
 
 .lang-selector-button:hover {

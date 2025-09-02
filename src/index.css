@@ -123,12 +123,6 @@ a:hover {
   color: var(--clr-text-dark);
 }
 
-/* Specific override for card content */
-.card-info span,
-.card-info strong {
-  color: var(--clr-text-dark);
-}
-
 /* ==================================================================
   HAUPT-LAYOUT REGELN (GELTEN FÜR ALLE BILDSCHIRMGRÖSSEN)
   ==================================================================
@@ -200,7 +194,7 @@ a:hover {
     flex-wrap: wrap;
   }
 
-   .hide-on-mobile {
+  .hide-on-mobile {
     display: none;
   }
 
@@ -249,9 +243,9 @@ a:hover {
   Ensures title and icon are on the same line and correctly aligned.
 */
 .deck-page-header {
-  display: flex;                 /* CRITICAL: Makes the container a flexbox */
+  display: flex; /* CRITICAL: Makes the container a flexbox */
   justify-content: space-between; /* Pushes title and button to opposite ends */
-  align-items: center;           /* CRITICAL: Vertically aligns them */
+  align-items: center; /* CRITICAL: Vertically aligns them */
   gap: 1rem;
   padding: 1rem 1.5rem !important;
   background-color: transparent !important;
@@ -269,4 +263,77 @@ a:hover {
 .deck-page-header .button svg {
   font-size: 1.8rem;
   transform: scaleX(-1);
+}
+
+/* Darkmode: nur die Überschriften VS/RS in weiß */
+body[data-theme='dark'] .card-list-area .card-info.unified .face-header,
+body[data-theme='dark'] .card-list-area .card-info.unified .face-header strong {
+  color: #ffffff !important;
+}
+
+/* Darkmode: Bold soll standardmäßig hell sein,
+   ABER wenn eine Inline-Farbe gesetzt ist (am Element selbst ODER einem Vorfahren),
+   soll diese Farbe gelten. */
+body[data-theme='dark']
+  .card-list-area
+  .card-info.unified
+  .face-content
+  strong:not([style*='color']):not(:where(span[style*='color'] *)),
+body[data-theme='dark']
+  .card-list-area
+  .card-info.unified
+  .face-content
+  b:not([style*='color']):not(:where(span[style*='color'] *)) {
+  color: var(--clr-text-primary); /* hell im Darkmode */
+}
+
+/* Falls Bold selbst eine Farbe trägt → nimm diese */
+body[data-theme='dark']
+  .card-list-area
+  .card-info.unified
+  .face-content
+  strong[style*='color'],
+body[data-theme='dark']
+  .card-list-area
+  .card-info.unified
+  .face-content
+  b[style*='color'] {
+  color: inherit !important;
+}
+
+/* Falls Bold innerhalb eines farbigen Spans liegt → Farbe vom Vorfahren erben */
+body[data-theme='dark']
+  .card-list-area
+  .card-info.unified
+  .face-content
+  span[style*='color']
+  strong,
+body[data-theme='dark']
+  .card-list-area
+  .card-info.unified
+  .face-content
+  span[style*='color']
+  b {
+  color: inherit !important;
+}
+
+/* Darkmode: Grundfarbe der VS/RS-Inhalte ist hell */
+body[data-theme='dark'] .card-list-area .card-info.unified .face-content {
+  color: var(--clr-text-primary);
+}
+
+/* Bold soll NICHT eigene Farbe setzen, sondern erben (weiß oder Inline-Farbe) */
+body[data-theme='dark'] .card-list-area .card-info.unified .face-content strong,
+body[data-theme='dark'] .card-list-area .card-info.unified .face-content b {
+  color: inherit !important; /* überschreibt .card-info strong {...} */
+}
+
+.face-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--clr-text-dark);
+}
+body[data-theme='dark'] .face-label {
+  color: #fff;
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 /**
  * A custom hook that tracks the state of a CSS media query.
@@ -6,24 +6,24 @@ import { useState, useEffect } from 'react';
  * @returns {boolean} Returns true if the media query matches, otherwise false.
  */
 export const useMediaQuery = (query: string): boolean => {
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(false)
 
   useEffect(() => {
-    const media = window.matchMedia(query);
+    const media = window.matchMedia(query)
     if (media.matches !== matches) {
-      setMatches(media.matches);
+      setMatches(media.matches)
     }
 
     const listener = () => {
-      setMatches(media.matches);
-    };
+      setMatches(media.matches)
+    }
 
     // Use the newer addEventListener method
-    media.addEventListener('change', listener);
+    media.addEventListener('change', listener)
 
     // Cleanup function to remove the listener on component unmount
-    return () => media.removeEventListener('change', listener);
-  }, [matches, query]);
+    return () => media.removeEventListener('change', listener)
+  }, [matches, query])
 
-  return matches;
-};
+  return matches
+}

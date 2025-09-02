@@ -35,7 +35,12 @@ const LoginPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type="submit" variant="primary" fullWidth aria-label="Anmelden">
+          <Button
+            type="submit"
+            variant="primary"
+            fullWidth
+            aria-label="Anmelden"
+          >
             Anmelden
           </Button>
         </form>

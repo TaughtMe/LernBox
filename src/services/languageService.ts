@@ -1,4 +1,4 @@
-import { francAll } from 'franc';
+import { francAll } from 'franc'
 
 /**
  * Erkennt die Sprache eines Textes mit einem mehrstufigen Hybrid-Ansatz.
@@ -10,42 +10,72 @@ import { francAll } from 'franc';
  * @returns 'de' für Deutsch, 'en' für Englisch.
  */
 export const detectLanguage = (text: string): 'de' | 'en' => {
-  const cleanedText = text.trim();
+  const cleanedText = text.trim()
 
   if (cleanedText.length < 2) {
-    return 'en';
+    return 'en'
   }
 
   // --- Schritt 1: Heuristik für 100% sichere deutsche Zeichen ---
-  const germanChars = /[äöüß]/i;
+  const germanChars = /[äöüß]/i
   if (germanChars.test(cleanedText)) {
-    return 'de';
+    return 'de'
   }
 
   // --- Schritt 2: 'francAll' mit Konfidenzprüfung ---
   const langProbs = francAll(cleanedText, {
     only: ['deu', 'eng'],
-  });
+  })
 
   // Wir geben den Elementen hier explizite Typen, um den 'implicit any' Fehler zu beheben
-  const deuProb = langProbs.find(([lang]: [string, number]) => lang === 'deu')?.[1] || 0;
-  const engProb = langProbs.find(([lang]: [string, number]) => lang === 'eng')?.[1] || 0;
+  const deuProb =
+    langProbs.find(([lang]: [string, number]) => lang === 'deu')?.[1] || 0
+  const engProb =
+    langProbs.find(([lang]: [string, number]) => lang === 'eng')?.[1] || 0
 
-  const confidenceThreshold = 0.1;
+  const confidenceThreshold = 0.1
   if (deuProb > engProb + confidenceThreshold) {
-    return 'de';
+    return 'de'
   }
   if (engProb > deuProb + confidenceThreshold) {
-    return 'en';
+    return 'en'
   }
 
   // --- Schritt 3: Fallback-Prüfung häufiger Wörter ---
-  const germanCommonWords = new Set(['der', 'die', 'das', 'und', 'ist', 'nicht', 'es', 'sie', 'er', 'ich', 'mit', 'zu']);
-  const englishCommonWords = new Set(['the', 'and', 'is', 'in', 'to', 'of', 'a', 'for', 'with', 'on', 'he', 'she']);
+  const germanCommonWords = new Set([
+    'der',
+    'die',
+    'das',
+    'und',
+    'ist',
+    'nicht',
+    'es',
+    'sie',
+    'er',
+    'ich',
+    'mit',
+    'zu',
+  ])
+  const englishCommonWords = new Set([
+    'the',
+    'and',
+    'is',
+    'in',
+    'to',
+    'of',
+    'a',
+    'for',
+    'with',
+    'on',
+    'he',
+    'she',
+  ])
 
-  const words = cleanedText.toLowerCase().split(/\s+/);
-  const germanCount = words.filter(word => germanCommonWords.has(word)).length;
-  const englishCount = words.filter(word => englishCommonWords.has(word)).length;
-  
-  return germanCount > englishCount ? 'de' : 'en';
-};
+  const words = cleanedText.toLowerCase().split(/\s+/)
+  const germanCount = words.filter((word) => germanCommonWords.has(word)).length
+  const englishCount = words.filter((word) =>
+    englishCommonWords.has(word)
+  ).length
+
+  return germanCount > englishCount ? 'de' : 'en'
+}

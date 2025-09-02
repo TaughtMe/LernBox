@@ -106,7 +106,10 @@ export const SessionControls: React.FC<SessionControlsProps> = ({
               </Button>
             ) : (
               <>
-                <div className="evaluation-feedback" style={{ marginBottom: '1rem' }}>
+                <div
+                  className="evaluation-feedback"
+                  style={{ marginBottom: '1rem' }}
+                >
                   {feedback === 'correct'
                     ? 'Richtig! ✨'
                     : 'Falsch. Die korrekte Antwort wird angezeigt.'}

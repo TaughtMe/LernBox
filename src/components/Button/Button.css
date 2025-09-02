@@ -50,7 +50,6 @@
   height: 2rem !important;
   padding: 0 !important; /* Die entscheidende Korrektur! */
   min-width: 0;
-  
 }
 .button.button--icon-only svg {
   width: 1.75rem;

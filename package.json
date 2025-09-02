@@ -14,21 +14,30 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tiptap/extension-color": "^3.3.0",
     "@tiptap/extension-placeholder": "^3.3.0",
+    "@tiptap/extension-text-style": "^3.3.0",
+    "@tiptap/extension-underline": "^3.3.0",
     "@tiptap/pm": "^3.3.0",
     "@tiptap/react": "^3.3.0",
     "@tiptap/starter-kit": "^3.3.0",
+    "@yudiel/react-qr-scanner": "^2.3.1",
     "dompurify": "^3.2.6",
     "franc": "^6.2.0",
+    "jspdf": "^3.0.2",
     "lucide-react": "^0.542.0",
+    "lz-string": "^1.5.0",
     "papaparse": "^5.5.3",
+    "qrcode.react": "^4.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.7.0"
+    "react-router-dom": "^7.7.0",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.1",
+    "@cloudflare/workers-types": "^4.20250902.0",
     "@eslint/js": "^9.30.1",
     "@storybook/addon-a11y": "^9.0.16",
     "@storybook/addon-docs": "^9.0.16",
@@ -38,6 +47,7 @@
     "@types/franc": "^5.0.3",
     "@types/node": "^24.0.15",
     "@types/papaparse": "^5.3.16",
+    "@types/qrcode.react": "^1.0.5",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.8",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
@@ -61,6 +71,7 @@
     "typescript-eslint": "^8.35.1",
     "vite": "^7.0.4",
     "vite-plugin-pwa": "^1.0.1",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wrangler": "^4.33.2"
   }
 }

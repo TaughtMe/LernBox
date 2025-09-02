@@ -1,0 +1,156 @@
+/* src/components/RichTextEditor/rte.css */
+.rte-container {
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+  border-radius: 12px;
+  background: var(--bg, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+}
+
+.rte-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.rte-btn {
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+  background: var(--btn-bg, rgba(0, 0, 0, 0.03));
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+}
+.rte-btn.is-active {
+  outline: 2px solid rgba(0, 0, 0, 0.35);
+}
+
+.rte-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border, rgba(0, 0, 0, 0.12));
+  margin: 0 4px;
+}
+
+.rte-color input[type='color'] {
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rte-editor {
+  padding: 6px;
+  border-radius: 8px;
+}
+.rte-editor .ProseMirror {
+  outline: none;
+}
+.rte-editor .ProseMirror p {
+  margin: 0.5em 0;
+}
+.rte-editor .ProseMirror ul,
+.rte-editor .ProseMirror ol {
+  padding-left: 1.25rem;
+}
+
+/* ==== Dark-Mode Tweaks for RichTextEditor ==== */
+
+/* Unterstützt beide Varianten: class="dark" oder data-theme="dark" */
+.dark .rte-container,
+[data-theme='dark'] .rte-container {
+  background: #1e2128; /* deutlich heller als Seitenhintergrund */
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .rte-editor,
+[data-theme='dark'] .rte-editor {
+  background: #171a20; /* etwas dunkler als Container für sichtbare Kante */
+  border-radius: 8px;
+}
+
+.dark .rte-editor .ProseMirror,
+[data-theme='dark'] .rte-editor .ProseMirror {
+  color: #e8e8e8; /* hohe Lesbarkeit */
+  caret-color: #e8e8e8;
+}
+
+/* Placeholder (Tiptap Placeholder-Ext) */
+.dark .rte-editor .ProseMirror p.is-editor-empty:first-child::before,
+[data-theme='dark']
+  .rte-editor
+  .ProseMirror
+  p.is-editor-empty:first-child::before {
+  color: rgba(232, 232, 232, 0.45);
+}
+
+/* Toolbar-Buttons */
+.dark .rte-toolbar .rte-btn,
+[data-theme='dark'] .rte-toolbar .rte-btn {
+  color: #e8e8e8;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .rte-toolbar .rte-btn.is-active,
+[data-theme='dark'] .rte-toolbar .rte-btn.is-active {
+  outline: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Farbwähler */
+.dark .rte-toolbar .rte-color input[type='color'],
+[data-theme='dark'] .rte-toolbar .rte-color input[type='color'] {
+  background: #171a20;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Trennlinie in Toolbar */
+.dark .rte-toolbar .rte-sep,
+[data-theme='dark'] .rte-toolbar .rte-sep {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Optional leichte Innen-Schatten für bessere Tiefenwirkung */
+.dark .rte-editor,
+[data-theme='dark'] .rte-editor {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* === Einheitliche Größe für alle Toolbar-Buttons (Text & SVG) === */
+.rte-toolbar {
+  gap: 8px;
+}
+
+.rte-btn {
+  --rte-icon-size: 18px; /* bei Bedarf 16–20 anpassen */
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(
+    --rte-icon-size
+  ); /* Text (B/I/U) und SVG sind gleich groß (1em) */
+  line-height: 1;
+}
+
+.rte-btn svg {
+  width: 1em; /* skaliert mit font-size der .rte-btn */
+  height: 1em;
+}
+
+/* Minimal größere Icons nur für Aufzählung & Nummerierung (Box-Größe bleibt gleich) */
+.rte-btn[aria-label='Aufzählungsliste'],
+.rte-btn[aria-label='Nummerierte Liste'] {
+  font-size: calc(
+    var(--rte-icon-size) * 1.5
+  ); /* bei Bedarf 1.18–1.28 feinjustieren */
+}

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button } from './Button';
-import { MdEdit } from 'react-icons/md'; // Icon für ein Beispiel importieren
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Button } from './Button'
+import { MdEdit } from 'react-icons/md' // Icon für ein Beispiel importieren
 
 const meta = {
   title: 'Design-System/Button',
@@ -18,10 +18,10 @@ const meta = {
       control: 'text', // Erlaubt die Bearbeitung des Inhalts in Storybook
     },
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Button>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 // --- Stories für jede Variante ---
 
@@ -31,7 +31,7 @@ export const Primary: Story = {
     children: 'Primary Button',
     'aria-label': 'Primary Button',
   },
-};
+}
 
 export const Secondary: Story = {
   args: {
@@ -39,7 +39,7 @@ export const Secondary: Story = {
     children: 'Secondary Button',
     'aria-label': 'Secondary Button',
   },
-};
+}
 
 export const Success: Story = {
   args: {
@@ -47,7 +47,7 @@ export const Success: Story = {
     children: 'Success Button',
     'aria-label': 'Success Button',
   },
-};
+}
 
 export const Danger: Story = {
   args: {
@@ -55,7 +55,7 @@ export const Danger: Story = {
     children: 'Danger Button',
     'aria-label': 'Danger Button',
   },
-};
+}
 
 export const IconOnly: Story = {
   args: {
@@ -64,4 +64,4 @@ export const IconOnly: Story = {
     children: <MdEdit />,
     'aria-label': 'Edit',
   },
-};
+}

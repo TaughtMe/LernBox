@@ -1,69 +1,69 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDecks } from '../../context/DeckContext';
-import { ThemeToggle } from '../../components/ThemeToggle';
-import type { Deck } from '../../context/DeckContext';
+import React, { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDecks } from '../../context/DeckContext'
+import { ThemeToggle } from '../../components/ThemeToggle'
+import type { Deck } from '../../context/DeckContext'
 // Dies ist der finale, saubere Import:
-import { version } from '../../version';
+import { version } from '../../version'
 
 const DashboardPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { decks, addDeck, deleteDeck, restoreDecks, exportDecks } = useDecks();
-  const [newDeckTitle, setNewDeckTitle] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate()
+  const { decks, addDeck, deleteDeck, restoreDecks, exportDecks } = useDecks()
+  const [newDeckTitle, setNewDeckTitle] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleDelete = (e: React.MouseEvent, deckId: string) => {
-    e.stopPropagation();
-    deleteDeck(deckId);
-  };
+    e.stopPropagation()
+    deleteDeck(deckId)
+  }
 
   const handleAddDeck = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (newDeckTitle.trim()) {
-      addDeck(newDeckTitle.trim());
-      setNewDeckTitle('');
+      addDeck(newDeckTitle.trim())
+      setNewDeckTitle('')
     }
-  };
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0]
     if (!file) {
-      return;
+      return
     }
 
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = (event) => {
-      const content = event.target?.result;
-      if (typeof content !== 'string') return;
+      const content = event.target?.result
+      if (typeof content !== 'string') return
 
       const confirmation = window.confirm(
         'WARNUNG: Das Importieren einer Datei überschreibt alle aktuellen Decks. Möchten Sie fortfahren?'
-      );
+      )
 
       if (confirmation) {
         try {
-          const importedDecks = JSON.parse(content) as Deck[];
+          const importedDecks = JSON.parse(content) as Deck[]
           if (Array.isArray(importedDecks)) {
-            restoreDecks(importedDecks);
-            alert('Decks erfolgreich importiert!');
+            restoreDecks(importedDecks)
+            alert('Decks erfolgreich importiert!')
           } else {
-            throw new Error('Invalides Dateiformat.');
+            throw new Error('Invalides Dateiformat.')
           }
         } catch (error) {
-          console.error('Fehler beim Importieren der Decks:', error);
+          console.error('Fehler beim Importieren der Decks:', error)
           alert(
             'Fehler: Die Datei konnte nicht gelesen werden. Stellen Sie sicher, dass es eine valide JSON-Datei ist.'
-          );
+          )
         }
       }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-  };
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
 
   const triggerFileInput = () => {
-    fileInputRef.current?.click();
-  };
+    fileInputRef.current?.click()
+  }
 
   return (
     <>
@@ -136,7 +136,7 @@ const DashboardPage: React.FC = () => {
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-export default DashboardPage;
+export default DashboardPage
