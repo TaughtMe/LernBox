@@ -2,7 +2,7 @@
   "homepage": "https://taughtme.github.io/LernBox",
   "name": "lernbox",
   "private": true,
-  "version": "2.0.7d",
+  "version": "2.0.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
