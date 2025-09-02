@@ -92,8 +92,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     editor.setEditable(!disabled)
   }, [disabled, editor])
 
-  // ▼▼ Fokus-Weiterleitung: Klick in die Fläche ⇒ Editor fokussieren
-  const handleMouseDown = useCallback(
+  // Klick überall im Container => Editor fokussieren (Caret ans Ende)
+  const handleContainerMouseDown = useCallback(
     (e: React.MouseEvent) => {
       if (!editor) return
       const target = e.target as HTMLElement
@@ -106,23 +106,25 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     [editor]
   )
 
+  if (!editor) return null
+
   return (
     <div className={`rte-container ${className ?? ''}`}>
       <Toolbar editor={editor as Editor | null} />
       <div
-        className="rte-editor" onMouseDown={e => { if (!editor) return; const el = e.target as HTMLElement; if (!el.closest('.ProseMirror')) { e.preventDefault(); editor.chain().focus('end').run(); } }}
+        className="rte-editor"
         role="textbox"
         aria-label={ariaLabel}
-        onMouseDown={handleMouseDown}
+        onMouseDown={handleContainerMouseDown}
         style={{
           minHeight: typeof minHeight === 'number' ? `${minHeight}px` : minHeight,
         }}
       >
-        <EditorContent id={id} editor={editor} aria-label={ariaLabel} />
+        {/* Wichtig: hier nur id + editor, keine doppelte aria-Props */}
+        <EditorContent id={id} editor={editor} />
       </div>
     </div>
   )
 }
 
 export default RichTextEditor
-
