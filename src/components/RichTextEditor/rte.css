@@ -154,3 +154,7 @@
     var(--rte-icon-size) * 1.5
   ); /* bei Bedarf 1.18â€“1.28 feinjustieren */
 }
+
+/* Cursor überall als Texteingabe anzeigen */
+.rte-editor { cursor: text; }
+
