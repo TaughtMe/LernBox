@@ -23,15 +23,46 @@ export default function LegalPage() {
     }
   }, [hash])
 
-  // WICHTIG: Link zur Textdatei relativ zur Vite-BASE_URL auflösen
+  // Pfad zur Datei relativ zur Vite-BASE_URL
   const baseAbs = new URL(import.meta.env.BASE_URL, window.location.origin)
   const noticesUrl = new URL('THIRDPARTY_NOTICES.txt', baseAbs).toString()
+
+  // Download erzwingen, ohne Navigation (um SPA/SW-Fallback zu umgehen)
+  const handleDownloadNotices = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    try {
+      const res = await fetch(noticesUrl, {
+        cache: 'no-store',
+        headers: { Accept: 'text/plain, */*;q=0.1' },
+      })
+      const text = await res.text()
+
+      // Falls doch HTML zurückkommt (z. B. index.html), trotzdem als Text speichern,
+      // aber im Dateinamen kenntlich machen
+      const isHtml = /^\s*<!doctype html/i.test(text)
+      const filename = isHtml ? 'THIRDPARTY_NOTICES_(server_fallback).txt' : 'THIRDPARTY_NOTICES.txt'
+
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Download fehlgeschlagen:', err)
+      alert('Die Datei konnte nicht geladen werden. Bitte später erneut versuchen.')
+    }
+  }
 
   const stand = new Date().toLocaleDateString('de-DE', { month: 'long', year: 'numeric' })
 
   return (
     <main className="page legal-page">
       <header className="page__header">
+        {/* vorhandener Zurück-Pfeil */}
         <Link
           to="/dashboard"
           aria-label="Zur Übersicht"
@@ -171,14 +202,11 @@ export default function LegalPage() {
           <li>zxing-wasm (QR/Barcode Fallback) – Apache-2.0</li>
           <li>(falls genutzt) Material Symbols / Google – Apache-2.0</li>
         </ul>
+
         <p>
           Vollständige Abhängigkeiten und Lizenztexte:&nbsp;
-          <a
-            href={noticesUrl}
-            download="THIRDPARTY_NOTICES.txt"
-            rel="noopener noreferrer"
-          >
-            THIRDPARTY_NOTICES.txt
+          <a href={noticesUrl} onClick={handleDownloadNotices} rel="noopener noreferrer">
+            THIRDPARTY_NOTICES.txt herunterladen
           </a>
           . Maßgeblich sind die jeweiligen Lizenztexte der Projekte.
         </p>
@@ -197,10 +225,6 @@ export default function LegalPage() {
             <strong>&lt;Font-Name 2&gt;</strong> – Version &lt;x.y&gt; – Lizenz: <em>OFL&nbsp;1.1</em> (oder <em>Apache-2.0</em>) – Quelle: fonts.google.com
           </li>
         </ul>
-        <p>
-          Hinweis: Bei OFL&nbsp;1.1 ist keine namentliche Attribution erforderlich, die <em>Lizenzdatei</em>
-          sollte jedoch mit ausgeliefert werden.
-        </p>
 
         <h3 id="icons">Icons</h3>
         <p>
