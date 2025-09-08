@@ -1,56 +1,48 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
-const LizenzenPage: React.FC = () => {
-  const year = new Date().getFullYear();
+export default function LicensesPage() {
   return (
-    <main style={{ maxWidth: 860, margin: '0 auto', padding: '24px 16px 64px', lineHeight: 1.55 }}>
-      <h1>Lizenzen & Danksagungen</h1>
-      <p style={{ opacity: .85 }}>Open-Source-Komponenten, Schriften und Icons dieser Anwendung.</p>
+    <div className="page-section">
+      <header className="page-header">
+        <h1>Lizenzen & Danksagungen</h1>
 
-      <section style={{ marginTop: 24 }}>
-        <h2>Schriften & Icons</h2>
-        <ul>
-          <li>
-            <strong>Google Fonts</strong> (lokal eingebunden) – <em>SIL Open Font License 1.1</em>, © jeweilige Urheber.
-          </li>
-          <li>
-            <strong>Material Icons / Material Symbols</strong> – <em>Apache License 2.0</em>, © Google.
-          </li>
-        </ul>
-      </section>
+        <Link
+          to="/dashboard"
+          className="button button--secondary button--icon-only"
+          aria-label="Zur Übersicht"
+          title="Zur Übersicht"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M14 7l-5 5 5 5V7z" />
+          </svg>
+        </Link>
+      </header>
 
-      <section style={{ marginTop: 24 }}>
-        <h2>Bibliotheken (Auszug)</h2>
-        <ul>
-          <li>React, React Router – MIT</li>
-          <li>TipTap (ProseMirror) – MIT</li>
-          <li>Workbox – MIT</li>
-          <li>html2canvas – MIT</li>
-          <li>@yudiel/react-qr-scanner – MIT</li>
-          <li>zxing-wasm – Apache-2.0</li>
-        </ul>
-        <p style={{ marginTop: 8 }}>
-          Vollständige Lizenztexte sind den jeweiligen Projekten zu entnehmen (package.json).
-        </p>
-      </section>
+      <div className="card">
+        <div className="card-content">
+          <h2>Third-Party Notices</h2>
+          <ul>
+            <li>React – MIT License</li>
+            <li>React Router – MIT License</li>
+            <li>TipTap – MIT License</li>
+            <li>Workbox – MIT License</li>
+            <li>ZXing WASM – Apache-2.0 License</li>
+            {/* …weitere Bibliotheken nach Bedarf… */}
+          </ul>
 
-      <section style={{ marginTop: 24 }}>
-        <h2>Hinweise</h2>
-        <p>
-          Diese App lädt keine externen Ressourcen für Schriften/Icons (lokale Einbindung).
-          Drittanbieterzugriffe sind durch eine strikte Content-Security-Policy begrenzt.
-        </p>
-      </section>
-
-      <p style={{ marginTop: 24 }}>
-        <a href="/THIRDPARTY_NOTICES.txt" download>THIRDPARTY_NOTICES.txt</a>
-      </p>
-
-      <p style={{ marginTop: 24, opacity: .8 }}>
-        © {year} [Toby Bryson]
-      </p>
-    </main>
+          <h2>Schrift & Icons</h2>
+          <p>
+            Eingebettete SVG-Dateien (lokal). Es werden keine externen
+            Schrift-CDNs geladen.
+          </p>
+        </div>
+      </div>
+    </div>
   );
-};
-
-export default LizenzenPage;
+}
