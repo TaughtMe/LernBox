@@ -1,0 +1,36 @@
+/* src/pages/LegalPage/LegalPage.css */
+
+.legal-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.legal-page .page__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.legal-page .page__header h1 {
+  margin: 0;
+  line-height: 1.2;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+}
+
+.legal-page .page__section {
+  margin-bottom: 1rem;
+}
+
+.legal-page .page__section h2 {
+  margin: 0 0 0.5rem 0;
+}
+
+.legal-page .page__section h3 {
+  margin: 0.75rem 0 0.25rem 0;
+}
+
+.legal-page a {
+  text-decoration: underline;
+}

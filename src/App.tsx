@@ -13,7 +13,7 @@ import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'
 import UpdateNotification from './components/UpdateNotification/UpdateNotification'
 
 // NEU: öffentliche Rechtsseite
-import LegalPage from './pages/LegalPage'
+import LegalPage from './pages/LegalPage/LegalPage'
 
 import './App.css'
 
