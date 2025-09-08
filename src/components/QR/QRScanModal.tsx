@@ -2,31 +2,25 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button } from '../Button/Button'
 import { MdClose, MdError } from 'react-icons/md'
-import { decodeAnyPayload, isLikelyQrCardPayloadText } from '../../utils/qrCodec'
+import {
+  decodeAnyPayload,
+  isLikelyQrCardPayloadText,
+} from '../../utils/qrCodec'
 import { Scanner } from '@yudiel/react-qr-scanner'
-import { toSafeQrItems } from '../../utils/qrValidate'
+import './QRScanModal.css'  // ⬅️ neu
 
 type CardData = { questionHtml: string; answerHtml: string }
 
 type QRScanModalProps = {
   isOpen: boolean
   onClose: () => void
-  /** 'single' → nach erstem Treffer übernehmen & schließen, 'multi' → sammeln und per Button übernehmen */
   mode?: 'single' | 'multi'
   onSuccess?: (data: CardData) => void
   onSuccessMany?: (items: CardData[]) => void
-  /** Throttle: Mindestabstand zwischen zwei Auswertungen (ms) */
   throttleMs?: number
 }
 
-// Kompatibilitätstypisierung ohne any
-const ScannerAny = Scanner as unknown as React.ComponentType<{
-  onResult?: (res: unknown) => void
-  onDecode?: (text: string) => void
-  onScan?: (text: string) => void
-  onError?: (err?: unknown) => void
-  constraints?: MediaStreamConstraints
-}>
+const ScannerAny = Scanner as unknown as React.ComponentType<any>
 
 const QRScanModal: React.FC<QRScanModalProps> = ({
   isOpen,
@@ -37,10 +31,8 @@ const QRScanModal: React.FC<QRScanModalProps> = ({
   throttleMs = 700,
 }) => {
   const [error, setError] = useState<string | null>(null)
-  const handledRef = useRef<boolean>(false) // nur für single-Mode einmal verarbeiten
-  const lastHandledAt = useRef<number>(0) // Throttle-Zeitstempel
-
-  // Multi-Scan-Sammlung
+  const handledRef = useRef(false)
+  const lastHandledAt = useRef(0)
   const [items, setItems] = useState<CardData[]>([])
 
   useEffect(() => {
@@ -52,52 +44,42 @@ const QRScanModal: React.FC<QRScanModalProps> = ({
     }
   }, [isOpen])
 
-  // ESC schließt Modal
   useEffect(() => {
     if (!isOpen) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [isOpen, onClose])
 
-  const addItem = (data: CardData) => setItems((prev) => [...prev, data])
-  const addMany = (arr: CardData[]) => setItems((prev) => [...prev, ...arr])
+  const addItem = (data: CardData) => setItems((p) => [...p, data])
+  const addMany = (arr: CardData[]) => setItems((p) => [...p, ...arr])
 
-  const decodeAndHandle = (text: string): void => {
+  const decodeAndHandle = (text: string) => {
     if (!text) return
-
-    // Throttle gegen Mehrfach-Treffer desselben QR
     const now = Date.now()
     if (now - lastHandledAt.current < throttleMs) return
     lastHandledAt.current = now
 
-    // Erwartetes LernBox-Format (LB1:…)
     if (!isLikelyQrCardPayloadText(text)) {
       setError('Unbekanntes QR-Format. Erwartet wird eine LernBox-Payload mit Präfix LB1:.')
       return
     }
 
-    // Vorhandene Decoder-Logik nutzen (LB1-Wrapper + Base64 etc.)
     const res = decodeAnyPayload(text)
     if (!res.ok) {
       setError(res.error)
       return
     }
 
-    // In gehärtetes Format überführen und validieren
     if (res.kind === 'single') {
-      const safe = toSafeQrItems(res.payload) // einzelnes Objekt ist erlaubt
-      if (!safe || safe.length === 0) {
-        setError('QR-Inhalt leer oder unzulässig')
-        return
+      const data: CardData = {
+        questionHtml: res.payload.questionHtml,
+        answerHtml: res.payload.answerHtml,
       }
-      const data = safe[0]
       if (mode === 'single') {
         if (handledRef.current) return
         handledRef.current = true
-        onSuccess?.(data) // Parent legt an & schließt
+        onSuccess?.(data)
       } else {
         addItem(data)
       }
@@ -105,18 +87,17 @@ const QRScanModal: React.FC<QRScanModalProps> = ({
     }
 
     // batch
-    const safe = toSafeQrItems({ items: res.payload.items })
-    if (!safe || safe.length === 0) {
-      setError('QR-Inhalt leer oder unzulässig')
-      return
-    }
+    const batchItems: CardData[] = res.payload.items.map((it) => ({
+      questionHtml: it.questionHtml,
+      answerHtml: it.answerHtml,
+    }))
 
     if (mode === 'single') {
       if (handledRef.current) return
       handledRef.current = true
-      onSuccessMany ? onSuccessMany(safe) : onSuccess?.(safe[0])
+      onSuccessMany ? onSuccessMany(batchItems) : onSuccess?.(batchItems[0])
     } else {
-      addMany(safe)
+      addMany(batchItems)
     }
   }
 
@@ -124,7 +105,7 @@ const QRScanModal: React.FC<QRScanModalProps> = ({
     const msg =
       typeof err === 'string'
         ? err
-        : (err as { message?: string })?.message || 'Kamera konnte nicht gestartet werden'
+        : (err as any)?.message || 'Kamera konnte nicht gestartet werden'
     setError(msg)
   }
 
@@ -142,94 +123,72 @@ const QRScanModal: React.FC<QRScanModalProps> = ({
   const multi = mode === 'multi'
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Karte(n) via QR-Code hinzufügen"
-      style={styles.backdrop}
-      onClick={onClose}
-    >
-      <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <div style={styles.header}>
-          <h3 style={styles.title}>
+    <div className="qr-backdrop" role="dialog" aria-modal="true" aria-label="Karte(n) via QR-Code hinzufügen" onClick={onClose}>
+      <div className="qr-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="qr-header">
+          <h3 className="qr-title">
             {multi ? 'Mehrere Karten via QR-Code hinzufügen' : 'Karte via QR-Code hinzufügen'}
           </h3>
-          <button aria-label="Schließen" onClick={onClose} style={styles.iconButton}>
+          <button aria-label="Schließen" onClick={onClose} className="qr-icon-btn">
             <MdClose size={22} />
           </button>
         </div>
 
-        <div style={styles.body}>
+        <div className="qr-body">
           {/* Kamera */}
-          <div style={styles.scannerWrap}>
+          <div className="qr-scanner">
             <ScannerAny
-              onResult={(res: unknown) => {
+              onResult={(res: any) => {
                 let text = ''
                 if (typeof res === 'string') text = res
-                else if (Array.isArray(res)) {
-                  const first = res[0] as unknown
-                  if (first && typeof first === 'object') {
-                    const obj = first as { rawValue?: string; text?: string }
-                    text = obj.rawValue ?? obj.text ?? ''
-                  }
-                } else if (res && typeof res === 'object') {
-                  const obj = res as { rawValue?: string; text?: string }
-                  text = obj.rawValue ?? obj.text ?? ''
-                }
+                else if (Array.isArray(res)) text = res[0]?.rawValue ?? ''
+                else if (res && typeof res === 'object')
+                  text = (res as any).rawValue ?? (res as any).text ?? ''
                 if (text) decodeAndHandle(text)
               }}
               onDecode={(text: string) => decodeAndHandle(text)}
               onScan={(text: string) => decodeAndHandle(text)}
               onError={handleError}
-              constraints={{ video: { facingMode: { ideal: 'environment' } }, audio: false }}
+              constraints={{ facingMode: 'environment' }}
             />
           </div>
 
           {error && (
-            <div style={styles.errorBox} role="alert">
+            <div className="qr-error" role="alert">
               <MdError style={{ marginRight: 6 }} />
               <span>{error}</span>
             </div>
           )}
 
-          {/* Multi-Scan Übersicht */}
           {multi && (
-            <div style={styles.multiInfo}>
+            <div className="qr-multi-info">
               <div>
                 Gesammelt: <strong>{items.length}</strong> Karte{items.length === 1 ? '' : 'n'}
               </div>
-              {/* letzte 3 anzeigen */}
-              <div className="mini-list" style={styles.miniList}>
+              <div className="qr-mini-list">
                 {items.slice(-3).map((it, i) => (
-                  <div key={i} style={styles.miniItem}>
-                    <span style={styles.miniText}>
+                  <div key={i} className="qr-mini-item">
+                    <span className="qr-mini-text">
                       {stripText(it.questionHtml).slice(0, 48) || 'VS …'} —{' '}
                       {stripText(it.answerHtml).slice(0, 48) || 'RS …'}
                     </span>
                   </div>
                 ))}
-                {items.length > 3 && <div style={styles.miniMore}>…</div>}
+                {items.length > 3 && <div className="qr-mini-more">…</div>}
               </div>
             </div>
           )}
 
-          {/* Fallback: manuelle Eingabe */}
-          <details style={styles.details}>
-            <summary style={styles.summary}>Kein Kamerazugriff? Payload einfügen</summary>
+          <details className="qr-details">
+            <summary className="qr-summary">Kein Kamerazugriff? Payload einfügen</summary>
             <ManualPaste onManualSubmit={handleManual} />
           </details>
 
-          <div style={styles.hint}>Tipp: Gute Ausleuchtung und ruhige Hand verbessern die Erkennungsrate</div>
+          <div className="qr-hint">Tipp: Gute Ausleuchtung und ruhige Hand verbessern die Erkennungsrate</div>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: multi ? 'space-between' : 'flex-end',
-              marginTop: 12,
-            }}
-          >
+          <div className="qr-footer">
             {multi && (
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div className="qr-footer-left">
                 <Button type="button" onClick={() => setItems([])} aria-label="Gesammelte Kartenliste leeren">
                   Zurücksetzen
                 </Button>
@@ -261,21 +220,21 @@ const stripText = (html: string) => {
 }
 
 const ManualPaste: React.FC<{ onManualSubmit: (text: string) => void }> = ({ onManualSubmit }) => {
-  const [text, setText] = useState<string>('')
+  const [text, setText] = useState('')
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onManualSubmit(text)
     setText('')
   }
   return (
-    <form onSubmit={handleSubmit} style={{ marginTop: 8 }}>
+    <form onSubmit={handleSubmit} className="qr-form">
       <textarea
+        className="qr-textarea"
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="LB1:… hier einfügen"
-        style={{ width: '100%', minHeight: 90, padding: 8 }}
       />
-      <div style={{ marginTop: 8, display: 'flex', gap: 8 }}>
+      <div className="qr-form-actions">
         <Button type="submit" variant="primary" aria-label="Payload hinzufügen">
           Hinzufügen
         </Button>
@@ -285,69 +244,6 @@ const ManualPaste: React.FC<{ onManualSubmit: (text: string) => void }> = ({ onM
       </div>
     </form>
   )
-}
-
-const styles: Record<string, React.CSSProperties> = {
-  backdrop: {
-    position: 'fixed',
-    inset: 0,
-    background: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-  },
-  modal: {
-    width: 'min(95vw, 760px)',
-    background: 'var(--color-bg, #fff)',
-    color: 'var(--color-fg, #111)',
-    borderRadius: 12,
-    boxShadow: '0 12px 40px rgba(0,0,0,0.25)',
-    overflow: 'hidden',
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '12px 16px',
-    borderBottom: '1px solid rgba(0,0,0,0.08)',
-  },
-  title: { margin: 0, fontSize: 18, fontWeight: 600 },
-  iconButton: {
-    background: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    padding: 6,
-    borderRadius: 8,
-  },
-  body: { padding: 16 },
-  scannerWrap: {
-    position: 'relative',
-    borderRadius: 12,
-    overflow: 'hidden',
-    border: '1px solid rgba(0,0,0,0.08)',
-  },
-  errorBox: {
-    marginTop: 10,
-    display: 'flex',
-    alignItems: 'center',
-    padding: '8px 10px',
-    borderRadius: 8,
-    background: 'rgba(255,0,0,0.06)',
-    color: '#a40000',
-  },
-  details: {
-    marginTop: 12,
-    background: 'rgba(0,0,0,0.03)',
-    borderRadius: 8,
-    padding: 8,
-  },
-  summary: { cursor: 'pointer', fontWeight: 600, marginBottom: 6 },
-  hint: { marginTop: 8, fontSize: 12, opacity: 0.8 },
-  multiInfo: { marginTop: 10 },
-  miniList: { marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 },
-  miniItem: { fontSize: 12, opacity: 0.85 },
-  miniMore: { fontSize: 14, opacity: 0.6 },
 }
 
 export default QRScanModal
