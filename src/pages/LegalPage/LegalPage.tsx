@@ -1,4 +1,10 @@
 // src/pages/LegalPage/LegalPage.tsx
+// Rechtstexte an deutsches Recht angelehnt (ohne Rechtsberatung).
+// Enthält: Impressum gem. § 5 TMG, Verantwortlichkeit gem. § 18 Abs. 2 MStV,
+// Urheberrecht, Haftung, Hosting-Hinweis, Lizenzen & Danksagungen,
+// Google-Fonts (Self-Hosting), Bildnachweise.
+// Bitte Platzhalter in <> unbedingt mit echten Daten füllen.
+
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './LegalPage.css'
@@ -10,7 +16,6 @@ export default function LegalPage() {
     document.title = 'Impressum & Lizenzen'
   }, [])
 
-  // Hash-Deep-Link unterstützen
   useEffect(() => {
     if (hash) {
       const el = document.querySelector(hash)
@@ -20,10 +25,12 @@ export default function LegalPage() {
     }
   }, [hash])
 
+  const stand = new Date().toLocaleDateString('de-DE', { month: 'long', year: 'numeric' })
+
   return (
     <main className="page legal-page">
       <header className="page__header">
-        {/* nutzt bestehenden Zurück-Pfeil-Stil */}
+        {/* vorhandener Zurück-Pfeil */}
         <Link
           to="/dashboard"
           aria-label="Zur Übersicht"
@@ -47,67 +54,160 @@ export default function LegalPage() {
         <h1>Impressum &amp; Lizenzen</h1>
       </header>
 
+      {/* ============================== IMPRESSUM ============================== */}
       <section id="impressum" className="page__section card">
         <h2>Impressum</h2>
 
-        {/* Platzhalter – mit echten Daten füllen */}
-        <p><strong>Verantwortlich</strong>: &lt;Name/Firma&gt;</p>
-        <p><strong>Anschrift</strong>: &lt;Straße Nr.&gt;, &lt;PLZ Ort&gt;, &lt;Land&gt;</p>
-        <p><strong>Kontakt</strong>: E-Mail: &lt;adresse@domain.tld&gt; · Tel.: &lt;Nummer&gt;</p>
-
-        <h3>Haftungsausschluss</h3>
+        <h3>Angaben gemäß § 5 TMG</h3>
         <p>
-          Inhalte wurden mit größter Sorgfalt erstellt. Für Richtigkeit, Vollständigkeit und
-          Aktualität wird keine Gewähr übernommen
+          <strong>Diensteanbieter</strong><br />
+          &lt;Name der Schule&gt;<br />
+          &lt;Straße Hausnummer&gt;<br />
+          &lt;PLZ Ort&gt; – &lt;Land&gt;
         </p>
 
-        <h3>Urheberrecht</h3>
         <p>
-          Sofern nicht anders angegeben, unterliegen Inhalte dem Urheberrecht des Anbieters.
-          Vervielfältigung nur im Rahmen der jeweils genannten Lizenzen zulässig
+          <strong>Vertreten durch (Schulleitung)</strong><br />
+          &lt;Name, Funktion&gt;
         </p>
+
+        <p>
+          <strong>Schulträger</strong><br />
+          &lt;Name des Schulträgers (Stadt/Gemeinde/Land)&gt;<br />
+          &lt;Adresse des Schulträgers&gt;
+        </p>
+
+        <p>
+          <strong>Kontakt</strong><br />
+          Telefon: &lt;Telefonnummer&gt;<br />
+          E-Mail: &lt;funktionsadresse@schule.de&gt;
+        </p>
+
+        <p>
+          <strong>Verantwortlich für den Inhalt gemäß § 18 Abs. 2 MStV</strong><br />
+          &lt;Vor- und Nachname&gt;<br />
+          &lt;dienstliche Anschrift oder wie oben&gt;
+        </p>
+
+        <p>
+          <strong>Aufsichtsbehörde</strong><br />
+          &lt;Zuständige Schulaufsichtsbehörde / Reg. von &gt;<br />
+          &lt;Anschrift&gt;
+        </p>
+
+        <p>
+          <strong>Umsatzsteuer-ID</strong><br />
+          Nicht zutreffend / entfällt für diese öffentliche Einrichtung (falls vorhanden, hier eintragen)
+        </p>
+
+        <h3>Technische Umsetzung / Hosting</h3>
+        <p>
+          Diese Website/Anwendung wird über Cloudflare Pages (Cloudflare, Inc.) bereitgestellt. Beim
+          Aufruf können serverseitig technische Zugriffsdaten (z.&nbsp;B. IP-Adresse, Zeitstempel,
+          User-Agent) verarbeitet werden. Es werden keine Nutzerkonten geführt. Die App ist als
+          PWA nutzbar und speichert Daten ausschließlich lokal auf dem Endgerät
+          (IndexedDB/LocalStorage).
+        </p>
+
+        <h3>Haftung für Inhalte</h3>
+        <p>
+          Die Inhalte wurden mit größter Sorgfalt erstellt. Für Richtigkeit, Vollständigkeit und
+          Aktualität wird keine Gewähr übernommen. Gesetzliche Informations- und Entfernungspflichten
+          bleiben unberührt.
+        </p>
+
+        <h3>Haftung für Links</h3>
+        <p>
+          Externe Links wurden bei Verlinkung auf mögliche Rechtsverstöße geprüft. Auf die aktuelle
+          inhaltliche Gestaltung haben wir keinen Einfluss. Für Inhalte verlinkter Seiten sind
+          ausschließlich deren Betreiber verantwortlich. Bei Hinweisen auf Rechtsverstöße werden
+          betroffene Links unverzüglich entfernt.
+        </p>
+
+        <h3>Urheberrecht / Nutzungsrechte</h3>
+        <p>
+          Sofern nicht anders gekennzeichnet, unterliegen Inhalte, Layouts und Quelltexte dem
+          Urheberrecht von &lt;Name der Schule&gt; bzw. den genannten Rechteinhabern. Vervielfältigung,
+          Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der gesetzlichen Schranken
+          bedürfen der vorherigen schriftlichen Zustimmung. Open-Source-Bestandteile sind gesondert
+          lizenziert (siehe Abschnitt „Lizenzen &amp; Danksagungen“).
+        </p>
+
+        <h3>Barrierefreiheit</h3>
+        <p>
+          Die Erklärung zur digitalen Barrierefreiheit gemäß BayEGovV/BITV finden Sie unter:&nbsp;
+          &lt;URL zur Barrierefreiheitserklärung&gt;
+        </p>
+
+        <h3>Datenschutz</h3>
+        <p>
+          Informationen zur Verarbeitung personenbezogener Daten entnehmen Sie bitte unserer
+          Datenschutzerklärung:&nbsp; &lt;URL zur Datenschutzerklärung&gt;
+        </p>
+
+        <p><em>Stand: {stand}</em></p>
       </section>
 
+      {/* ========================= LIZENZEN & DANKSAGUNGEN ========================= */}
       <section id="lizenzen" className="page__section card">
-        <h2>Lizenzen</h2>
+        <h2>Lizenzen &amp; Danksagungen</h2>
 
-        <h3>App-Lizenz</h3>
         <p>
-          Diese Anwendung steht unter: <em>&lt;Lizenztyp, z.&nbsp;B. MIT&gt;</em>.
-          Den vollständigen Lizenztext bitte hier verlinken oder einbetten
+          <strong>App-Name</strong>: LernBox<br />
+          <strong>Copyright</strong>: © {new Date().getFullYear()} &lt;Name der Schule&gt;<br />
+          <strong>Lizenz der Anwendung</strong>: &lt;z.&nbsp;B. „Alle Rechte vorbehalten“ oder „MIT-Lizenz“&gt;<br />
+          {/* Falls Open-Source: Link/Verweis auf LICENSE im Repo ergänzen */}
         </p>
 
-        <h3>Open-Source-Bibliotheken</h3>
+        <h3>Open-Source-Komponenten (Auszug)</h3>
+        <ul>
+          <li>React – MIT</li>
+          <li>React Router – MIT</li>
+          <li>Vite – MIT</li>
+          <li>TypeScript – Apache-2.0</li>
+          <li>TipTap (Editor) &amp; ProseMirror – MIT</li>
+          <li>workbox (Service Worker Utilities, Google) – Apache-2.0</li>
+          <li>html2canvas – MIT</li>
+          <li>zxing-wasm (QR/Barcode Fallback) – Apache-2.0</li>
+          <li>(falls genutzt) Material Symbols / Google – Apache-2.0</li>
+        </ul>
         <p>
-          Eine vollständige Übersicht externer Bibliotheken und ihrer Lizenzen befindet sich in&nbsp;
+          Eine vollständige Übersicht externer Abhängigkeiten und Lizenztexte finden Sie in&nbsp;
           <a href="/THIRDPARTY_NOTICES.txt" target="_blank" rel="noopener noreferrer">
             THIRDPARTY_NOTICES.txt
           </a>
+          . Maßgeblich sind die jeweiligen Lizenztexte der Projekte.
         </p>
 
         <h3 id="schriften">Schriften (Google Fonts)</h3>
         <p>
-          Die verwendeten Schriften werden <strong>selbst gehostet</strong> und nicht über Google-CDNs geladen
-          {/* Falls aktuell CDN genutzt wird, diesen Satz anpassen: 
-              "Die Schriften werden über Google Fonts (CDN) geladen. Dabei kann Ihre IP-Adresse an Google übermittelt werden.
-               Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer einheitlichen Darstellung)."
-              Empfehlung: Selbsthosting umsetzen */}
+          Es werden <strong>keine externen Webfonts</strong> von Google-CDNs geladen. Verwendete Google-Fonts
+          sind lokal gebündelt (Self-Hosting). Für jede Schrift werden Name, Version, Lizenz und Quelle
+          aufgeführt:
         </p>
         <ul>
           <li>
-            <strong>&lt;Font-Name 1&gt;</strong> – Version &lt;x.y&gt; – Lizenz: <em>OFL&nbsp;1.1</em> oder <em>Apache-2.0</em> – Quelle: <code>https://fonts.google.com/</code>
+            <strong>&lt;Font-Name 1&gt;</strong> – Version &lt;x.y&gt; – Lizenz: <em>OFL&nbsp;1.1</em> (oder <em>Apache-2.0</em>) – Quelle: fonts.google.com
           </li>
           <li>
-            <strong>&lt;Font-Name 2&gt;</strong> – Version &lt;x.y&gt; – Lizenz: <em>OFL&nbsp;1.1</em> oder <em>Apache-2.0</em> – Quelle: <code>https://fonts.google.com/</code>
+            <strong>&lt;Font-Name 2&gt;</strong> – Version &lt;x.y&gt; – Lizenz: <em>OFL&nbsp;1.1</em> (oder <em>Apache-2.0</em>) – Quelle: fonts.google.com
           </li>
         </ul>
         <p>
-          Hinweis: Bei OFL 1.1 ist keine Attribution erforderlich, die <em>Lizenzdatei</em> sollte jedoch mit ausgeliefert werden
+          Hinweis: Bei OFL&nbsp;1.1 ist keine namentliche Attribution erforderlich, die <em>Lizenzdatei</em>
+          sollte jedoch mit ausgeliefert werden.
+        </p>
+
+        <h3 id="icons">Icons</h3>
+        <p>
+          Icons sind lokal als SVG eingebettet bzw. stammen aus Systemschriften. Falls Google-Material-Symbole
+          verwendet werden: „Material Symbols (Google), Apache-2.0 – lokal eingebettet, kein externer Abruf“.
         </p>
 
         <h3 id="bildnachweise">Bildnachweise</h3>
         <p>
-          Sofern nicht anders angegeben, sind Bilder/Grafiken urheberrechtlich geschützt. Für Materialien unter Creative-Commons-Lizenzen werden folgende Nachweise geführt
+          Sofern nicht anders angegeben, sind Bilder/Grafiken urheberrechtlich geschützt. Für Materialien
+          unter Creative-Commons-Lizenzen werden folgende Nachweise geführt:
         </p>
         <ul>
           <li>
@@ -120,6 +220,8 @@ export default function LegalPage() {
             <strong>&lt;Stock-Bild&gt;</strong> – Lizenz: &lt;Agentur/Vertrags-ID&gt; – Nutzungsart: &lt;Web/App&gt;
           </li>
         </ul>
+
+        <p><em>Stand: {stand}</em></p>
       </section>
     </main>
   )
