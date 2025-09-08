@@ -14,7 +14,7 @@ import UpdateNotification from './components/UpdateNotification/UpdateNotificati
 
 import ImpressumPage from './pages/ImpressumPage'
 import LizenzenPage from './pages/LizenzenPage'
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+
 
 import './App.css'
 
