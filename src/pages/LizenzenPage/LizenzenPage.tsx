@@ -1,48 +1,62 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function LicensesPage() {
+const LicensesPage: React.FC = () => {
+  const navigate = useNavigate();
+  const goBack = () => (window.history.length > 1 ? navigate(-1) : navigate('/dashboard'));
+
   return (
-    <div className="page-section">
-      <header className="page-header">
+    <div className="App">
+      {/* Kopf mit Zurück-Button – gleich wie überall */}
+      <header className="deck-page-header page-section">
         <h1>Lizenzen & Danksagungen</h1>
-
-        <Link
-          to="/dashboard"
+        <button
           className="button button--secondary button--icon-only"
+          type="button"
           aria-label="Zur Übersicht"
-          title="Zur Übersicht"
+          onClick={goBack}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M14 7l-5 5 5 5V7z" />
+          <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 19l-7-7 7-7v4h10v6H10v4z"></path>
           </svg>
-        </Link>
+        </button>
       </header>
 
-      <div className="card">
+      {/* Inhalt im Card-Look */}
+      <section className="card page-section">
         <div className="card-content">
-          <h2>Third-Party Notices</h2>
+          <p>
+            Diese Anwendung verwendet Open-Source-Bibliotheken. Vielen Dank an die
+            jeweiligen Projekte und Autor:innen.
+          </p>
+
+          <h3>Third-Party Notices (Auszug)</h3>
           <ul>
             <li>React – MIT License</li>
             <li>React Router – MIT License</li>
-            <li>TipTap – MIT License</li>
-            <li>Workbox – MIT License</li>
-            <li>ZXing WASM – Apache-2.0 License</li>
-            {/* …weitere Bibliotheken nach Bedarf… */}
+            <li>Vite – MIT License</li>
+            <li>TipTap &amp; StarterKit – MIT License</li>
+            <li>workbox – MIT License</li>
+            <li>html2canvas – MIT License</li>
+            {/* ergänze hier deine Liste/Links wie im Repo gepflegt */}
           </ul>
 
-          <h2>Schrift & Icons</h2>
+          <h3>Icons/Schrift</h3>
           <p>
-            Eingebettete SVG-Dateien (lokal). Es werden keine externen
-            Schrift-CDNs geladen.
+            Eingebettete SVG-Icons (lokal). Keine externen Fonts/CDNs. Falls
+            Google-Fonts-SVGs eingebettet wurden, bitte Quellenangaben entsprechend ergänzen.
+          </p>
+
+          <h3>Quellcode & Copyright</h3>
+          <p>
+            © {new Date().getFullYear()} [Name der Schule]. Der App-Code steht (sofern nicht
+            anders vermerkt) unter Ihrer Lizenz. Einzelne Bibliotheken stehen unter ihren
+            jeweiligen Lizenzen (siehe oben/verlinkte Repos).
           </p>
         </div>
-      </div>
+      </section>
     </div>
   );
-}
+};
+
+export default LicensesPage;
