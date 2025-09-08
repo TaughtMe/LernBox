@@ -47,7 +47,7 @@ const LizenzenPage: React.FC = () => {
       </p>
 
       <p style={{ marginTop: 24, opacity: .8 }}>
-        © {year} [Name der Schule]
+        © {year} [Toby Bryson]
       </p>
     </main>
   );

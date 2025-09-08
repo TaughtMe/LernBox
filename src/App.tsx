@@ -15,6 +15,7 @@ import UpdateNotification from './components/UpdateNotification/UpdateNotificati
 import ImpressumPage from './pages/ImpressumPage'
 import LizenzenPage from './pages/LizenzenPage'
 
+
 import './App.css'
 
 function App() {
@@ -97,8 +98,16 @@ function App() {
 
       {/* Footer mit SPA-Links */}
       <footer className="app-footer">
-        <span>© {new Date().getFullYear()} [Name der Schule]</span>
+        <span>© {new Date().getFullYear()} [Toby Bryson]</span>
         <nav>
+          <Link to="/impressum">Impressum</Link>
+          <Link to="/lizenzen">Lizenzen</Link>
+        </nav>
+      </footer>
+
+      <footer className="app-footer">
+        <div className="copyright">© {new Date().getFullYear()} [Name der Schule]</div>
+        <nav className="footer-links">
           <Link to="/impressum">Impressum</Link>
           <Link to="/lizenzen">Lizenzen</Link>
         </nav>
