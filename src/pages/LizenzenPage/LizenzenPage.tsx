@@ -11,9 +11,7 @@ const LizenzenPage: React.FC = () => {
         <h2>Schriften & Icons</h2>
         <ul>
           <li>
-            <strong>Google Fonts</strong> (z. B. Roboto, Inter o. ä.) –{' '}
-            <em>SIL Open Font License 1.1</em>, © jeweilige Urheber. <br />
-            <small>Hinweis: lokal eingebunden – keine Verbindung zu Google beim Seitenaufruf.</small>
+            <strong>Google Fonts</strong> (lokal eingebunden) – <em>SIL Open Font License 1.1</em>, © jeweilige Urheber.
           </li>
           <li>
             <strong>Material Icons / Material Symbols</strong> – <em>Apache License 2.0</em>, © Google.
@@ -28,21 +26,28 @@ const LizenzenPage: React.FC = () => {
           <li>TipTap (ProseMirror) – MIT</li>
           <li>Workbox – MIT</li>
           <li>html2canvas – MIT</li>
-          <li>@yudiel/react-qr-scanner & zxing-wasm – MIT / Apache-2.0</li>
+          <li>@yudiel/react-qr-scanner – MIT</li>
+          <li>zxing-wasm – Apache-2.0</li>
         </ul>
         <p style={{ marginTop: 8 }}>
-          Vollständige Lizenztexte sind dem Paketverwaltungs-Metadaten zu entnehmen
-          (package.json) und dem unten verlinkten Hinweis-Dokument.
+          Vollständige Lizenztexte sind den jeweiligen Projekten zu entnehmen (package.json).
         </p>
       </section>
 
       <section style={{ marginTop: 24 }}>
-        <h2>Urheberrecht</h2>
-        <p>© {year} [Name der Schule] – sofern nicht anders gekennzeichnet.</p>
+        <h2>Hinweise</h2>
+        <p>
+          Diese App lädt keine externen Ressourcen für Schriften/Icons (lokale Einbindung).
+          Drittanbieterzugriffe sind durch eine strikte Content-Security-Policy begrenzt.
+        </p>
       </section>
 
       <p style={{ marginTop: 24 }}>
         <a href="/THIRDPARTY_NOTICES.txt" download>THIRDPARTY_NOTICES.txt</a>
+      </p>
+
+      <p style={{ marginTop: 24, opacity: .8 }}>
+        © {year} [Name der Schule]
       </p>
     </main>
   );
