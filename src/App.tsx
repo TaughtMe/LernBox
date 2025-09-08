@@ -14,7 +14,7 @@ import UpdateNotification from './components/UpdateNotification/UpdateNotificati
 
 import ImpressumPage from './pages/ImpressumPage'
 import LizenzenPage from './pages/LizenzenPage'
-
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 
 import './App.css'
 
@@ -104,14 +104,7 @@ function App() {
           <Link to="/lizenzen">Lizenzen</Link>
         </nav>
       </footer>
-
-      <footer className="app-footer">
-        <div className="copyright">© {new Date().getFullYear()} [Name der Schule]</div>
-        <nav className="footer-links">
-          <Link to="/impressum">Impressum</Link>
-          <Link to="/lizenzen">Lizenzen</Link>
-        </nav>
-      </footer>
+      
 
       {/* Update-Hinweis nur anzeigen, wenn neue Version erkannt wurde */}
       {newVersion && (
