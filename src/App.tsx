@@ -12,9 +12,8 @@ import LearningPage from './pages/LearningPage/LearningPage'
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'
 import UpdateNotification from './components/UpdateNotification/UpdateNotification'
 
-import ImpressumPage from './pages/ImpressumPage/ImpressumPage';
-import LicensesPage from './pages/LizenzenPage/LizenzenPage';
-
+// NEU: öffentliche Rechtsseite
+import LegalPage from './pages/LegalPage'
 
 import './App.css'
 
@@ -61,6 +60,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
+        {/* ÖFFENTLICH: /legal außerhalb ProtectedRoute */}
+        <Route path="/legal" element={<LegalPage />} />
+
         <Route
           path="/dashboard"
           element={
@@ -88,23 +90,17 @@ function App() {
           }
         />
 
-        {/* Öffentlich zugängliche Info-Seiten */}
-        <Route path="/impressum" element={<ImpressumPage />} />
-        <Route path="/lizenzen" element={<LicensesPage  />} />
-
         {/* Fallback auf Dashboard */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
 
-      {/* Footer mit SPA-Links */}
+      {/* Globaler Footer mit Link zur öffentlichen Rechtsseite */}
       <footer className="app-footer">
         <span>© {new Date().getFullYear()} [Toby Bryson]</span>
         <nav>
-          <Link to="/impressum">Impressum</Link>
-          <Link to="/lizenzen">Lizenzen</Link>
+          <Link to="/legal">Impressum &amp; Lizenzen</Link>
         </nav>
       </footer>
-      
 
       {/* Update-Hinweis nur anzeigen, wenn neue Version erkannt wurde */}
       {newVersion && (
