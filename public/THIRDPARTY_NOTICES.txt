@@ -1,0 +1,19 @@
+LernBox – Third-Party Notices
+
+Schriften:
+- Google Fonts (diverse Familien) – SIL Open Font License 1.1
+  © jeweilige Urheber. Lokal eingebunden.
+
+Icons:
+- Material Icons / Material Symbols – Apache License 2.0
+  © Google LLC.
+
+Bibliotheken (Auszug):
+- React, React Router – MIT
+- TipTap (ProseMirror) – MIT
+- Workbox – MIT
+- html2canvas – MIT
+- @yudiel/react-qr-scanner – MIT
+- zxing-wasm – Apache 2.0
+
+Die vollständigen Lizenztexte sind in den jeweiligen Projekten einzusehen.

@@ -1,7 +1,6 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-// Wir benennen den Import um, um Klarheit zu schaffen
 import { version as currentVersion } from './version'
 
 import { useTheme } from './context/ThemeContext'
@@ -13,26 +12,26 @@ import LearningPage from './pages/LearningPage/LearningPage'
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'
 import UpdateNotification from './components/UpdateNotification/UpdateNotification'
 
+import ImpressumPage from './pages/ImpressumPage'
+import LizenzenPage from './pages/LizenzenPage'
+
 import './App.css'
 
 function App() {
   const { theme } = useTheme()
   const { exportDecks } = useDecks()
 
-  // Dieser State steuert jetzt alles. Ist er leer, ist keine Benachrichtigung sichtbar.
-  // Ist er gefüllt, enthält er die NEUE Version und die Benachrichtigung wird gezeigt.
+  // Leerer String = keine Benachrichtigung. Gefüllt = neue Version verfügbar.
   const [newVersion, setNewVersion] = useState('')
 
   const { updateServiceWorker } = useRegisterSW({
-    // Diese Funktion wird jetzt asynchron, um die neue Version zu holen
     async onNeedRefresh() {
       try {
-        // HIER IST DIE FINALE KORREKTUR: './' statt '/'
-        const response = await fetch(`./version.json?t=${new Date().getTime()}`)
+        // Wichtig: relativer Pfad für Pages/PWA
+        const response = await fetch(`./version.json?t=${Date.now()}`)
         if (response.ok) {
           const data = await response.json()
-          // State mit der neuen Version setzen, was die Benachrichtigung auslöst
-          setNewVersion(data.version)
+          setNewVersion(data.version ?? '')
         }
       } catch (error) {
         console.error('Fehler beim Abrufen der neuen Version:', error)
@@ -46,23 +45,21 @@ function App() {
   }, [theme])
 
   const handleUpdate = () => {
+    // Vor Update: lokale Daten sichern
     exportDecks()
     setTimeout(() => {
       updateServiceWorker(true)
     }, 100)
-    // Benachrichtigung schließen
     setNewVersion('')
   }
 
-  const handleDismiss = () => {
-    // Benachrichtigung schließen
-    setNewVersion('')
-  }
+  const handleDismiss = () => setNewVersion('')
 
   return (
-    <>
+    <div className="App">
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
         <Route
           path="/dashboard"
           element={
@@ -71,6 +68,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/deck/:deckId"
           element={
@@ -79,6 +77,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/learn/:deckId"
           element={
@@ -87,9 +86,25 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Öffentlich zugängliche Info-Seiten */}
+        <Route path="/impressum" element={<ImpressumPage />} />
+        <Route path="/lizenzen" element={<LizenzenPage />} />
+
+        {/* Fallback auf Dashboard */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
 
-      {/* Die Benachrichtigung wird angezeigt, wenn newVersion einen Wert hat */}
+      {/* Footer mit SPA-Links */}
+      <footer className="app-footer">
+        <span>© {new Date().getFullYear()} [Name der Schule]</span>
+        <nav>
+          <Link to="/impressum">Impressum</Link>
+          <Link to="/lizenzen">Lizenzen</Link>
+        </nav>
+      </footer>
+
+      {/* Update-Hinweis nur anzeigen, wenn neue Version erkannt wurde */}
       {newVersion && (
         <UpdateNotification
           onUpdate={handleUpdate}
@@ -98,7 +113,7 @@ function App() {
           newVersion={newVersion}
         />
       )}
-    </>
+    </div>
   )
 }
 
