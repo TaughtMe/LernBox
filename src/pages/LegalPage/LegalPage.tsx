@@ -1,9 +1,6 @@
 // src/pages/LegalPage/LegalPage.tsx
 // Rechtstexte an deutsches Recht angelehnt (ohne Rechtsberatung).
-// Enthält: Impressum gem. § 5 TMG, Verantwortlichkeit gem. § 18 Abs. 2 MStV,
-// Urheberrecht, Haftung, Hosting-Hinweis, Lizenzen & Danksagungen,
-// Google-Fonts (Self-Hosting), Bildnachweise.
-// Bitte Platzhalter in <> unbedingt mit echten Daten füllen.
+// Bitte Platzhalter in <> mit echten Daten füllen.
 
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -16,6 +13,7 @@ export default function LegalPage() {
     document.title = 'Impressum & Lizenzen'
   }, [])
 
+  // Deep-Links unterstützen
   useEffect(() => {
     if (hash) {
       const el = document.querySelector(hash)
@@ -25,12 +23,15 @@ export default function LegalPage() {
     }
   }, [hash])
 
+  // WICHTIG: Link zur Textdatei relativ zur Vite-BASE_URL auflösen
+  const baseAbs = new URL(import.meta.env.BASE_URL, window.location.origin)
+  const noticesUrl = new URL('THIRDPARTY_NOTICES.txt', baseAbs).toString()
+
   const stand = new Date().toLocaleDateString('de-DE', { month: 'long', year: 'numeric' })
 
   return (
     <main className="page legal-page">
       <header className="page__header">
-        {/* vorhandener Zurück-Pfeil */}
         <Link
           to="/dashboard"
           aria-label="Zur Übersicht"
@@ -155,8 +156,7 @@ export default function LegalPage() {
         <p>
           <strong>App-Name</strong>: LernBox<br />
           <strong>Copyright</strong>: © {new Date().getFullYear()} &lt;Name der Schule&gt;<br />
-          <strong>Lizenz der Anwendung</strong>: &lt;z.&nbsp;B. „Alle Rechte vorbehalten“ oder „MIT-Lizenz“&gt;<br />
-          {/* Falls Open-Source: Link/Verweis auf LICENSE im Repo ergänzen */}
+          <strong>Lizenz der Anwendung</strong>: &lt;z.&nbsp;B. „Alle Rechte vorbehalten“ oder „MIT-Lizenz“&gt;
         </p>
 
         <h3>Open-Source-Komponenten (Auszug)</h3>
@@ -172,8 +172,12 @@ export default function LegalPage() {
           <li>(falls genutzt) Material Symbols / Google – Apache-2.0</li>
         </ul>
         <p>
-          Eine vollständige Übersicht externer Abhängigkeiten und Lizenztexte finden Sie in&nbsp;
-          <a href="/THIRDPARTY_NOTICES.txt" target="_blank" rel="noopener noreferrer">
+          Vollständige Abhängigkeiten und Lizenztexte:&nbsp;
+          <a
+            href={noticesUrl}
+            download="THIRDPARTY_NOTICES.txt"
+            rel="noopener noreferrer"
+          >
             THIRDPARTY_NOTICES.txt
           </a>
           . Maßgeblich sind die jeweiligen Lizenztexte der Projekte.

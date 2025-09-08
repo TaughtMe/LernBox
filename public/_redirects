@@ -1,1 +1,6 @@
-﻿/*    /index.html   200
+﻿# Whitelist: Textdateien direkt ausliefern
+/THIRDPARTY_NOTICES.txt    /THIRDPARTY_NOTICES.txt    200
+/*.txt                     /:splat                    200
+
+# SPA-Fallback für alle übrigen Pfade
+/*                         /index.html                200
