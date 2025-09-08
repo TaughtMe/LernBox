@@ -12,8 +12,8 @@ import LearningPage from './pages/LearningPage/LearningPage'
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'
 import UpdateNotification from './components/UpdateNotification/UpdateNotification'
 
-import ImpressumPage from './pages/ImpressumPage'
-import LizenzenPage from './pages/LizenzenPage'
+import ImpressumPage from './pages/ImpressumPage/ImpressumPage';
+import LicensesPage from './pages/LizenzenPage/LizenzenPage';
 
 
 import './App.css'
@@ -90,7 +90,7 @@ function App() {
 
         {/* Öffentlich zugängliche Info-Seiten */}
         <Route path="/impressum" element={<ImpressumPage />} />
-        <Route path="/lizenzen" element={<LizenzenPage />} />
+        <Route path="/lizenzen" element={<LicensesPage  />} />
 
         {/* Fallback auf Dashboard */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
