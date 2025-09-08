@@ -1,19 +1,695 @@
-LernBox – Third-Party Notices
-
-Schriften:
-- Google Fonts (diverse Familien) – SIL Open Font License 1.1
-  © jeweilige Urheber. Lokal eingebunden.
-
-Icons:
-- Material Icons / Material Symbols – Apache License 2.0
-  © Google LLC.
-
-Bibliotheken (Auszug):
-- React, React Router – MIT
-- TipTap (ProseMirror) – MIT
-- Workbox – MIT
-- html2canvas – MIT
-- @yudiel/react-qr-scanner – MIT
-- zxing-wasm – Apache 2.0
-
-Die vollständigen Lizenztexte sind in den jeweiligen Projekten einzusehen.
+├─ @babel/runtime@7.28.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/babel/babel
+│  ├─ publisher: The Babel Team
+│  ├─ url: https://babel.dev/team
+│  ├─ path: G:\LernBox\lernbox\node_modules\@babel\runtime
+│  └─ licenseFile: node_modules\@babel\runtime\LICENSE
+├─ @floating-ui/core@1.7.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/floating-ui/floating-ui
+│  ├─ publisher: atomiks
+│  ├─ path: G:\LernBox\lernbox\node_modules\@floating-ui\core
+│  └─ licenseFile: node_modules\@floating-ui\core\LICENSE
+├─ @floating-ui/dom@1.7.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/floating-ui/floating-ui
+│  ├─ publisher: atomiks
+│  ├─ path: G:\LernBox\lernbox\node_modules\@floating-ui\dom
+│  └─ licenseFile: node_modules\@floating-ui\dom\LICENSE
+├─ @floating-ui/utils@0.2.10
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/floating-ui/floating-ui
+│  ├─ publisher: atomiks
+│  ├─ path: G:\LernBox\lernbox\node_modules\@floating-ui\utils
+│  └─ licenseFile: node_modules\@floating-ui\utils\LICENSE
+├─ @remirror/core-constants@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remirror/remirror
+│  ├─ path: G:\LernBox\lernbox\node_modules\@remirror\core-constants
+│  └─ licenseFile: node_modules\@remirror\core-constants\LICENSE
+├─ @tiptap/core@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\core
+│  └─ licenseFile: node_modules\@tiptap\core\LICENSE.md
+├─ @tiptap/extension-blockquote@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-blockquote
+│  └─ licenseFile: node_modules\@tiptap\extension-blockquote\LICENSE.md
+├─ @tiptap/extension-bold@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-bold
+│  └─ licenseFile: node_modules\@tiptap\extension-bold\LICENSE.md
+├─ @tiptap/extension-bubble-menu@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-bubble-menu
+│  └─ licenseFile: node_modules\@tiptap\extension-bubble-menu\LICENSE.md
+├─ @tiptap/extension-bullet-list@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-bullet-list
+│  └─ licenseFile: node_modules\@tiptap\extension-bullet-list\LICENSE.md
+├─ @tiptap/extension-code-block@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-code-block
+│  └─ licenseFile: node_modules\@tiptap\extension-code-block\LICENSE.md
+├─ @tiptap/extension-code@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-code
+│  └─ licenseFile: node_modules\@tiptap\extension-code\LICENSE.md
+├─ @tiptap/extension-color@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-color
+│  └─ licenseFile: node_modules\@tiptap\extension-color\LICENSE.md
+├─ @tiptap/extension-document@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-document
+│  └─ licenseFile: node_modules\@tiptap\extension-document\LICENSE.md
+├─ @tiptap/extension-dropcursor@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-dropcursor
+│  └─ licenseFile: node_modules\@tiptap\extension-dropcursor\LICENSE.md
+├─ @tiptap/extension-floating-menu@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-floating-menu
+│  └─ licenseFile: node_modules\@tiptap\extension-floating-menu\LICENSE.md
+├─ @tiptap/extension-gapcursor@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-gapcursor
+│  └─ licenseFile: node_modules\@tiptap\extension-gapcursor\LICENSE.md
+├─ @tiptap/extension-hard-break@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-hard-break
+│  └─ licenseFile: node_modules\@tiptap\extension-hard-break\LICENSE.md
+├─ @tiptap/extension-heading@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-heading
+│  └─ licenseFile: node_modules\@tiptap\extension-heading\LICENSE.md
+├─ @tiptap/extension-horizontal-rule@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-horizontal-rule
+│  └─ licenseFile: node_modules\@tiptap\extension-horizontal-rule\LICENSE.md
+├─ @tiptap/extension-italic@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-italic
+│  └─ licenseFile: node_modules\@tiptap\extension-italic\LICENSE.md
+├─ @tiptap/extension-link@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-link
+│  └─ licenseFile: node_modules\@tiptap\extension-link\LICENSE.md
+├─ @tiptap/extension-list-item@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-list-item
+│  └─ licenseFile: node_modules\@tiptap\extension-list-item\LICENSE.md
+├─ @tiptap/extension-list-keymap@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-list-keymap
+│  └─ licenseFile: node_modules\@tiptap\extension-list-keymap\LICENSE.md
+├─ @tiptap/extension-list@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-list
+│  └─ licenseFile: node_modules\@tiptap\extension-list\LICENSE.md
+├─ @tiptap/extension-ordered-list@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-ordered-list
+│  └─ licenseFile: node_modules\@tiptap\extension-ordered-list\LICENSE.md
+├─ @tiptap/extension-paragraph@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-paragraph
+│  └─ licenseFile: node_modules\@tiptap\extension-paragraph\LICENSE.md
+├─ @tiptap/extension-placeholder@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-placeholder
+│  └─ licenseFile: node_modules\@tiptap\extension-placeholder\LICENSE.md
+├─ @tiptap/extension-strike@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-strike
+│  └─ licenseFile: node_modules\@tiptap\extension-strike\LICENSE.md
+├─ @tiptap/extension-text-style@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-text-style
+│  └─ licenseFile: node_modules\@tiptap\extension-text-style\LICENSE.md
+├─ @tiptap/extension-text@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-text
+│  └─ licenseFile: node_modules\@tiptap\extension-text\LICENSE.md
+├─ @tiptap/extension-underline@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extension-underline
+│  └─ licenseFile: node_modules\@tiptap\extension-underline\LICENSE.md
+├─ @tiptap/extensions@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\extensions
+│  └─ licenseFile: node_modules\@tiptap\extensions\LICENSE.md
+├─ @tiptap/pm@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\pm
+│  └─ licenseFile: node_modules\@tiptap\pm\LICENSE.md
+├─ @tiptap/react@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\react
+│  └─ licenseFile: node_modules\@tiptap\react\LICENSE.md
+├─ @tiptap/starter-kit@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ueberdosis/tiptap
+│  ├─ path: G:\LernBox\lernbox\node_modules\@tiptap\starter-kit
+│  └─ licenseFile: node_modules\@tiptap\starter-kit\LICENSE.md
+├─ @types/emscripten@1.40.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\emscripten
+│  └─ licenseFile: node_modules\@types\emscripten\LICENSE
+├─ @types/linkify-it@5.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\linkify-it
+│  └─ licenseFile: node_modules\@types\linkify-it\LICENSE
+├─ @types/markdown-it@14.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\markdown-it
+│  └─ licenseFile: node_modules\@types\markdown-it\LICENSE
+├─ @types/mdurl@2.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\mdurl
+│  └─ licenseFile: node_modules\@types\mdurl\LICENSE
+├─ @types/pako@2.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\pako
+│  └─ licenseFile: node_modules\@types\pako\LICENSE
+├─ @types/raf@3.4.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\raf
+│  └─ licenseFile: node_modules\@types\raf\LICENSE
+├─ @types/trusted-types@2.0.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\trusted-types
+│  └─ licenseFile: node_modules\@types\trusted-types\LICENSE
+├─ @types/use-sync-external-store@0.0.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: G:\LernBox\lernbox\node_modules\@types\use-sync-external-store
+│  └─ licenseFile: node_modules\@types\use-sync-external-store\LICENSE
+├─ @yudiel/react-qr-scanner@2.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/yudielcurbelo/react-qr-scanner
+│  ├─ publisher: Yudiel Curbelo
+│  ├─ path: G:\LernBox\lernbox\node_modules\@yudiel\react-qr-scanner
+│  └─ licenseFile: node_modules\@yudiel\react-qr-scanner\LICENSE
+├─ argparse@2.0.1
+│  ├─ licenses: Python-2.0
+│  ├─ repository: https://github.com/nodeca/argparse
+│  ├─ path: G:\LernBox\lernbox\node_modules\argparse
+│  └─ licenseFile: node_modules\argparse\LICENSE
+├─ barcode-detector@3.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/Sec-ant/barcode-detector
+│  ├─ publisher: Ze-Zheng Wu
+│  ├─ path: G:\LernBox\lernbox\node_modules\barcode-detector
+│  └─ licenseFile: node_modules\barcode-detector\LICENSE
+├─ base64-arraybuffer@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/niklasvh/base64-arraybuffer
+│  ├─ publisher: Niklas von Hertzen
+│  ├─ email: niklasvh@gmail.com
+│  ├─ url: https://hertzen.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\base64-arraybuffer
+│  └─ licenseFile: node_modules\base64-arraybuffer\LICENSE
+├─ canvg@3.0.11
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/canvg/canvg
+│  ├─ path: G:\LernBox\lernbox\node_modules\canvg
+│  └─ licenseFile: node_modules\canvg\LICENSE
+├─ collapse-white-space@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/collapse-white-space
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\collapse-white-space
+│  └─ licenseFile: node_modules\collapse-white-space\license
+├─ cookie@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/cookie
+│  ├─ publisher: Roman Shtylman
+│  ├─ email: shtylman@gmail.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\cookie
+│  └─ licenseFile: node_modules\cookie\LICENSE
+├─ core-js@3.45.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/zloirock/core-js
+│  ├─ publisher: Denis Pushkarev
+│  ├─ email: zloirock@zloirock.ru
+│  ├─ url: http://zloirock.ru
+│  ├─ path: G:\LernBox\lernbox\node_modules\core-js
+│  └─ licenseFile: node_modules\core-js\LICENSE
+├─ crelt@1.0.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/marijnh/crelt
+│  ├─ publisher: Marijn Haverbeke
+│  ├─ email: marijn@haverbeke.berlin
+│  ├─ path: G:\LernBox\lernbox\node_modules\crelt
+│  └─ licenseFile: node_modules\crelt\LICENSE
+├─ css-line-break@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/niklasvh/css-line-break
+│  ├─ publisher: Niklas von Hertzen
+│  ├─ email: niklasvh@gmail.com
+│  ├─ url: https://hertzen.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\css-line-break
+│  └─ licenseFile: node_modules\css-line-break\LICENSE
+├─ dompurify@3.2.6
+│  ├─ licenses: (MPL-2.0 OR Apache-2.0)
+│  ├─ repository: https://github.com/cure53/DOMPurify
+│  ├─ publisher: Dr.-Ing. Mario Heiderich, Cure53
+│  ├─ email: mario@cure53.de
+│  ├─ url: https://cure53.de/
+│  ├─ path: G:\LernBox\lernbox\node_modules\dompurify
+│  └─ licenseFile: node_modules\dompurify\LICENSE
+├─ entities@4.5.0
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/fb55/entities
+│  ├─ publisher: Felix Boehm
+│  ├─ email: me@feedic.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\entities
+│  └─ licenseFile: node_modules\entities\LICENSE
+├─ escape-string-regexp@4.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/escape-string-regexp
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\escape-string-regexp
+│  └─ licenseFile: node_modules\escape-string-regexp\license
+├─ fast-deep-equal@3.1.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/epoberezkin/fast-deep-equal
+│  ├─ publisher: Evgeny Poberezkin
+│  ├─ path: G:\LernBox\lernbox\node_modules\fast-deep-equal
+│  └─ licenseFile: node_modules\fast-deep-equal\LICENSE
+├─ fast-png@6.4.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/image-js/fast-png
+│  ├─ publisher: Michaël Zasso
+│  ├─ path: G:\LernBox\lernbox\node_modules\fast-png
+│  └─ licenseFile: node_modules\fast-png\LICENSE
+├─ fflate@0.8.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/101arrowz/fflate
+│  ├─ publisher: Arjun Barrett
+│  ├─ email: arjunbarrett@gmail.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\fflate
+│  └─ licenseFile: node_modules\fflate\LICENSE
+├─ franc@6.2.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/franc/tree/main/packages/franc
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: http://wooorm.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\franc
+│  └─ licenseFile: node_modules\franc\readme.md
+├─ html2canvas@1.4.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/niklasvh/html2canvas
+│  ├─ publisher: Niklas von Hertzen
+│  ├─ email: niklasvh@gmail.com
+│  ├─ url: https://hertzen.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\html2canvas
+│  └─ licenseFile: node_modules\html2canvas\LICENSE
+├─ iobuffer@5.4.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/image-js/iobuffer
+│  ├─ publisher: Michaël Zasso
+│  ├─ path: G:\LernBox\lernbox\node_modules\iobuffer
+│  └─ licenseFile: node_modules\iobuffer\LICENSE
+├─ jspdf@3.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/parallax/jsPDF
+│  ├─ path: G:\LernBox\lernbox\node_modules\jspdf
+│  └─ licenseFile: node_modules\jspdf\LICENSE
+├─ lernbox@2.0.8
+│  ├─ licenses: [1m[31mUNLICENSED[39m[22m
+│  ├─ private: true
+│  ├─ path: G:\LernBox\lernbox
+│  └─ licenseFile: README.md
+├─ linkify-it@5.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/markdown-it/linkify-it
+│  ├─ path: G:\LernBox\lernbox\node_modules\linkify-it
+│  └─ licenseFile: node_modules\linkify-it\LICENSE
+├─ linkifyjs@4.3.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nfrasser/linkifyjs
+│  ├─ publisher: Nick Frasser
+│  ├─ url: https://nfrasser.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\linkifyjs
+│  └─ licenseFile: node_modules\linkifyjs\LICENSE
+├─ lucide-react@0.542.0
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/lucide-icons/lucide
+│  ├─ publisher: Eric Fennis
+│  ├─ path: G:\LernBox\lernbox\node_modules\lucide-react
+│  └─ licenseFile: node_modules\lucide-react\LICENSE
+├─ lz-string@1.5.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/pieroxy/lz-string
+│  ├─ publisher: pieroxy
+│  ├─ email: pieroxy@pieroxy.net
+│  ├─ path: G:\LernBox\lernbox\node_modules\lz-string
+│  └─ licenseFile: node_modules\lz-string\LICENSE
+├─ markdown-it@14.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/markdown-it/markdown-it
+│  ├─ path: G:\LernBox\lernbox\node_modules\markdown-it
+│  └─ licenseFile: node_modules\markdown-it\LICENSE
+├─ mdurl@2.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/markdown-it/mdurl
+│  ├─ path: G:\LernBox\lernbox\node_modules\mdurl
+│  └─ licenseFile: node_modules\mdurl\LICENSE
+├─ n-gram@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/words/n-gram
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\n-gram
+│  └─ licenseFile: node_modules\n-gram\license
+├─ orderedmap@2.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/marijnh/orderedmap
+│  ├─ publisher: Marijn Haverbeke
+│  ├─ email: marijn@haverbeke.berlin
+│  ├─ path: G:\LernBox\lernbox\node_modules\orderedmap
+│  └─ licenseFile: node_modules\orderedmap\LICENSE
+├─ pako@2.1.0
+│  ├─ licenses: (MIT AND Zlib)
+│  ├─ repository: https://github.com/nodeca/pako
+│  ├─ path: G:\LernBox\lernbox\node_modules\pako
+│  └─ licenseFile: node_modules\pako\LICENSE
+├─ papaparse@5.5.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mholt/PapaParse
+│  ├─ publisher: Matthew Holt
+│  ├─ url: https://twitter.com/mholt6
+│  ├─ path: G:\LernBox\lernbox\node_modules\papaparse
+│  └─ licenseFile: node_modules\papaparse\LICENSE
+├─ performance-now@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/braveg1rl/performance-now
+│  ├─ publisher: Braveg1rl
+│  ├─ email: braveg1rl@outlook.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\performance-now
+│  └─ licenseFile: node_modules\performance-now\license.txt
+├─ prosemirror-changeset@2.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-changeset
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-changeset
+│  └─ licenseFile: node_modules\prosemirror-changeset\LICENSE
+├─ prosemirror-collab@1.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-collab
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-collab
+│  └─ licenseFile: node_modules\prosemirror-collab\LICENSE
+├─ prosemirror-commands@1.7.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-commands
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-commands
+│  └─ licenseFile: node_modules\prosemirror-commands\LICENSE
+├─ prosemirror-dropcursor@1.8.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-dropcursor
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-dropcursor
+│  └─ licenseFile: node_modules\prosemirror-dropcursor\LICENSE
+├─ prosemirror-gapcursor@1.3.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-gapcursor
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-gapcursor
+│  └─ licenseFile: node_modules\prosemirror-gapcursor\LICENSE
+├─ prosemirror-history@1.4.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-history
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-history
+│  └─ licenseFile: node_modules\prosemirror-history\LICENSE
+├─ prosemirror-inputrules@1.5.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-inputrules
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-inputrules
+│  └─ licenseFile: node_modules\prosemirror-inputrules\LICENSE
+├─ prosemirror-keymap@1.2.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-keymap
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-keymap
+│  └─ licenseFile: node_modules\prosemirror-keymap\LICENSE
+├─ prosemirror-markdown@1.13.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-markdown
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-markdown
+│  └─ licenseFile: node_modules\prosemirror-markdown\LICENSE
+├─ prosemirror-menu@1.2.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-menu
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-menu
+│  └─ licenseFile: node_modules\prosemirror-menu\LICENSE
+├─ prosemirror-model@1.25.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-model
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-model
+│  └─ licenseFile: node_modules\prosemirror-model\LICENSE
+├─ prosemirror-schema-basic@1.2.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-schema-basic
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-schema-basic
+│  └─ licenseFile: node_modules\prosemirror-schema-basic\LICENSE
+├─ prosemirror-schema-list@1.5.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-schema-list
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-schema-list
+│  └─ licenseFile: node_modules\prosemirror-schema-list\LICENSE
+├─ prosemirror-state@1.4.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-state
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-state
+│  └─ licenseFile: node_modules\prosemirror-state\LICENSE
+├─ prosemirror-tables@1.8.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-tables
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-tables
+│  └─ licenseFile: node_modules\prosemirror-tables\LICENSE
+├─ prosemirror-trailing-node@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remirror/remirror
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-trailing-node
+│  └─ licenseFile: node_modules\prosemirror-trailing-node\LICENSE
+├─ prosemirror-transform@1.10.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-transform
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-transform
+│  └─ licenseFile: node_modules\prosemirror-transform\LICENSE
+├─ prosemirror-view@1.40.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prosemirror/prosemirror-view
+│  ├─ path: G:\LernBox\lernbox\node_modules\prosemirror-view
+│  └─ licenseFile: node_modules\prosemirror-view\LICENSE
+├─ punycode.js@2.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mathiasbynens/punycode.js
+│  ├─ publisher: Mathias Bynens
+│  ├─ url: https://mathiasbynens.be/
+│  ├─ path: G:\LernBox\lernbox\node_modules\punycode.js
+│  └─ licenseFile: node_modules\punycode.js\LICENSE-MIT.txt
+├─ qrcode.react@4.2.0
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/zpao/qrcode.react
+│  ├─ publisher: Paul O’Shannessy
+│  ├─ email: paul@oshannessy.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\qrcode.react
+│  └─ licenseFile: node_modules\qrcode.react\LICENSE
+├─ raf@3.4.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chrisdickinson/raf
+│  ├─ publisher: Chris Dickinson
+│  ├─ email: chris@neversaw.us
+│  ├─ path: G:\LernBox\lernbox\node_modules\raf
+│  └─ licenseFile: node_modules\raf\LICENSE
+├─ react-dom@19.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/react
+│  ├─ path: G:\LernBox\lernbox\node_modules\react-dom
+│  └─ licenseFile: node_modules\react-dom\LICENSE
+├─ react-icons@5.5.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/react-icons/react-icons
+│  ├─ publisher: Goran Gajic
+│  ├─ path: G:\LernBox\lernbox\node_modules\react-icons
+│  └─ licenseFile: node_modules\react-icons\LICENSE
+├─ react-router-dom@7.8.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remix-run/react-router
+│  ├─ publisher: Remix Software
+│  ├─ email: hello@remix.run
+│  ├─ path: G:\LernBox\lernbox\node_modules\react-router-dom
+│  └─ licenseFile: node_modules\react-router-dom\LICENSE.md
+├─ react-router@7.8.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remix-run/react-router
+│  ├─ publisher: Remix Software
+│  ├─ email: hello@remix.run
+│  ├─ path: G:\LernBox\lernbox\node_modules\react-router
+│  └─ licenseFile: node_modules\react-router\LICENSE.md
+├─ react@19.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/react
+│  ├─ path: G:\LernBox\lernbox\node_modules\react
+│  └─ licenseFile: node_modules\react\LICENSE
+├─ regenerator-runtime@0.13.11
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/regenerator/tree/main/packages/runtime
+│  ├─ publisher: Ben Newman
+│  ├─ email: bn@cs.stanford.edu
+│  ├─ path: G:\LernBox\lernbox\node_modules\regenerator-runtime
+│  └─ licenseFile: node_modules\regenerator-runtime\LICENSE
+├─ rgbcolor@1.0.1
+│  ├─ licenses: MIT*
+│  ├─ repository: https://github.com/yetzt/node-rgbcolor
+│  ├─ publisher: Sebastian Vollnhals
+│  ├─ email: sebastian@vollnhals.info
+│  ├─ path: G:\LernBox\lernbox\node_modules\rgbcolor
+│  └─ licenseFile: node_modules\rgbcolor\LICENSE.md
+├─ rope-sequence@1.3.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/marijnh/rope-sequence
+│  ├─ publisher: Marijn Haverbeke
+│  ├─ email: marijn@haverbeke.berlin
+│  ├─ path: G:\LernBox\lernbox\node_modules\rope-sequence
+│  └─ licenseFile: node_modules\rope-sequence\LICENSE
+├─ scheduler@0.26.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/react
+│  ├─ path: G:\LernBox\lernbox\node_modules\scheduler
+│  └─ licenseFile: node_modules\scheduler\LICENSE
+├─ sdp@3.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/fippo/sdp
+│  ├─ publisher: Philipp Hancke
+│  ├─ path: G:\LernBox\lernbox\node_modules\sdp
+│  └─ licenseFile: node_modules\sdp\LICENSE
+├─ set-cookie-parser@2.7.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nfriedly/set-cookie-parser
+│  ├─ publisher: Nathan Friedly
+│  ├─ url: http://nfriedly.com/
+│  ├─ path: G:\LernBox\lernbox\node_modules\set-cookie-parser
+│  └─ licenseFile: node_modules\set-cookie-parser\LICENSE
+├─ stackblur-canvas@2.7.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/flozz/StackBlur
+│  ├─ publisher: Mario Klingemann
+│  ├─ path: G:\LernBox\lernbox\node_modules\stackblur-canvas
+│  └─ licenseFile: node_modules\stackblur-canvas\LICENSE-MIT.txt
+├─ svg-pathdata@6.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nfroidure/svg-pathdata
+│  ├─ publisher: Nicolas Froidure
+│  ├─ path: G:\LernBox\lernbox\node_modules\svg-pathdata
+│  └─ licenseFile: node_modules\svg-pathdata\LICENSE
+├─ text-segmentation@1.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/niklasvh/text-segmentation
+│  ├─ publisher: Niklas von Hertzen
+│  ├─ email: niklasvh@gmail.com
+│  ├─ url: https://hertzen.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\text-segmentation
+│  └─ licenseFile: node_modules\text-segmentation\LICENSE
+├─ trigram-utils@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/trigram-utils
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\trigram-utils
+│  └─ licenseFile: node_modules\trigram-utils\license
+├─ type-fest@4.41.0
+│  ├─ licenses: (MIT OR CC0-1.0)
+│  ├─ repository: https://github.com/sindresorhus/type-fest
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\zxing-wasm\node_modules\type-fest
+│  └─ licenseFile: node_modules\zxing-wasm\node_modules\type-fest\license-cc0
+├─ uc.micro@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/markdown-it/uc.micro
+│  ├─ path: G:\LernBox\lernbox\node_modules\uc.micro
+│  └─ licenseFile: node_modules\uc.micro\LICENSE.txt
+├─ use-sync-external-store@1.5.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/react
+│  ├─ path: G:\LernBox\lernbox\node_modules\use-sync-external-store
+│  └─ licenseFile: node_modules\use-sync-external-store\LICENSE
+├─ utrie@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/niklasvh/utrie
+│  ├─ publisher: Niklas von Hertzen
+│  ├─ email: niklasvh@gmail.com
+│  ├─ url: https://hertzen.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\utrie
+│  └─ licenseFile: node_modules\utrie\LICENSE
+├─ w3c-keyname@2.2.8
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/marijnh/w3c-keyname
+│  ├─ publisher: Marijn Haverbeke
+│  ├─ email: marijn@haverbeke.berlin
+│  ├─ path: G:\LernBox\lernbox\node_modules\w3c-keyname
+│  └─ licenseFile: node_modules\w3c-keyname\LICENSE
+├─ webrtc-adapter@9.0.3
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/webrtchacks/adapter
+│  ├─ path: G:\LernBox\lernbox\node_modules\webrtc-adapter
+│  └─ licenseFile: node_modules\webrtc-adapter\LICENSE.md
+├─ zod@4.1.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/colinhacks/zod
+│  ├─ publisher: Colin McDonnell
+│  ├─ email: zod@colinhacks.com
+│  ├─ path: G:\LernBox\lernbox\node_modules\zod
+│  └─ licenseFile: node_modules\zod\LICENSE
+└─ zxing-wasm@2.2.1
+   ├─ licenses: MIT
+   ├─ repository: https://github.com/Sec-ant/zxing-wasm
+   ├─ publisher: Ze-Zheng Wu
+   ├─ path: G:\LernBox\lernbox\node_modules\zxing-wasm
+   └─ licenseFile: node_modules\zxing-wasm\LICENSE
